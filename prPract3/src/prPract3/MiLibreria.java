@@ -13,13 +13,14 @@ public class MiLibreria {
 	 *         0! = 1
 	 *         No existe el factorial de números negativos.</pre><br>
 	 * @param num (num es el valor al que se va a calcular el factorial)
-	 * @return long -> el cáculo del factorial o -1 si el número es negativo
+	 * @return long -> El cáculo del factorial, -1 si el número es negativo, -2 si es muy grande como para calcularlo
 	 */
 	public static long factorial(int num) {
 		
 		long fact = 1;
-		
-		if (num < 0) return -1;
+
+		if (num<0) return -1;
+		if (num>20) return -2;
 		
 		for (int i = 2; i <= num; i++)
 			fact *= i;
@@ -32,21 +33,27 @@ public class MiLibreria {
 	 * Metodo que calcula el combinatorio de dos números.
 	 * @param a (Es el primer valor, tiene que ser mayor a cero, si es menor que "b" entonces se intercambian)
 	 * @param b (Es el segundo valor, tiene que ser mayor a cero, si es mayor que "a" entonces se intercambian)
-	 * @return float --> Devuelve el calculo del factorial de ambos números o -1 si "a" o "b" es menor que 0
+	 * @return float --> Calculo del combinatorio de ambos números, -1 si "a" o "b" es negativo, -2 si "a" o "b" es muy grande
 	 */
-	public static float combinatorio(int a, int b) {
+	public static int combinatorio(int a, int b) {
 		
-		float comb = 0;
+		int comb = 0;
+		long factA = factorial(a);
+		long factB = factorial(b);
 		
-		if (a<0 || b<0) return -1;
+		if (factA == -1 || factB == -1) return -1;
+		if (factA == -2 || factB == -2) return -2;
 		
 		if (a<b) {
-			int reserva = a;
+			long reserva = factA;
+			factA = factB;
+			factB = reserva;
+			reserva = a;
 			a = b;
-			b = reserva;
+			b = (int) reserva;
 		}
 		
-		comb = (float)factorial(a) / (factorial(b) * factorial(a-b));
+		comb = (int) (factA / (factB * factorial(a-b)));
 		
 		return comb;
 		
@@ -59,19 +66,29 @@ public class MiLibreria {
 	 */
 	public static boolean isPrimo(int num) {
 		
-		int rNum;
+		num = Math.abs(num);
+		int i = 2, rNum = (int) Math.sqrt(Math.abs(num));
 		boolean primo = true;
-	
-		rNum = (int) Math.sqrt(Math.abs(num));
-
-		for (int i = 2; i <= rNum && primo; i++) {
-			if ((num % i) == 0) {
+		
+		while (i <= rNum && primo) {
+			if ((num % i) == 0)
 				primo = false;
-			}
+			i++;
 		}
+
+		/*for (int i = 2; i <= rNum && primo; i++) {
+			if ((num % i) == 0)
+				primo = false;
+		}*/ // Esto no es del todo correcto ya que en otros lenguajes el for es más rigido. 
+		
 		return primo;
 	}
 	
+	/**
+	 * Calcular la suma de los divisores de un número sin contar él mismo.
+	 * @param num (El número del que se va a calcular la suma de sus divisores)
+	 * @return int --> La suma de los divisores.
+	 */
 	private static int sumaDiv(int num) {
 		
 		int sum = 0, limit = num/2;
@@ -83,8 +100,23 @@ public class MiLibreria {
 		return sum;
 	}
 	
+	/**
+	 * Comprueba si un número es perfecto o no (La suma de los divisores de un número sin contarse a si mismo es igual al número).
+	 * @param num (El número a comprobar)
+	 * @return boolean --> TRUE si es perfecto, FALSE si no es perfecto
+	 */
 	public static boolean isPerfecto(int num) {
 		return (num == sumaDiv(num));
+	}
+	
+	/**
+	 * Comprueba si dos números son amigos o no (La suma de los divisores del primer número es igual al segundo y viceversa).
+	 * @param a (Primer número)
+	 * @param b (Segundo número)
+	 * @return boolean --> TRUE si ambos son amigos, FALSE si no son amigos
+	 */
+	public static boolean isAmigo(int a, int b) {
+		return (sumaDiv(a) == b && sumaDiv(b) == a);
 	}
 	
 }
