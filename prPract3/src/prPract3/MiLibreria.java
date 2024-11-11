@@ -119,7 +119,7 @@ public class MiLibreria {
 		return (sumaDiv(a) == b && sumaDiv(b) == a);
 	}
 	
-	private static int mcd(int num1, int num2) {
+	public static int mcdWhile(int num1, int num2) {
 		while (num1!=num2) {
 			if (num1>num2)
 				num1-=num2;
@@ -128,10 +128,24 @@ public class MiLibreria {
 		}
 		return num1;
 	}
+
+	public static int mcdRecursivo(int num1, int num2) {
+		if (num1>num2) return mcdRecursivo(num1-=num2,num2);
+		if (num2>num1) return mcdRecursivo(num1,num2-=num1);
+		return num1;
+	}
 	
 	public static boolean isCoprimos(int num1, int num2) {
-		return (mcd(num1,num2) == 1);
+		return (mcdWhile(num1,num2) == 1);
+	}
+	
+	public static int funcionEuler(int num) {
+		int cont = 0;
+		num = Math.abs(num);
 		
+		for (int i=1; i<num; i++)
+			if (isCoprimos(num,i)) cont++;
+		return cont;
 	}
 	
 	

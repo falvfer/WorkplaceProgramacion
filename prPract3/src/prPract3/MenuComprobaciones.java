@@ -104,7 +104,7 @@ public class MenuComprobaciones {
 	}
 	
 	/**
-	 * Proceso para comprobar si dos números son amigos
+	 * Proceso para comprobar si dos números son coprimos
 	 * @param sc (Exportar Scanner)
 	 */
 	private static void proceso6(Scanner sc) {
@@ -115,9 +115,15 @@ public class MenuComprobaciones {
 		else
 			System.out.println(num1+" y "+num2+" no son primos entre sí.");
 	}
-	
+
+	/**
+	 * Proceso para calcular el Euler de un número
+	 * @param sc (Exportar Scanner)
+	 */
 	private static void proceso7(Scanner sc) {
+		int num = pedirInt(sc);
 		
+		System.out.println("El Euler de "+num+" es "+MiLibreria.funcionEuler(num));
 	}
 	
 	private static void proceso8(Scanner sc) {
@@ -133,7 +139,7 @@ public class MenuComprobaciones {
 		System.out.println("5. Comprobar si dos números son amigos");
 		System.out.println("6. Comprobar si dos números son primos entre sí");
 		System.out.println("7. Calcular el euler de un número");
-		System.out.println("8. ");
+		System.out.println("8. Calcular el MCD de dos números");
 	}
 	
 	public static void main(String[] args) {
