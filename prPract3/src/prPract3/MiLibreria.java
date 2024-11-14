@@ -1,5 +1,7 @@
 package prPract3;
 
+import java.util.Scanner;
+
 /**
  * Librería matemática con métodos de clase, como son factorial,
  * primo, combinatorio, perfecto, amigos, ...
@@ -119,6 +121,12 @@ public class MiLibreria {
 		return (sumaDiv(a) == b && sumaDiv(b) == a);
 	}
 	
+	/**
+	 * Calcula el MCD de dos números (con un bucle)
+	 * @param num1 (Primer número)
+	 * @param num2 (Segundo número)
+	 * @return int --> El MCD de susodichos números
+	 */
 	public static int mcdWhile(int num1, int num2) {
 		while (num1!=num2) {
 			if (num1>num2)
@@ -129,16 +137,33 @@ public class MiLibreria {
 		return num1;
 	}
 
+	/**
+	 * Calcula el MCD de dos números (de forma recursiva)
+	 * @param num1 (Primer número)
+	 * @param num2 (Segundo número)
+	 * @return int --> El MCD de susodichos números
+	 */
 	public static int mcdRecursivo(int num1, int num2) {
 		if (num1>num2) return mcdRecursivo(num1-=num2,num2);
 		if (num2>num1) return mcdRecursivo(num1,num2-=num1);
 		return num1;
 	}
 	
+	/**
+	 * Comprueba si dos números son Coprimos
+	 * @param num1 (Primer número)
+	 * @param num2 (Segundo número)
+	 * @return boolean --> TRUE si son Coprimos, FALSE si no lo son
+	 */
 	public static boolean isCoprimos(int num1, int num2) {
 		return (mcdWhile(num1,num2) == 1);
 	}
 	
+	/**
+	 * Calcula la función de Euler de un número
+	 * @param num (Número para calcularle el Euler)
+	 * @return int --> El resultado de la función (Cantidad de números menor a este que son Coprimos)
+	 */
 	public static int funcionEuler(int num) {
 		int cont = 0;
 		num = Math.abs(num);
@@ -147,6 +172,47 @@ public class MiLibreria {
 			if (isCoprimos(num,i)) cont++;
 		return cont;
 	}
+
+	/**
+	 * Calcula una posición de la serie de fibonnaci (con bucle for)
+	 * @param num (Posición de la serie)
+	 * @return int --> El número en susodicha posición
+	 */
+	public static int fibFor(int num) {
+		int aux1 = 1, aux2 = 1;
+		
+		for (int cont = 2; cont <= num; cont+=2) {
+			aux1+=aux2;
+			aux2+=aux1;
+		}
+		return (num%2==0?aux1:aux2);
+	}
+
+	/**
+	 * Calcula una posición de la serie de fibonnaci (con recursividad)
+	 * @param num (Posición de la serie)
+	 * @return int --> El número en susodicha posición
+	 */
+	public static int fibRecursivo(int num) {
+		if (num == 0 || num == 1) return 1;
+		return fibRecursivo(num-1) + fibRecursivo(num-2);
+	}
 	
+	/**
+	 * Calcula la potencia tanto negativa como positiva de un número
+	 * @param base (La base de la potencia)
+	 * @param exp (El exponente de la potencia)
+	 * @return double --> El resultado de la potencia
+	 */
+	public static double potenciaRecursiva(int base, int exp) {
+		if (exp < 0) return 1/potenciaRecursiva(base,Math.abs(exp));
+		if (exp == 0) return 1;
+		if (exp == 1) return base;
+		return potenciaRecursiva(base,exp-1)*base; 
+	}
 	
+	public static long sumaFibRecursivo(int pos) {
+		if (pos==0) return 1;
+		return fibRecursivo(pos) + sumaFibRecursivo(pos-1);
+	}
 }
