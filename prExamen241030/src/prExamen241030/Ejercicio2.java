@@ -30,8 +30,10 @@ public class Ejercicio2 {
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
+
+		final byte costeBase = 80, prInv = 1, prFuente = 100;
+		final float prCPops = 0.25f, prDon = 0.3f;
 		
-		final int costeBase = 80;
 		int invitados;
 		double costeTotal;
 		char cPops, donuts, fuente;
@@ -53,13 +55,13 @@ public class Ejercicio2 {
 		sc.close(); // Cerrar Scanner ya que no hace falta 
 		
 		// Calcular el costeTotal en base a los datos dados 
-		costeTotal = costeBase + invitados;
+		costeTotal = costeBase + invitados * prInv;
 		if (cPops == 'S')
-			costeTotal += invitados * 0.25;
+			costeTotal += invitados * prCPops;
 		if (donuts == 'S')
-			costeTotal += invitados * 0.3;
+			costeTotal += invitados * prDon;
 		if (fuente == 'S')
-			costeTotal += 100;
+			costeTotal += prFuente;
 		
 		// Mostrar por pantalla todos los datos finales
 		System.out.println("EL COSTE TOTAL DE LA MESA ASCIENDE A: "+costeTotal+"€");

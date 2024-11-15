@@ -1,7 +1,5 @@
 package prPract3;
 
-import java.util.Scanner;
-
 /**
  * Librería matemática con métodos de clase, como son factorial,
  * primo, combinatorio, perfecto, amigos, ...

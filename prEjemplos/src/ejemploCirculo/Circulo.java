@@ -109,4 +109,11 @@ public class Circulo {
 	public static void setNumCirculos(int numCirculos) {
 		Circulo.numCirculos = numCirculos;
 	}
+	
+	// Método toString() personalizado
+	@Override
+	public String toString() {
+		return "Objeto Circulo: X = " + x +" Y = " + y + " Radio = " + radio;
+	}
+	
 } // fin de la clase Circulo

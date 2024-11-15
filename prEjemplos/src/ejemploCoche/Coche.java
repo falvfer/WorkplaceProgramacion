@@ -10,8 +10,8 @@ public class Coche {
 	/**
 	 * Constructor para crear objetos Coche
 	 */
-	public Coche(String m, String modelo, int año, String color) {
-		marca = m;
+	public Coche(String marca, String modelo, int año, String color) {
+		this.marca = marca;
 		this.modelo = modelo;
 		this.año = año;
 		this.color = color;

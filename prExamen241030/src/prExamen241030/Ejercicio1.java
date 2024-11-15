@@ -63,12 +63,12 @@ public class Ejercicio1 {
 		
 		// Mostrar todos las categorias con su cantidad de corredores
 		System.out.println();
-		System.out.println("Juvenil: "+(juvenil!=0?(juvenil+" corredores"):("Ningúno inscrito")));
-		System.out.println("Promesa: "+(promesa!=0?(promesa+" corredores"):("Ningúno inscrito")));
-		System.out.println("Senior: "+(senior!=0?(senior+" corredores"):("Ningúno inscrito")));
-		System.out.println("Veterano A: "+(vetA!=0?(vetA+" corredores"):("Ningúno inscrito")));
-		System.out.println("Veterano B: "+(vetB!=0?(vetB+" corredores"):("Ningúno inscrito")));
-		System.out.println("Veterano C: "+(vetC!=0?(vetC+" corredores"):("Ningúno inscrito")));
+		System.out.println("Juvenil: "+(juvenil!=0?(juvenil+" corredores"):("Ninguno inscrito")));
+		System.out.println("Promesa: "+(promesa!=0?(promesa+" corredores"):("Ninguno inscrito")));
+		System.out.println("Senior: "+(senior!=0?(senior+" corredores"):("Ninguno inscrito")));
+		System.out.println("Veterano A: "+(vetA!=0?(vetA+" corredores"):("Ninguno inscrito")));
+		System.out.println("Veterano B: "+(vetB!=0?(vetB+" corredores"):("Ninguno inscrito")));
+		System.out.println("Veterano C: "+(vetC!=0?(vetC+" corredores"):("Ninguno inscrito")));
 		
 	}
 }
