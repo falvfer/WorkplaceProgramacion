@@ -64,7 +64,14 @@ public class Semaforo2 {
 	/**
 	 * Redefinición de equals
 	 */
-	public boolean equals(Semaforo2 unSemaforo) {
-		return this.colorSemaforo.equals(unSemaforo.getColor());
+	@Override
+	public boolean equals(Object ob) {
+		
+		Semaforo2 unSemaforo = (Semaforo2) ob; // Nuevo objecto de la clase "Semaforo2" llamado "unSemaforo" pillando el objeto
+											   // genérico de entrada y haciendole casting a "Semaforo2"
+		if (this.colorSemaforo.equals(unSemaforo.getColor()))
+			return true;
+		
+		return false;
 	}
 }
