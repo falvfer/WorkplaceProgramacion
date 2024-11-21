@@ -39,7 +39,7 @@ public class Fraccion {
 		}
 	}
 	
-	public Fraccion simplificacion() {
+	public Fraccion simplificado() {
 		Fraccion f = new Fraccion(this);
 		f.simplifica();
 		return f;

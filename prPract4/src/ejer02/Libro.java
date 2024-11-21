@@ -2,7 +2,7 @@ package ejer02;
 
 public class Libro {
 
-	// Variables de instancia
+// Variables de instancia
 	private String autor, titulo;
 	private boolean estado; // FALSE prestado, TRUE disponible
 	
@@ -13,10 +13,7 @@ public class Libro {
 		this.estado = e;
 	}
 	
-	// Métodos
-	
-	
-	// Overrides
+// Overrides
 	@Override
 	public String toString() {
 		return "Objeto Libro: "
@@ -31,7 +28,7 @@ public class Libro {
 			&& this.titulo.equals(otroLibro.getTitulo());
 	}
 	
-	// Getters
+// Getters
 	public String getAutor() {
 		return autor;
 	}
@@ -42,7 +39,7 @@ public class Libro {
 		return estado;
 	}
 	
-	// Setters
+// Setters
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}

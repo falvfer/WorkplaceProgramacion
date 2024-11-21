@@ -24,6 +24,11 @@ public class TestLibro {
 		else
 			System.out.println("Son distintos");
 		
+		if (b3 == b2)
+			System.out.println("Son iguales");
+		else
+			System.out.println("Son distintos");
+		
 		if (b2.equals(b3))
 			System.out.println("Son iguales");
 		else

@@ -25,8 +25,8 @@ public class TestFraccion {
 		System.out.println();
 
 		System.out.println(f5.getNum() + "/" + f5.getDen());
-		f5.setNum(2);
-		f5.setDen(4);
+		f5.setNum(4);
+		f5.setDen(8);
 		System.out.println(f5.getNum() + "/" + f5.getDen());
 		System.out.println();
 		
@@ -53,10 +53,10 @@ public class TestFraccion {
 
 		System.out.println("(" + f1.toString() + ") x (" + f2.toString() + ") = ("
 						   + f1.multiplica(f2).toString() + ") = ("
-						   + f1.multiplica(f2).simplificacion().toString() + ")");
+						   + f1.multiplica(f2).simplificado().toString() + ")");
 		System.out.println("(" + f1.toString() + ") / (" + f2.toString() + ") = ("
 				   + f1.divide(f2).toString() + ") = ("
-				   + f1.divide(f2).simplificacion().toString() + ")");
+				   + f1.divide(f2).simplificado().toString() + ")");
 		System.out.println();
 		
 		
