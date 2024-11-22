@@ -30,7 +30,7 @@ public class Fraccion {
 		this.den = reserva;
 	}
 	
-	public void simplifica() {
+	public void simplificar() {
 		int mcd = mcd(this.num,this.den);
 		
 		if (mcd!=1) {
@@ -41,7 +41,7 @@ public class Fraccion {
 	
 	public Fraccion simplificado() {
 		Fraccion f = new Fraccion(this);
-		f.simplifica();
+		f.simplificar();
 		return f;
 		
 	}

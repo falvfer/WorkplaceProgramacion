@@ -4,11 +4,11 @@ public class TestFraccion {
 
 	public static void main(String[] args) {
 		/*
-		 * Fraccion --> num, den
-		 * Constructores --> (num, den) (num) ()
-		 * Métodos --> invierte, simplifica, simplificacion, multiplica, divide
-		 * Otros métodos --> toString, equals
-		 * Getters y Setters
+		 * Cosas que comprobar:
+		 *   Fraccion --> num, den
+		 *   Constructores --> (num, den) (num) ()
+		 *   Métodos --> invierte, simplificar, simplificado, multiplica, divide
+		 *   Otros métodos --> toString, equals, Getters, Setters
 		 */
 		
 		Fraccion f1 = new Fraccion(6,2);
@@ -47,16 +47,20 @@ public class TestFraccion {
 		System.out.println();
 		
 		System.out.println(f1.toString());
-		f1.simplifica();
+		f1.simplificar();
 		System.out.println(f1.toString());
 		System.out.println();
-
+		
+		f5 = f1.multiplica(f2);
+		// f1 * f2 = f5 = f5(simplificado)
 		System.out.println("(" + f1.toString() + ") x (" + f2.toString() + ") = ("
-						   + f1.multiplica(f2).toString() + ") = ("
-						   + f1.multiplica(f2).simplificado().toString() + ")");
+						   + f5.toString() + ") = ("
+						   + f5.simplificado().toString() + ")");
+		f5 = f1.divide(f2);
+		// f1 / f2 = f5 = f5(simplificado)
 		System.out.println("(" + f1.toString() + ") / (" + f2.toString() + ") = ("
-				   + f1.divide(f2).toString() + ") = ("
-				   + f1.divide(f2).simplificado().toString() + ")");
+				   + f5.toString() + ") = ("
+				   + f5.simplificado().toString() + ")");
 		System.out.println();
 		
 		
