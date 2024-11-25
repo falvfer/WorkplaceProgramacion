@@ -20,6 +20,31 @@ public class Edificio {
 		this(new Direccion(nomCalle, numero, codPostal), numHab, numPlantas, area);
 	}
 
+// Métodos públicos
+	/**
+	 * Método para calcular el ibi de un edificio
+	 * Formula: Area x 1.2 + NºPlantas x 100
+	 * @return
+	 */
+	public float calculaIbi() {
+		return this.area * 1.2f + this.numPlantas * 100;
+	}
+	
+// toString
+	@Override
+	public String toString() {
+		return "Objeto tipo " + this.getClass().getSimpleName().toUpperCase() + ": "
+				+ "\n\tDirección: " + this.dirEdif
+				+ "\n\tNúmero plantas: " + this.numPlantas
+				+ "\n\tNúmero habitaciones: " + this.numHab
+				+ "\n\tArea: " + this.area
+				+ "\n\tIBI: " + this.calculaIbi();
+	}
+	
+	
+	
+	
+	
 // Getters
 	public Direccion getDirEdif() {return dirEdif;}
 	public short getNumHab() {return numHab;}
@@ -30,9 +55,5 @@ public class Edificio {
 	public void setDirEdif(Direccion dirEdif) {this.dirEdif = dirEdif;}
 	public void setNumHab(short numHab) {this.numHab = numHab;}
 	public void setNumPlantas(byte numPlantas) {this.numPlantas = numPlantas;}
-
 	public void setArea(float area) {this.area = area;}
-	
-	
-	
 }

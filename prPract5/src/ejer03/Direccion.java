@@ -14,7 +14,7 @@ public class Direccion {
 		this.codPostal = codPostal;
 	}
 	
-// Overrides
+// toString
 	@Override
 	public String toString() {
 		return this.nomCalle + ", " + this.numero + ", " + this.codPostal;
