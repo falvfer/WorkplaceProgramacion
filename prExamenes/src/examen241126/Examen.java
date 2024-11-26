@@ -1,4 +1,4 @@
-package prExamen241126;
+package examen241126;
 
 public class Examen {
 

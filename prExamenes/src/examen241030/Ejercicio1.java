@@ -1,4 +1,4 @@
-package prExamen241030;
+package examen241030;
 
 import java.util.Scanner;
 
