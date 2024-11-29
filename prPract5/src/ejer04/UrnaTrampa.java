@@ -5,11 +5,11 @@ import java.util.Random;
 public class UrnaTrampa extends Urna {
 	
 // Variables de clase
-	private final float probabilidadCambiar = 0.2f;
+	private final static float probabilidadCambiar = 0.2f;
 	
 // Constructores
-	public UrnaTrampa(int blanc, int neg) {
-		super(blanc, neg);
+	public UrnaTrampa(int b, int n) {
+		super(b, n);
 	}
 	
 	public UrnaTrampa(int bolas, char color) {
@@ -27,7 +27,7 @@ public class UrnaTrampa extends Urna {
 		char bola = super.sacaBola();
 		boolean cambColor = (rdn.nextInt(0,(int)(1/(probabilidadCambiar/100))) == 0);
 		
-		if (cambColor && this.getBlanc() > 0 && this.getNeg() > 0) {
+		if (cambColor && this.getB() > 0 && this.getN() > 0) {
 			char bolaCambiar = super.sacaBola();
 			
 			if (bolaCambiar == 'b')

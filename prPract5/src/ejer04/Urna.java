@@ -5,19 +5,19 @@ import java.util.Random;
 public class Urna {
 
 // Variables de instancia
-	private int blanc, neg;
+	private int b, n;
 
 // Getters y Setters
-	public int getBlanc() {return blanc;}
-	public int getNeg() {return neg;}
+	public int getB() {return b;}
+	public int getN() {return n;}
 
-	public void setBlanc(int blanc) {this.blanc = blanc;}
-	public void setNeg(int neg) {this.neg = neg;}
+	public void setB(int b) {this.b = b;}
+	public void setN(int n) {this.n = n;}
 
 // Constructores
-	public Urna(int blanc, int neg) {
-		this.blanc = blanc;
-		this.neg = neg;
+	public Urna(int b, int n) {
+		this.b = b;
+		this.n = n;
 	}
 	
 	public Urna(int bolas, char color) {
@@ -30,33 +30,20 @@ public class Urna {
 
 // Metodos publicos
 	public char sacaBola() throws Exception {
-		if (this.blanc == 0) {
-			if (this.neg == 0)
-				throw new Exception("Error: No quedan bolas");
-			else {
-				this.neg--;
-				return 'n';
-			}
-		} else {
-			if (this.neg == 0) {
-				this.blanc--;
-				return 'b';
-			} else {
-				Random rdn = new Random();
-				boolean color = (rdn.nextInt(1,this.totalBolas()) <= this.blanc);
-				
-				if (color) this.blanc--;
-				else this.neg--;
-				
-				return (color?'b':'n');
-			}
-		}
+		char bola = elegirBolaAleatoria();
+		
+		if (bola == 'b') this.b--;
+		else this.n--;
+		
+		return bola;
 	}
 	
 	public void meteBola(char color) throws Exception {
-		if (color == 'b') this.blanc++;
-		else if (color == 'n') this.neg++;
-		else throw new Exception("Error: Color no válido");
+		switch (color) {
+		case 'b' -> this.b++;
+		case 'n' -> this.n++;
+		default -> throw new Exception("Error: Color no válido");
+		}
 	}
 	
 	public boolean quedanBolas() {
@@ -69,15 +56,40 @@ public class Urna {
 
 // Metodos privados
 	private int totalBolas() {
-		return this.blanc + this.neg;
+		return this.b + this.n;
+	}
+	
+	/**
+	 * Método para elegir una bola aleatoria de la Urna basada en la cantidad de bolas que hay dentro
+	 * @return char --> 'b', 'n', Exception
+	 * @throws Exception ("Error: No quedan bolas")
+	 */
+	private char elegirBolaAleatoria() throws Exception {
+		int numBolas = totalBolas();
+		if (numBolas == 0) throw new Exception("Error: No quedan bolas");
+		
+		Random rdn = new Random();
+		int bolaAleatoria;
+		char color;
+		
+		if (numBolas == 1) bolaAleatoria = 1;
+		else bolaAleatoria = rdn.nextInt(1,numBolas);
+		
+		
+		if (bolaAleatoria <= this.b)
+			color = 'b';
+		else
+			color = 'n';
+		
+		return color;
 	}
 
 // toString, equals, hash
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName().toUpperCase()
-				+ "\n\tBolas blancas: " + this.blanc
-				+ "\n\tBolas negras: " + this.neg;
+				+ "\n\tBolas blancas: " + this.b
+				+ "\n\tBolas negras: " + this.n;
 	}
 	
 }

@@ -31,17 +31,51 @@ public class Test {
 			 * Test clase "UrnaTrampa"
 			 * ------------------------------------------------------------------------
 			 */
+			
 			UrnaTrampa u2 = new UrnaTrampa(50,50);
 			
-			for (int i = 10000; i>=1; i--) {
+			for (int i = 1000; i>=1; i--) {
 				u2.meteBola(u2.sacaBola());
 			}
 			
 			System.out.println("\n" + u2);
+			
+			System.out.println();
 		
-			System.out.println(1/(0.2/100));
-
+			/* ------------------------------------------------------------------------
+			 * Test clase "UrnaTrampa"
+			 * ------------------------------------------------------------------------
+			 */
+			
+			UrnaDeTresColores u3 = new UrnaDeTresColores(rnd.nextInt(1,101),rnd.nextInt(1,101),rnd.nextInt(1,101));
+			
+			char bola1, bola2;
+			
+			do {
+				bola1 = u3.sacaBola();
+				bola2 = u3.sacaBola();
+				
+				if (bola1 == bola2)
+					if (bola1 == 'b')
+						u3.meteBola('r');
+					else
+						u3.meteBola(bola1);
+				else
+					u3.meteBola('b');
+			} while (u3.quedaMasDeUnaBola());
+			bola1 = u3.sacaBola();
+			
+			System.out.print("La última vola restante es: ");
+			if (bola1 == 'b') System.out.println("Blanca");
+			else if (bola1 == 'n') System.out.println("Negra");
+			else System.out.println("Roja");
+			
+			
+			
+			
+			
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
