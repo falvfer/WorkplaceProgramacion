@@ -4,12 +4,16 @@ public class TestSemaforo {
 
 	public static void main(String[] args) {
 
-		Semaforo miSemaforo = new Semaforo();
+		Semaforo miSemaforo = new Semaforo("Verde");
 		Semaforo semaforoDeMiCalle = new Semaforo();
 		Semaforo otroSemaforo = new Semaforo();
 		
+		System.out.println(miSemaforo.toString());
 		miSemaforo.setColor("Rojo");
+		System.out.println(miSemaforo);
 		otroSemaforo.setColor("Verde");
+		
+		
 		
 		System.out.println(otroSemaforo.getColor());
 		System.out.println(semaforoDeMiCalle.getColor());

@@ -5,7 +5,19 @@ public class Semaforo {
 	/**
 	 * Variables de instancia
 	 */
-	private String colorSemaforo = "Rojo";
+	private String colorSemaforo;
+	
+	/**
+	 * Constructor
+	 */
+	
+	public Semaforo (String color) {
+		this.colorSemaforo = color;
+	}
+	
+	public Semaforo () {
+		this("Rojo");
+	}
 	
 	/**
 	 * Método get, para consultar el valor de la variable
@@ -20,14 +32,6 @@ public class Semaforo {
 	public void setColor(String nuevoColor) {
 		this.colorSemaforo = nuevoColor;
 	}
-
-	public String getColorSemaforo() {
-		return colorSemaforo;
-	}
-
-	public void setColorSemaforo(String colorSemaforo) {
-		this.colorSemaforo = colorSemaforo;
-	}
 	
 	/**
 	 * Método que comprueba si un coche puede pasar o no
@@ -41,7 +45,8 @@ public class Semaforo {
 	 */
 	@Override
 	public String toString() {
-		return "Semaforo [colorSemaforo=" + colorSemaforo + "]";
+		return this.getClass().getSimpleName().toUpperCase()
+				+ "\n\tColor del semaforo: " + colorSemaforo;
 	}
 	
 	

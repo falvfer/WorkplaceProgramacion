@@ -1,7 +1,7 @@
 package ejer1_10;
 
 public class Ejercicio01_3 {
-
+	
 	public static void main(String[] args) {
 		// Crear variables para evitar errores de Java
 		int numero=0;
