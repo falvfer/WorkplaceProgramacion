@@ -33,7 +33,7 @@ public class MiLibreria {
 	 * Metodo que calcula el combinatorio de dos números.
 	 * @param a (Es el primer valor, tiene que ser mayor a cero, si es menor que "b" entonces se intercambian)
 	 * @param b (Es el segundo valor, tiene que ser mayor a cero, si es mayor que "a" entonces se intercambian)
-	 * @return float --> Calculo del combinatorio de ambos números, -1 si "a" o "b" es negativo, -2 si "a" o "b" es muy grande
+	 * @return float --> Calculo del combinatorio de ambos números, -1 si "a" o "b" es negativo, -2 si "a" o "b" es muy grande, -3 si a<b
 	 */
 	public static int combinatorio(int a, int b) {
 		
@@ -43,15 +43,7 @@ public class MiLibreria {
 		
 		if (factA == -1 || factB == -1) return -1;
 		if (factA == -2 || factB == -2) return -2;
-		
-		if (a<b) {
-			long reserva = factA;
-			factA = factB;
-			factB = reserva;
-			reserva = a;
-			a = b;
-			b = (int) reserva;
-		}
+		if (a<b) return -3;
 		
 		comb = (int) (factA / (factB * factorial(a-b)));
 		
@@ -142,8 +134,8 @@ public class MiLibreria {
 	 * @return int --> El MCD de susodichos números
 	 */
 	public static int mcdRecursivo(int num1, int num2) {
-		if (num1>num2) return mcdRecursivo(num1-=num2,num2);
-		if (num2>num1) return mcdRecursivo(num1,num2-=num1);
+		if (num1>num2) return mcdRecursivo(num1-num2,num2);
+		if (num2>num1) return mcdRecursivo(num1,num2-num1);
 		return num1;
 	}
 	
