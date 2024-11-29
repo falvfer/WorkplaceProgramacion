@@ -6,10 +6,12 @@ public class ClaseC extends ClaseB implements InterfazD{
 	/**
 	 * Métodos redefinidos de la InterfazB
 	 */
+	@Override
 	public void metodoInterfazB1() {
 		System.out.println("Redefinición del método de la interfazB-1");
 	}
 
+	@Override
 	public void metodoInterfazB2() {
 		System.out.println("Redefinición del método de la interfazB-21");
 	}
@@ -17,10 +19,12 @@ public class ClaseC extends ClaseB implements InterfazD{
 	/**
 	 * Métodos redefinidos de la InterfazC
 	 */
+	@Override
 	public void metodoInterfazC() {
 		System.out.println("Redefinición del método de la interfazC");
 	}
 
+	@Override
 	/**
 	 * M�todos redefinidos de la InterfazD
 	 */

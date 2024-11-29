@@ -7,17 +7,12 @@ public class ClaseA {
 	private int varCA;
 
 	// M�todos set y get
-	public int getVarCA() {
-		return varCA;
-	}
+	public int getVarCA() {return varCA;}
 
-	public void setVarCA(int varCA) {
-		this.varCA = varCA;
-	}
+	public void setVarCA(int varCA) {this.varCA = varCA;}
 	
 	// Método que muestra un mensaje
-	public void metodoClaseA()
-	{
+	public void metodoClaseA() {
 		System.out.println("Este método pertenece a la ClaseA");
 	}
 }
