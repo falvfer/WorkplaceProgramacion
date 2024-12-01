@@ -1,5 +1,9 @@
 package ejer06;
 
+import java.util.InputMismatchException;
+import java.util.Locale;
+import java.util.Scanner;
+
 /*
  * Hacer un programa para calcular la nómina de un trabajador, sabiendo que:
  * - El sueldo base, que se introducirá desde teclado, hay que incrementarlo en 30 euros por trienio.
@@ -47,11 +51,49 @@ public class Trabajador {
 
 	
 	public static void main(String[] args) {
+	Scanner sc = new Scanner(System.in).useLocale(Locale.US);
+	float sueldoBase;
+	short trienios;
+	byte hijos;
+	boolean isJefe, isCasado;
+	
+	System.out.println("Bienvenido, se va a registrar un nuevo trabajador para calcular su nómina.");
+	
+	try {
 		
+		// Pedir sueldo base
+		System.out.print("Especifique el suelo base: ");	
+		sueldoBase = sc.nextFloat();
 		
+		// Pedir los trienios
+		System.out.print("Especifique los trienios del trabajador, si no tiene ponga 0: ");
+		trienios = sc.nextShort();
 		
+		// Pedir los hijos
+		System.out.print("Especifique los hijos que tiene el trabajador, si no tiene ponga 0: ");
+		hijos = sc.nextByte();
+		
+		// Pedir si es Jefe de algún departamento
+		System.out.print("¿Es jefe de algún departamento? [S/N]: ");
+		sc.nextLine();
+		isJefe = (Character.toLowerCase(sc.nextLine().charAt(0)) == 's');
+		
+		// Pedir si está casado el trabajador
+		System.out.print("¿Está casado? [S/N]: ");
+		isCasado = (Character.toLowerCase(sc.nextLine().charAt(0)) == 's');
+		
+		// Crear el nuevo trabajador
+		Trabajador tr = new Trabajador(sueldoBase, trienios, hijos, isJefe, isCasado);
+		
+		// Calcularle la nómina y mostrarla por pantalla
+		System.out.println("La nómina de este trabajador es de: " + tr.calcularNomina() + "€");
+		
+	} catch (InputMismatchException e) {
+		System.out.println("Error: Formato de número no válido.");
 	}
 	
+	sc.close();
 	
+	}
 	
 }
