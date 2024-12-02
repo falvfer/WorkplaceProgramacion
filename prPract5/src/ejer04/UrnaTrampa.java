@@ -5,7 +5,7 @@ import java.util.Random;
 public class UrnaTrampa extends Urna {
 	
 // Variables de clase
-	private final static float probabilidadCambiar = 0.2f;
+	private final static float probabilidadCambiar = 0.2f; // En porcentaje: 0.2 == 0.2%
 	
 // Constructores
 	public UrnaTrampa(int b, int n) {

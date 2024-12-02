@@ -36,7 +36,7 @@ public class UrnaDeTresColores extends Urna {
 	
 	@Override
 	public char sacaBola() throws Exception {
-		char bola = elegirBolaAleatoria();
+		char bola = this.elegirBolaAleatoria();
 		
 		if (bola == 'b') this.setB(getB()-1);
 		else if (bola == 'n') this.setN(getN()-1);
