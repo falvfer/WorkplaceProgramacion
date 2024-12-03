@@ -44,22 +44,12 @@ public class Fecha {
 		if (this.anno > 999 && this.anno <= 4000)
 			if (this.dia >= 1) {
 				switch (mes) {
-					case 1:
-					case 3:
-					case 5:
-					case 7:
-					case 8:
-					case 10:
-					case 12: if (this.dia <= 31) respuesta = true; break;
-					case 4:
-					case 6:
-					case 9:
-					case 11: if (this.dia <= 30) respuesta = true; break;
-					case 2: {
+					case 1,3,5,7,8,10,12 -> {if (this.dia <= 31) respuesta = true;}
+					case 4,6,9,11 -> {if (this.dia <= 30) respuesta = true;}
+					case 2 -> {
 						if (this.isBisiesto()) {
 							if (this.dia <= 29) respuesta = true;
 						} else if (this.dia <= 28) respuesta = true;
-						break;
 					}
 				}
 			}

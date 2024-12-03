@@ -29,6 +29,18 @@ public class CuentaEmpresarial extends Cuenta {
 	}
 
 // Métodos públicos de objeto
+	@Override
+	public void imposicion(double cantidad) {
+		super.imposicion(cantidad);
+		this.contIngresos++;
+	}
+	
+	@Override
+	public void reintegro(double cantidad) throws Exception{
+		super.reintegro(cantidad);
+		this.contReintegros++;
+	}
+	
 	public void reiniciarOperaciones() {
 		this.fecha = getDate();
 		this.contIngresos = 0;
@@ -48,4 +60,13 @@ public class CuentaEmpresarial extends Cuenta {
 						"0" + LocalDate.now().getDayOfMonth());
 	}
 	
+// toString, equals, hashCode
+	@Override
+	public String toString() {
+		return super.toString()
+				+ "\n\tNombre de empresa: " + this.nombEmpresa
+				+ "\n\tFecha desde el ultimo reinicio de contador de ingresos y reintegros: " + this.fecha
+				+ "\n\tContador de Ingresos: " + this.contIngresos
+				+ "\n\tContador de Reintegros: " + this.contReintegros;
+	}
 }

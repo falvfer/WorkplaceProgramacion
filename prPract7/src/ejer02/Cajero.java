@@ -27,7 +27,7 @@ public class Cajero implements InterfazCajero {
 			
 			if (cantidad <= 0) throw new Exception("Error: No se puede meter cantidades negativas al cajero, o 0.");
 			if (cantidad % 10 != 0) throw new Exception("Error: No se puede sacar cantidades que no se puedan subdividir en billetes de 100, 50, 20 o 10.");
-			if (cantidad > this.disponible()) throw new Exception("Error: El cajero no tiene suficiente villetes para realizar esta operación.");
+			if (cantidad > this.disponible()) throw new Exception("Error: El cajero no tiene suficiente billetes para realizar esta operación.");
 			
 			cuenta.reintegro(cantidad);
 			
@@ -58,6 +58,8 @@ public class Cajero implements InterfazCajero {
 			
 			cuenta.imposicion(cantidad);
 			
+			this.actualizaCantidades(cantidad, true);
+			
 		} else throw new Exception("Error: El número secreto es incorrecto.");
 	}
 	
@@ -69,9 +71,29 @@ public class Cajero implements InterfazCajero {
 		this.num10 += b10;
 	}
 	
-	private void actualizaCantidades(int cantidad) throws Exception {
-		if (cantidad % 5 != 0) throw new Exception("Error: No se puede meter monedas al cajero");
+	private void actualizaCantidades(int cantidad, boolean accion) throws Exception {
+		if (cantidad % 10 != 0) throw new Exception("Error: No se puede meter monedas al cajero o billetes de 5.");
+		int numBill100 = toBilletes(cantidad, 100);
+		cantidad -= numBill100 * 100;
+		int numBill50 = toBilletes(cantidad, 50);
+		cantidad -= numBill50 * 50;
+		int numBill20 = toBilletes(cantidad, 20);
+		cantidad -= numBill20 * 20;
+		int numBill10 = toBilletes(cantidad, 10);
+		cantidad -= numBill10 * 10;
+		if (cantidad!=0) throw new Exception("Error en el calculo de cantidades");
 		
+		if (accion) {
+			this.num100 += numBill100;
+			this.num50 += numBill50;
+			this.num20 += numBill20;
+			this.num10 += numBill10;
+		} else {
+			this.num100 -= numBill100;
+			this.num50 -= numBill50;
+			this.num20 -= numBill20;
+			this.num10 -= numBill10;
+		}
 		// COMPLETAR ESTE MÉTODO Y DESPUÉS HACER LOS TESTS
 	}
 	
@@ -83,7 +105,12 @@ public class Cajero implements InterfazCajero {
 // toString, equals, hashCode
 	@Override
 	public String toString() {
-		return "";
+		return this.getClass().getSimpleName().toUpperCase()
+				+ "\n\tCantidad total de dinero: " + this.disponible() + "€"
+				+ "\n\tBilletes de 100: " + this.num100
+				+ "\n\tBilletes de 50: " + this.num50
+				+ "\n\tBilletes de 20: " + this.num20
+				+ "\n\tBilletes de 10: " + this.num10;
 	}
 
 }

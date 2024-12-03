@@ -1,5 +1,6 @@
 package ejer1_10;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -16,17 +17,21 @@ public class Ejercicio05 {
 		float cat2=0;
 		float hipo=0;
 		
-		// Pedir los catetos al usuario.
-		System.out.print("Especifique el primer cateto del triangulo rectangulo: ");
-		cat1=sc.nextFloat();
-		System.out.print("Especifique el segundo cateto: ");
-		cat2=sc.nextFloat();
-		
-		// Hacer el cálculo, también lo redondeo a tres dígitos usando Math.round
-		hipo=(float)Math.round(1000*(Math.sqrt(Math.pow(cat1,2)+Math.pow(cat2,2))))/1000;
-		
-		// Mostrar por pantalla los datos del triangulo rectángulo.
-		System.out.println("La hipotenusa del triangulo rectángulo cuyos catetos son: " + cat1 + " y " + cat2 + " es igual a: " + hipo);
+		try {
+			// Pedir los catetos al usuario.
+			System.out.print("Especifique el primer cateto del triangulo rectangulo: ");
+			cat1=sc.nextFloat();
+			System.out.print("Especifique el segundo cateto: ");
+			cat2=sc.nextFloat();
+			
+			// Hacer el cálculo, también lo redondeo a tres dígitos usando Math.round
+			hipo=(float)Math.round(1000*(Math.sqrt(Math.pow(cat1,2)+Math.pow(cat2,2))))/1000;
+			
+			// Mostrar por pantalla los datos del triangulo rectángulo.
+			System.out.println("La hipotenusa del triangulo rectángulo cuyos catetos son: " + cat1 + " y " + cat2 + " es igual a: " + hipo);
+		} catch (InputMismatchException e) {
+			System.out.println("Error: Número no válido");
+		}
 		
 		// Cerrar el objeto Scanner
 		sc.close();

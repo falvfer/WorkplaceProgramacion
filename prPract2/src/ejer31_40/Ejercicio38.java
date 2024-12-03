@@ -57,7 +57,7 @@ public class Ejercicio38 {
 					
 					// Opción no válida ________________________________________
 				} else if (Character.toUpperCase(opcion) != 'T') { 
-					System.out.println("Error, opción no válida");
+					throw new Exception("Error: Opción no válida");
 				}
 				
 			} catch (InputMismatchException e) {
