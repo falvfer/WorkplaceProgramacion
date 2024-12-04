@@ -65,7 +65,7 @@ public class Cuenta {
 	@Override
 	public boolean equals(Object ob) {
 		Cuenta other = (Cuenta)ob;
-		return (this.numCuenta == other.numCuenta);
+		return (this.numCuenta.equals(other.numCuenta));
 	}
 	
 }
