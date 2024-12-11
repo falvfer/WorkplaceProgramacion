@@ -1,7 +1,6 @@
-package ejer01_05;
+package ejer01_09;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class Ejercicio5 {
 
@@ -28,12 +27,13 @@ public class Ejercicio5 {
 			array[i] = rdn.nextInt(0,101);
 			System.out.print(array[i] + " ");
 		}
-		
+		System.out.println("\n");
 		// Contar y sumar las posiciones impares
-		System.out.print("\nPosiciones impares: ");
 		for (int i = 0; i<array.length; i+=2) {
-			System.out.print(array[i] + " ");
-			sumaArray += array[i];
+			if (array[i]%2==0) {
+				System.out.println("Posicion " + (i+1) + ": " + array[i]);
+				sumaArray += array[i];
+			}
 		}
 		System.out.println("\nLa suma es: " + sumaArray);
 
