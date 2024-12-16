@@ -1,4 +1,4 @@
-package prExamen241204;
+package examen241204;
 
 public class Reserva {
 
@@ -30,7 +30,7 @@ public class Reserva {
 // Métodos públicos
 	public float precioTotal() {
 		float precioBruto = this.vehiculoReserva.getPrecioAlquilerDia() * this.diasAlquiler
-				+ (this.vehiculoReserva.impuestosAnuales() > 100? 10: 5);
+								+ (this.vehiculoReserva.impuestosAnuales() > 100? 10: 5);
 		return (float) (precioBruto * (this.seguroAdicional?1.2:1) * (this.clienteReserva.isVip()?0.9:1));
 	}
 	

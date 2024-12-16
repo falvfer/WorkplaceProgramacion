@@ -1,4 +1,4 @@
-package prExamen241204;
+package examen241204;
 
 public class UtilidadesVehiculos {
 

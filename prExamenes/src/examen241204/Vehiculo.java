@@ -1,4 +1,4 @@
-package prExamen241204;
+package examen241204;
 
 public class Vehiculo {
 
@@ -43,9 +43,9 @@ public class Vehiculo {
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName().toUpperCase() + ": " + this.matricula + " - " + this.modelo
-				+ "\n   Impuestos anuales: " + this.impuestosAnuales() + "€"
-				+ "\n   Precio alquiler diario: " + this.precioAlquilerDia + "€"
-				+ "\n   Número de plazas: " + this.numPlazas;
+				+ "\n\tImpuestos anuales: " + this.impuestosAnuales() + "€"
+				+ "\n\tPrecio alquiler diario: " + this.precioAlquilerDia + "€"
+				+ "\n\tNúmero de plazas: " + this.numPlazas;
 	}
 
 	@Override

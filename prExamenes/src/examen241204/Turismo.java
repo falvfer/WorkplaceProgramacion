@@ -1,4 +1,4 @@
-package prExamen241204;
+package examen241204;
 
 public class Turismo extends Vehiculo {
 
@@ -24,7 +24,7 @@ public class Turismo extends Vehiculo {
 // Métodos públicos
 	@Override
 	public float impuestosAnuales() {
-		return super.impuestosAnuales() + (this.electrico? -20: 50) + (this.clasificacion == "SUV"? 25: 0);
+		return super.impuestosAnuales() + (this.electrico? -20: 50) + (this.clasificacion.equalsIgnoreCase("SUV")? 25: 0);
 	}
 	
 // toString
