@@ -15,7 +15,8 @@ public class TestLibrerias {
 		System.out.println("7. Desordenar el array");
 		System.out.println("8. Insertar número");
 		System.out.println("9. Borrar número");
-		System.out.println("10. Terminar");
+		System.out.println("10. Rotar el array");
+		System.out.println("11. Terminar");
 	}
 	
 	private static void menuBuscar() {
@@ -171,6 +172,14 @@ public class TestLibrerias {
 		
 	}
 	
+	private static void proceso6(Scanner sc, ArrayEntero vector) {
+		// 10. Rotar array
+		System.out.print("Especifique las posiciones a rotar: ");
+		
+		vector.rotar(sc.nextInt());
+		
+	}
+	
 	public static void main(String[] args) {
 		boolean salir = false, generarOtro;
 		Scanner sc = new Scanner(System.in);
@@ -203,7 +212,8 @@ public class TestLibrerias {
 						case 7 -> proceso3(sc, vector);
 						case 8 -> proceso4(sc, vector);
 						case 9 -> proceso5(sc, vector);
-						case 10 -> {generarOtro = true; salir = true;}
+						case 10 -> proceso6(sc, vector);
+						case 11 -> {generarOtro = true; salir = true;}
 					}
 					
 				} while (!generarOtro);
