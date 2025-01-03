@@ -220,6 +220,7 @@ public class TestLibrerias {
 				
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
+				sc.nextLine();
 			}
 			
 		} while (!salir);

@@ -1,5 +1,7 @@
 package ejer11_18;
 
+import ejer10_Libreria.LibreriaVector;
+
 public class Ejercicio14 {
 
 	/*
@@ -23,6 +25,9 @@ public class Ejercicio14 {
 		System.out.println("Matriz A:\n" + LibreriaMatriz.toString(A));
 		System.out.println("Vector B:\n" + LibreriaVector.toString(B));
 		System.out.println("\nVector C:\n" + LibreriaVector.toString(C));
+		
+		LibreriaVector.ordenarBurbuja(C);
+		System.out.println(LibreriaVector.toString(C));
 		
 	}
 	

@@ -15,18 +15,16 @@ public class LibreriaMatriz {
 		return cadena;
 	}
 	
-	public static int[][] generarAleatorio(int[][] matriz, int ini, int fin) {
+	public static void generarAleatorio(int[][] matriz, int ini, int fin) {
 		Random rdn = new Random();
 		
 		for(int i = 0; i < matriz.length; i++)
 			for (int k = 0; k < matriz[i].length; k++)
 				matriz[i][k] = rdn.nextInt(ini, fin);
-		
-		return matriz;
 	}
 	
-	public static int[][] generarAleatorio(int[][] matriz) {
-		return generarAleatorio(matriz, 0, 100);
+	public static void generarAleatorio(int[][] matriz) {
+		generarAleatorio(matriz, 0, 100);
 	}
 	
 	public static int[] sumarFilas(int[][] matriz) {
@@ -63,12 +61,26 @@ public class LibreriaMatriz {
 	
 	private static int posNumMaximo(int[] vector) {
 		int max = Integer.MIN_VALUE;
+		int posMax = -1;
+		
 		for (int i = 0; i < vector.length; i++)
-			if (vector[i] > max)
-				max = i;
-		return max;
+			if (vector[i] > max) {
+				posMax = i;
+				max = vector[i];
+			}
+		
+		return posMax;
 	}
 	
+	public static int[][] transponer(int[][] matriz) {
+		int[][] matrizFinal = new int[matriz[filaMasGrande(matriz)].length][matriz.length];
+		
+		for (int i = 0; i < matriz.length; i++)
+			for (int k = 0; k < matriz[i].length; k++)
+				matrizFinal[k][i] = matriz[i][k];
+		
+		return matrizFinal;
+	}
 	
 	
 	
