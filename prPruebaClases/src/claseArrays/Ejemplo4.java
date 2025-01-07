@@ -9,7 +9,7 @@ public class Ejemplo4 {
 		int[] vector1 = {1,3,4};
 		int[] vector2 = {1,3,4};
 		int[] vector3 = {1,3,5};
-		int[] vector4 = {1,3,4,5};
+		int[] vector4 = vector1;
 		
 		System.out.println(Arrays.equals(vector1, vector2));
 		System.out.println(Arrays.equals(vector1, vector3));
