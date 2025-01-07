@@ -68,7 +68,9 @@ public class Baraja7YMedio {
 	// toString
 	@Override
 	public String toString() {
-		return LibreriaMatriz.toString(baraja);
+		return "Baraja 7 y medio:"
+				+ "\n\tCartas restantes: " + (41 - this.pos)
+				+ "\n\tÚltima carta sacada: " + this.ultimaCartaSacada;
 	}
 
 

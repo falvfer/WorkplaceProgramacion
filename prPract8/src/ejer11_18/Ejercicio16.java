@@ -11,7 +11,6 @@ public class Ejercicio16 {
 	 * media con dos jugadores (usuario y ordenador como banca).
 	 */
 	
-	static Scanner sc;
 	private static Baraja7YMedio baraja;
 	private static boolean terminar;
 	private static float totalCPU, totalJugador;
@@ -20,7 +19,6 @@ public class Ejercicio16 {
 	private final static int sueldoBase = 100;
 
 	static {
-		sc = new Scanner(System.in);
 		baraja = new Baraja7YMedio();
 		terminar = false;
 		totalCPU = 0;
@@ -41,16 +39,16 @@ public class Ejercicio16 {
 		}
 	}
 
-	public static boolean turnoJugador() {
+	public static boolean turnoJugador(Scanner sc) {
 
 		// Sacar primera carta y pedir apuesta
 		totalJugador += baraja.sacaCarta();
 		System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
 		sleep(400);
-		pedirApuesta();
+		pedirApuesta(sc);
 
 		// Bucle hasta que el jugador se planta o se pasa de 7.5
-		while (totalJugador <= 7.5f && !plantar()) {
+		while (totalJugador <= 7.5f && !plantar(sc)) {
 			sleep(400);
 			totalJugador += baraja.sacaCarta();
 			System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
@@ -88,12 +86,12 @@ public class Ejercicio16 {
 		}
 	}
 
-	public static boolean plantar() {
+	public static boolean plantar(Scanner sc) {
 		System.out.print("Desea plantarse? [N/s]: ");
 		return (Character.toUpperCase(sc.nextLine().charAt(0)) == 'S');
 	}
 
-	public static void pedirApuesta() {
+	public static void pedirApuesta(Scanner sc) {
 		System.out.println("Sueldo total: " + sueldo);
 		System.out.print("Escriba su apuesta: ");
 		apuesta = sc.nextInt();
@@ -147,7 +145,9 @@ public class Ejercicio16 {
 	}
 
 	public static void main(String[] args) {
-
+		
+		Scanner sc = new Scanner(System.in);
+		
 		baraja.desordenar();
 		byte accionPartida = 0;
 		/*
@@ -172,7 +172,7 @@ public class Ejercicio16 {
 			System.out.println("-------------------------------------- TURNO " + (turnosJugados + 1) + " ----------");
 			// Jugar el turno del jugador
 			System.out.println("----- TURNO DEL JUGADOR -----");
-			if (turnoJugador()) { // Comprobar que el jugador se haya plantado
+			if (turnoJugador(sc)) { // Comprobar que el jugador se haya plantado
 				sleep(800);
 				System.out.println("----- TURNO DE LA CPU -----");
 				turnoCPU();
