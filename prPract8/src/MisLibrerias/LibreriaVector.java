@@ -1,4 +1,4 @@
-package ejer10_Libreria;
+package MisLibrerias;
 
 import java.util.Random;
 import java.util.Scanner;

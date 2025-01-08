@@ -1,6 +1,7 @@
-package ejer11_18;
+package ejer11_16;
 
-import ejer10_Libreria.LibreriaVector;
+import MisLibrerias.LibreriaMatriz;
+import MisLibrerias.LibreriaVector;
 
 public class Ejercicio14 {
 

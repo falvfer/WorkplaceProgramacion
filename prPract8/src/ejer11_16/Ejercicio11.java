@@ -1,4 +1,4 @@
-package ejer11_18;
+package ejer11_16;
 
 import java.util.Random;
 import java.util.Scanner;

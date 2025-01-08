@@ -1,10 +1,34 @@
-package ejer11_18;
+package MisLibrerias;
 
 import java.util.Random;
 
 public class LibreriaMatriz {
 
 	public static String toString(int[][] matriz) {
+		int longitudTab = LibreriaVarios.calcularLongitud(mayor(matriz)) + 2; 
+		String cadena = "";
+		
+		for(int[] i: matriz) {
+			for (int k: i) {
+				cadena += k + LibreriaVarios.tabular(k, longitudTab);
+			}
+			cadena += "\n";
+		}
+		
+		return cadena;
+	}
+	
+	public static int mayor(int[][] matriz) {
+		int mayor = Integer.MIN_VALUE;
+		
+		for (int[]i: matriz)
+			for (int k: i)
+				if (k > mayor) mayor = k;
+		
+		return mayor;
+	}
+	
+/*	public static String toString(String[][] matriz) {
 		String cadena = "";
 		for(int i = 0; i < matriz.length; i++) {
 			for (int k = 0; k < matriz[i].length; k++) {
@@ -14,7 +38,7 @@ public class LibreriaMatriz {
 		}
 		return cadena;
 	}
-	
+*/
 	public static void generarAleatorio(int[][] matriz, int ini, int fin) {
 		Random rdn = new Random();
 		
