@@ -1,4 +1,4 @@
-package ejer11_16;
+package ejer16v2;
 
 import java.util.Scanner;
 
@@ -10,26 +10,6 @@ public class Ejercicio16 {
 	 * Caballo y el Rey. Utilizando dicha matriz implementar el juego de las 7 y
 	 * media con dos jugadores (usuario y ordenador como banca).
 	 */
-	
-	private static Baraja7YMedio baraja;
-	private static boolean terminar;
-	private static float totalCPU, totalJugador;
-	private static int sueldo, apuesta, turnosJugados, dineroPerdido, dineroGanado;
-	private static byte dificultad;
-	private final static int sueldoBase = 100;
-
-	static {
-		baraja = new Baraja7YMedio();
-		terminar = false;
-		totalCPU = 0;
-		totalJugador = 0;
-		sueldo = sueldoBase;
-		apuesta = 0;
-		turnosJugados = 0;
-		dineroPerdido = 0;
-		dineroGanado = 0;
-		dificultad = 0;
-	}
 
 	private static void sleep(int milliseconds) {
 		System.out.println();
@@ -126,7 +106,7 @@ public class Ejercicio16 {
 	}
 
 	public static void reiniciar() {
-		baraja.desordenar();
+		baraja.barajar();
 		totalCPU = 0;
 		totalJugador = 0;
 		apuesta = 0;
@@ -145,72 +125,41 @@ public class Ejercicio16 {
 	}
 
 	public static void main(String[] args) {
-		
+		Baraja7YMedio baraja = new Baraja7YMedio();
+		boolean terminarPartida = false;
+		int turnosJugados = 0, dineroPerdido, dineroGanado;
+		final int sueldoBase = 100;
 		Scanner sc = new Scanner(System.in);
 		
-		baraja.desordenar();
-		byte accionPartida = 0;
-		/*
-		 * GUIA DE VARIABLE "accionPartida": 0 = Empate entre la CPU y el jugador 1 = Ha
-		 * ganado el jugador 2 = Ha perdido el jugador
-		 */
+		// Inscribir al jugador
+		System.out.print("Escriba su nombre: ");
+		Jugador jugador = new Jugador(sc.nextLine());
 
-		// Elegir la dificultad que desea el jugador
+		// Elegir la dificultad que desea el jugador e inscribir a la CPU
 		System.out.println("Cual dificultad de CPU prefiere?");
 		System.out.println("1. Normal");
 		System.out.println("2. Dificil");
-		dificultad = sc.nextByte();
+		JugadorCPU cpu = new JugadorCPU(sc.nextByte());
 
-		while (dificultad != 1 && dificultad != 2) {
+		while (cpu.getDificultad() != 1 && cpu.getDificultad() != 2) {
 			System.out.print("Dificultad no válida, vuelve a elegir una: ");
-			dificultad = sc.nextByte();
+			cpu.setDificultad(sc.nextByte());
 		}
 
 		sleep(800);
 
 		do {
 			System.out.println("-------------------------------------- TURNO " + (turnosJugados + 1) + " ----------");
-			// Jugar el turno del jugador
-			System.out.println("----- TURNO DEL JUGADOR -----");
-			if (turnoJugador(sc)) { // Comprobar que el jugador se haya plantado
-				sleep(800);
-				System.out.println("----- TURNO DE LA CPU -----");
-				turnoCPU();
-				if (totalCPU <= 7.5f) { // Si Jugador y CPU se han plantado
-					System.out.println("La CPU se planta.");
-					sleep(800);
-					System.out.println("----- RESULTADO -----");
-					System.out.println("Valor total del mazo del Jugador: " + totalJugador);
-					System.out.println("Valor total del mazo de la CPU: " + totalCPU);
-					sleep(400);
-					if (totalJugador > totalCPU)
-						accionPartida = 1;
-					else if (totalJugador == totalCPU)
-						accionPartida = 0;
-					else
-						accionPartida = 2;
-				} else { // La CPU se ha pasado de 7.5
-					System.out.println("----- RESULTADO -----");
-					System.out.print("La CPU se ha pasado de 7 y medio. ");
-					accionPartida = 1;
-				}
-			} else { // El jugador se ha pasado de 7.5
-				System.out.println("----- RESULTADO -----");
-				System.out.print("Te has pasado de 7 y medio. ");
-				accionPartida = 2;
-			}
-
-			actualizarEstadisticas(accionPartida);
-
-			if (sueldo > 0) {
-				System.out.print("Desea volver a jugar otro turno? [S/n]: ");
-				if (Character.toUpperCase(sc.nextLine().charAt(0)) == 'N')
-					terminar = true;
-				else
-					reiniciar();
-			}
-
-		} while (!terminar && sueldo > 0);
+			
+			// Turno del jugador
+			System.out.println("----- TURNO DE " + jugador.getNombre().toUpperCase() + " -----");
+			
+			
+			
+			
+			
+			turnosJugados++;
+		} while (!terminarPartida && jugador.getSueldo() > 0);
 
 		mostrarEstadisticas();
 	}

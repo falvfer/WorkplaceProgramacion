@@ -1,4 +1,4 @@
-package Ejercicio17;
+package ejer17;
 
 public class Alumno {
 

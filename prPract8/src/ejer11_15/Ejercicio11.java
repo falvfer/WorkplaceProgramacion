@@ -1,5 +1,6 @@
-package ejer11_16;
+package ejer11_15;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -25,7 +26,7 @@ public class Ejercicio11 {
 			if (opcion > 3 || opcion < 1) throw new Exception();
 
 			if (opcion !=3)
-				pol3 = new int[lengthPolMayor(pol1, pol2)];
+				pol3 = new int[Math.max(pol1.length, pol2.length)];
 			else
 				pol3 = new int[pol1.length + pol2.length - 1];
 			
@@ -82,52 +83,28 @@ public class Ejercicio11 {
 		return pol;
 	}
 	
-	private static int lengthPolMayor(int[] pol1, int[] pol2) {
-		return pol2.length>pol1.length?pol2.length:pol1.length;
-	}
-	
-	private static int lengthPolMenor(int[] pol1, int[] pol2) {
-		return pol2.length<pol1.length?pol2.length:pol1.length;
-	}
-	
 	private static int[] sumaPolinomio(int[] pol1, int[] pol2) {
-		int[] polFinal = new int[pol2.length>pol1.length?pol2.length:pol1.length];
+		int[] polMenor = (pol1.length<pol2.length? pol1: pol2);
+		int[] polFinal = pol1.length>pol2.length? Arrays.copyOf(pol1, pol1.length): Arrays.copyOf(pol2, pol2.length); //new int[Math.max(pol1.length, pol2.length)];
 		
-		for (int i = 0; i<lengthPolMenor(pol1, pol2); i++)
-			polFinal[i] = pol1[i] + pol2[i];
-		
-		if (pol1.length == lengthPolMayor(pol1, pol2)) {
-			for (int i = lengthPolMenor(pol1, pol2); i<lengthPolMayor(pol1, pol2); i++)
-				polFinal[i] = pol1[i];
-		} else {
-			for (int i = lengthPolMenor(pol1, pol2); i<lengthPolMayor(pol1, pol2); i++)
-				polFinal[i] = pol2[i];
-		}
+		for (int i = 0; i<Math.min(pol1.length, pol2.length); i++)
+			polFinal[i] += polMenor[i];
 		
 		return polFinal;
 	}
 	
 	private static int[] restaPolinomio(int[] pol1, int[] pol2) {
-		int[] polFinal = new int[pol2.length>pol1.length?pol2.length:pol1.length];
+		int[] pol2Inv = Arrays.copyOf(pol2, pol2.length);
+		for (int i = 0; i < pol2Inv.length; i++)
+			pol2Inv[i] = -pol2Inv[i];
 		
-		for (int i = 0; i<lengthPolMenor(pol1, pol2); i++)
-			polFinal[i] = pol1[i] - pol2[i];
-		
-		if (pol1.length == lengthPolMayor(pol1, pol2)) {
-			for (int i = lengthPolMenor(pol1, pol2); i<lengthPolMayor(pol1, pol2); i++)
-				polFinal[i] = pol1[i];
-		} else {
-			for (int i = lengthPolMenor(pol1, pol2); i<lengthPolMayor(pol1, pol2); i++)
-				polFinal[i] = pol2[i];
-		}
-		
-		return polFinal;
+		return sumaPolinomio(pol1, pol2Inv);
 	}
 	
 	private static int[] multiplicaPolinomio(int[] pol1, int[] pol2) {
 		int[] polMayor = pol2.length>pol1.length?pol2:pol1,
-				  polMenor = pol2.length<pol1.length?pol2:(pol2.length==pol1.length?pol2:pol1),
-				  polFinal = new int[polMayor.length + polMenor.length - 1];
+		      polMenor = pol2.length<pol1.length?pol2:(pol2.length==pol1.length?pol2:pol1),
+			  polFinal = new int[polMayor.length + polMenor.length - 1];
 		
 		for (int i = 0; i<polMenor.length; i++)
 			for (int k = 0; k<polMayor.length; k++)

@@ -107,7 +107,6 @@ public class LibreriaMatriz {
 	}
 	
 	public static void enumerar(int[][] matriz, int inicio) {
-		
 		for (int i = 0; i < matriz.length; i++)
 			for (int k = 0; k < matriz[i].length; k++)
 				matriz[i][k] = inicio++;

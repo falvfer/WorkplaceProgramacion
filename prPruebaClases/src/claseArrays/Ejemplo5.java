@@ -1,7 +1,6 @@
 package claseArrays;
 
 import java.util.Arrays;
-import MisLibrerias.LibreriaVector;
 
 public class Ejemplo5 {
 

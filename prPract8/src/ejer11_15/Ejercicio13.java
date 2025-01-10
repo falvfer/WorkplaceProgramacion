@@ -1,4 +1,4 @@
-package ejer11_16;
+package ejer11_15;
 
 import MisLibrerias.LibreriaMatriz;
 

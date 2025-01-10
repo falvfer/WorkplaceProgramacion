@@ -1,4 +1,4 @@
-package ejer11_16;
+package ejer16v1;
 
 import MisLibrerias.LibreriaMatriz;
 
@@ -21,27 +21,27 @@ public class Baraja7YMedio {
 	// Constructor
 	public Baraja7YMedio() {
 		this.baraja = new int[4][10];
-		LibreriaMatriz.enumerar(baraja);
+		LibreriaMatriz.enumerar(this.baraja);
 		this.pos = 1;
-		ultimaCartaSacada = "";
+		this.ultimaCartaSacada = "";
 	}
 
 	// Métodos públicos
-	public void desordenar() {
-		LibreriaMatriz.desordenar(baraja);
+	public void barajar() {
+		LibreriaMatriz.desordenar(this.baraja);
 		this.pos = 1;
-		ultimaCartaSacada = "";
+		this.ultimaCartaSacada = "";
 	}
 	
 	public float sacaCarta() {
 		
-		if (pos > 40) return -1;
+		if (this.pos > 40) return -1;
 		
 		float valor = LibreriaMatriz.buscarNum(this.baraja, this.pos)[1];
-		cambiaUltimaCarta();
+		this.cambiaUltimaCarta();
 		
-		if (valor >= 7) valor = 0.5f;
-		else valor++;
+		if (valor < 7) valor++;
+		else valor = 0.5f;
 		
 		this.pos++;
 		
@@ -53,17 +53,17 @@ public class Baraja7YMedio {
 		int[] posicion = LibreriaMatriz.buscarNum(this.baraja, this.pos);
 
 		switch (posicion[1]) {
-		case 7 -> ultimaCartaSacada = "Sota de ";
-		case 8 -> ultimaCartaSacada = "Caballo de ";
-		case 9 -> ultimaCartaSacada = "Rey de ";
-		default -> ultimaCartaSacada = posicion[1]+1 + " de ";
+		case 7 -> this.ultimaCartaSacada = "Sota de ";
+		case 8 -> this.ultimaCartaSacada = "Caballo de ";
+		case 9 -> this.ultimaCartaSacada = "Rey de ";
+		default -> this.ultimaCartaSacada = (posicion[1]+1) + " de ";
 		}
 		
 		switch (posicion[0]) {
-		case 0 -> ultimaCartaSacada += "Espadas";
-		case 1 -> ultimaCartaSacada += "Monedas";
-		case 2 -> ultimaCartaSacada += "Bastos";
-		default -> ultimaCartaSacada += "Copas";
+		case 0 -> this.ultimaCartaSacada += "Espadas";
+		case 1 -> this.ultimaCartaSacada += "Monedas";
+		case 2 -> this.ultimaCartaSacada += "Bastos";
+		default -> this.ultimaCartaSacada += "Copas";
 		}
 	}
 	
