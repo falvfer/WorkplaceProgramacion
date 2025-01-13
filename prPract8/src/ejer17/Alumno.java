@@ -1,6 +1,8 @@
 package ejer17;
 
-public class Alumno {
+import java.util.Arrays;
+
+public class Alumno implements Comparable<Alumno> {
 
 	/*
 	 * Crea una clase Alumno, con información sobre su nombre y su nota media.
@@ -33,6 +35,16 @@ public class Alumno {
 		return this.nombre + ": " + this.notaMedia;
 	}
 	
+// Comparable
+	@Override
+	public int compareTo(Alumno o) {
+		// Compara una nota con la otra:
+		//		si la primera es mayor va a dar un número positivo (a>b; +a -b = +)
+		//		si son iguales van a dar cero (a==b; +a -b = 0)
+		//		si el segundo es mayor va a dar negativo (a<b; +a -b = -)
+		return Float.compare(this.notaMedia, o.notaMedia);
+	}
+	
 // Clase main para testear
 	public static void main(String[] args) {
 		
@@ -45,6 +57,12 @@ public class Alumno {
 				new Alumno("María", 5.31f)
 		};
 		
+		for (Alumno alum: alumnos)
+			System.out.println(alum.toString());
+		
+		Arrays.sort(alumnos);
+
+		System.out.println();
 		for (Alumno alum: alumnos)
 			System.out.println(alum.toString());
 

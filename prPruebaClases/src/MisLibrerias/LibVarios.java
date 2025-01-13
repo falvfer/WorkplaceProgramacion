@@ -1,6 +1,6 @@
 package MisLibrerias;
 
-public class LibreriaVarios {
+public class LibVarios {
 	
 	public static String tabular(int numero, int longitud) {
 		String resultado = "";

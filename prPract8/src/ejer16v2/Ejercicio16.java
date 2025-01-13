@@ -19,40 +19,36 @@ public class Ejercicio16 {
 		}
 	}
 
-	public static boolean turnoJugador(Scanner sc) {
+	public static void turnoJugador(Scanner sc, Baraja7YMedio baraja, Jugador jugador, boolean isInicial) {
 
-		// Sacar primera carta y pedir apuesta
-		totalJugador += baraja.sacaCarta();
+		System.out.println("----- TURNO DE " + jugador.getNombre().toUpperCase() + " -----");
+		jugador.setTotalPuntos(jugador.getTotalPuntos() + baraja.sacaCarta());
 		System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
-		sleep(400);
-		pedirApuesta(sc);
+		System.out.println("Valor total actual: " + jugador.getTotalPuntos());
 
-		// Bucle hasta que el jugador se planta o se pasa de 7.5
-		while (totalJugador <= 7.5f && !plantar(sc)) {
-			sleep(400);
-			totalJugador += baraja.sacaCarta();
-			System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
-			System.out.println("Valor total de su mano de cartas: " + totalJugador);
-			sleep(400);
+		// Pedir apuesta al jugador si es el primer turno
+		if (isInicial) {
+			System.out.print("Escriba su apuesta: ");
+			jugador.setApuesta(sc.nextInt());
 		}
-
-		return totalJugador <= 7.5f;
+		
+		// Preguntar si desea plantarse
+		System.out.print("Desea plantarse? [N/s]: ");
+		jugador.setPlantado(Character.toUpperCase(sc.nextLine().charAt(0)) == 'S');
 	}
 
-	public static void turnoCPU() {
+	public static void turnoCPU(Scanner sc, Baraja7YMedio baraja, JugadorCPU cpu) {
 		// Sacar primera carta
-		totalCPU += baraja.sacaCarta();
+		cpu.setTotalPuntos(cpu.getTotalPuntos() + baraja.sacaCarta());
 		System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
+		System.out.println("Valor total actual de la CPU: " + cpu.getTotalPuntos());
 		sleep(800);
 
-		// La CPU procede a decidir si plantarse o seguir sacando cartas en base a su
-		// dificultad
-		if (dificultad == 1) { // Dificultad normal
-			while (totalCPU < 5f) {
-				totalCPU += baraja.sacaCarta();
-				System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
-				System.out.println("Valor total actual de la CPU: " + totalCPU);
-				sleep(1600);
+		// La CPU procede a decidir si plantarse o no en base a su dificultad
+		if (cpu.getDificultad() == 1) { // Dificultad normal
+			if (cpu.getTotalPuntos() >= 5f) {
+				cpu.setPlantado(true);
+				System.out.println("La CPU se planta");
 			}
 		} else { // Dificultad dificil
 			float cartaSacada = baraja.sacaCarta();
@@ -113,21 +109,10 @@ public class Ejercicio16 {
 		sleep(800);
 	}
 
-	public static void mostrarEstadisticas() {
-		sleep(800);
-		System.out.println("Estadísticas de la partida: ");
-		System.out.println("\tDificultad de la CPU: " + (dificultad == 1 ? "Normal" : "Difícil"));
-		System.out.println("\tSueldo inicial: " + sueldoBase + "€");
-		System.out.println("\tSueldo final: " + (sueldo <= 0 ? "Banca rota" : sueldo + "€"));
-		System.out.println("\tTurnos jugados: " + turnosJugados);
-		System.out.println("\tDinero ganado: " + dineroGanado + "€");
-		System.out.println("\tDinero perdido: " + dineroPerdido + "€");
-	}
-
 	public static void main(String[] args) {
 		Baraja7YMedio baraja = new Baraja7YMedio();
 		boolean terminarPartida = false;
-		int turnosJugados = 0, dineroPerdido, dineroGanado;
+		int turnosJugados = 0, dineroPerdido = 0, dineroGanado = 0;
 		final int sueldoBase = 100;
 		Scanner sc = new Scanner(System.in);
 		
@@ -151,17 +136,31 @@ public class Ejercicio16 {
 		do {
 			System.out.println("-------------------------------------- TURNO " + (turnosJugados + 1) + " ----------");
 			
-			// Turno del jugador
-			System.out.println("----- TURNO DE " + jugador.getNombre().toUpperCase() + " -----");
+			turnoJugador(sc, baraja, jugador, true);
 			
+			turnoCPU(sc, baraja, cpu);
 			
-			
-			
+			while (!(jugador.isPlantado() && cpu.isPlantado()) || jugador.getTotalPuntos() <= 7.5f
+					  || cpu.getTotalPuntos() <= 7.5f) {
+				
+				
+				
+				
+				
+			} 
 			
 			turnosJugados++;
 		} while (!terminarPartida && jugador.getSueldo() > 0);
 
-		mostrarEstadisticas();
+		// Mostrar estadísticas
+		sleep(800);
+		System.out.println("Estadísticas de la partida: ");
+		System.out.println("\tDificultad de la CPU: " + (cpu.getDificultad() == 1 ? "Normal" : "Difícil"));
+		System.out.println("\tSueldo inicial: " + sueldoBase + "€");
+		System.out.println("\tSueldo final: " + (jugador.getSueldo() <= 0 ? "Banca rota" : jugador.getSueldo() + "€"));
+		System.out.println("\tTurnos jugados: " + turnosJugados);
+		System.out.println("\tDinero ganado: " + dineroGanado + "€");
+		System.out.println("\tDinero perdido: " + dineroPerdido + "€");
 	}
 
 }

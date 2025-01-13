@@ -2,15 +2,15 @@ package MisLibrerias;
 
 import java.util.Random;
 
-public class LibreriaMatriz {
+public class LibMatriz {
 
 	public static String toString(int[][] matriz) {
-		int longitudTab = LibreriaVarios.calcularLongitud(mayor(matriz)) + 2; 
+		int longitudTab = LibVarios.calcularLongitud(mayor(matriz)) + 2; 
 		String cadena = "";
 		
 		for(int[] i: matriz) {
 			for (int k: i) {
-				cadena += k + LibreriaVarios.tabular(k, longitudTab);
+				cadena += k + LibVarios.tabular(k, longitudTab);
 			}
 			cadena += "\n";
 		}

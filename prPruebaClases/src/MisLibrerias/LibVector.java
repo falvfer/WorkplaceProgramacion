@@ -3,7 +3,7 @@ package MisLibrerias;
 import java.util.Random;
 import java.util.Scanner;
 
-public class LibreriaVector {
+public class LibVector {
 
 	public static String toString(int[] vector) {
 		String cadena = "";
