@@ -28,97 +28,114 @@ public class Ejercicio16 {
 
 		// Pedir apuesta al jugador si es el primer turno
 		if (isInicial) {
-			System.out.print("Escriba su apuesta: ");
-			jugador.setApuesta(sc.nextInt());
+			pedirApuesta(sc, jugador);
 		}
 		
-		// Preguntar si desea plantarse
-		System.out.print("Desea plantarse? [N/s]: ");
-		jugador.setPlantado(Character.toUpperCase(sc.nextLine().charAt(0)) == 'S');
-	}
-
-	public static void turnoCPU(Scanner sc, Baraja7YMedio baraja, JugadorCPU cpu) {
-		// Sacar primera carta
-		cpu.setTotalPuntos(cpu.getTotalPuntos() + baraja.sacaCarta());
-		System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
-		System.out.println("Valor total actual de la CPU: " + cpu.getTotalPuntos());
-		sleep(800);
-
-		// La CPU procede a decidir si plantarse o no en base a su dificultad
-		if (cpu.getDificultad() == 1) { // Dificultad normal
-			if (cpu.getTotalPuntos() >= 5f) {
-				cpu.setPlantado(true);
-				System.out.println("La CPU se planta");
-			}
-		} else { // Dificultad dificil
-			float cartaSacada = baraja.sacaCarta();
-			while (totalCPU + cartaSacada <= 7.5f) {
-				totalCPU += cartaSacada;
-				System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
-				cartaSacada = baraja.sacaCarta();
-				System.out.println("Valor total actual de la CPU: " + totalCPU);
-				sleep(1600);
-			}
+		// Preguntar si desea plantarse, en caso de que no se haya pasado
+		if (jugador.getTotalPuntos() <= 7.5f) {
+			System.out.print("Desea plantarse? [N/s]: ");
+			jugador.setPlantado(Character.toUpperCase(sc.nextLine().charAt(0)) == 'S');
 		}
 	}
 
-	public static boolean plantar(Scanner sc) {
-		System.out.print("Desea plantarse? [N/s]: ");
-		return (Character.toUpperCase(sc.nextLine().charAt(0)) == 'S');
-	}
-
-	public static void pedirApuesta(Scanner sc) {
-		System.out.println("Sueldo total: " + sueldo);
+	public static void pedirApuesta(Scanner sc, Jugador jugador) {
+		// Pedir apuesta inicialmente
+		sleep(100);
+		System.out.println("Sueldo total: " + jugador.getSueldo());
 		System.out.print("Escriba su apuesta: ");
-		apuesta = sc.nextInt();
-		sc.nextLine();
+		jugador.setApuesta(sc.nextInt());
 
-		while (apuesta > sueldo || apuesta <= 0) {
+		// Pedir más veces si no es válida la apuesta
+		while (jugador.getApuesta() > jugador.getSueldo() || jugador.getApuesta() <= 0) {
 			sleep(400);
 			System.out.println("Apuesta no válida, no puedes apostar más dinero del que tienes, ni dinero negativo, ni no apostar.");
 			sleep(800);
 			System.out.print("Escriba su apuesta: ");
-			apuesta = sc.nextInt();
-			sc.nextLine();
+			jugador.setApuesta(sc.nextInt());
 		}
+
+		// Limpiar buffer de teclado
+		sc.nextLine();
 	}
 
-	public static void actualizarEstadisticas(int accionPartida) {
-		turnosJugados++;
-
-		if (accionPartida == 1) {
-			System.out.println("¡Felicidades! Has ganado la apuesta, has duplicado el dinero apostado.");
-			sueldo += apuesta;
-			dineroGanado += apuesta;
-		} else if (accionPartida == 2) {
-			System.out.println("Has perdido la apuesta junto al dinero apostado.");
-			sueldo -= apuesta;
-			dineroPerdido += apuesta;
+	public static void turnoCPU(Baraja7YMedio baraja,
+								JugadorCPU cpu, Jugador jugador, boolean isInicial) {
+		System.out.println("----- TURNO DE " + cpu.getNombre().toUpperCase() + " -----");
+		// Sacar primera carta
+		cpu.setTotalPuntos(cpu.getTotalPuntos() + baraja.sacaCarta());
+		if (isInicial) {
+			System.out.println("La CPU mantiene la primera carta oculta.");
+			cpu.setPuntosOcultos(cpu.getTotalPuntos());
 		} else {
-			System.out.println("Empate, se te ha devuelto el dinero apostado.");
+			System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
+			System.out.println("Valor actual de la CPU: " + (cpu.getTotalPuntos() - cpu.getPuntosOcultos()) + " + ???");
 		}
 
-		sleep(800);
+		// La CPU procede a decidir si plantarse o no en base a su dificultad, si no se ha pasado
+		if (cpu.getTotalPuntos() <= 7.5) {
+			if (cpu.getDificultad() == 1) { // Dificultad normal
+				if (cpu.getTotalPuntos() >= 5f)
+					cpu.setPlantado(true);
+			} else { // Dificultad dificil
+				float siguienteCarta = baraja.mirarCarta(jugador.isPlantado()?0:1);
+				if (cpu.getTotalPuntos() + siguienteCarta > 7.5f)
+					cpu.setPlantado(true);
+			}
+		}
+		
+		// Poner el mensaje si se ha plantado
+		if (cpu.isPlantado()) {
+			sleep(800);
+			System.out.println("La CPU se planta.");
+		}
+	}
+	
+	public static int resultado(Jugador jugador, JugadorCPU cpu) {
+		int resultado;
+		
+		if (jugador.isPlantado()) {
+			if (cpu.isPlantado()) {
+				if (cpu.getTotalPuntos() < jugador.getTotalPuntos())
+					resultado = jugador.getApuesta();
+				else if (cpu.getTotalPuntos() > jugador.getTotalPuntos())
+					resultado = -jugador.getApuesta();
+				else
+					resultado = 0;
+			} else {
+				resultado = jugador.getApuesta();
+			}
+		} else {
+			if (cpu.isPlantado())
+				resultado = -jugador.getApuesta();
+			else
+				resultado = 0;
+		}
+		
+		return resultado;
 	}
 
-	public static void reiniciar() {
+	public static void reiniciar(Baraja7YMedio baraja, Jugador jugador, JugadorCPU cpu) {
 		baraja.barajar();
-		totalCPU = 0;
-		totalJugador = 0;
-		apuesta = 0;
+		cpu.setTotalPuntos(0);
+		cpu.setPuntosOcultos(0);
+		cpu.setPlantado(false);
+		jugador.setTotalPuntos(0);
+		jugador.setApuesta(0);
+		jugador.setPlantado(false);
 		sleep(800);
 	}
 
 	public static void main(String[] args) {
 		Baraja7YMedio baraja = new Baraja7YMedio();
-		boolean terminarPartida = false;
-		int turnosJugados = 0, dineroPerdido = 0, dineroGanado = 0;
+		baraja.barajar();
+		boolean terminarJuego = false, isInicial = true;
+		int partidasJugadas = 0, dineroPerdido = 0, dineroGanado = 0, resultadoPartida;
 		final int sueldoBase = 100;
 		Scanner sc = new Scanner(System.in);
 		
 		// Inscribir al jugador
 		System.out.print("Escriba su nombre: ");
-		Jugador jugador = new Jugador(sc.nextLine());
+		Jugador jugador = new Jugador(sc.nextLine(), sueldoBase);
 
 		// Elegir la dificultad que desea el jugador e inscribir a la CPU
 		System.out.println("Cual dificultad de CPU prefiere?");
@@ -126,6 +143,7 @@ public class Ejercicio16 {
 		System.out.println("2. Dificil");
 		JugadorCPU cpu = new JugadorCPU(sc.nextByte());
 
+		// Si no es una dificultad válida: seguir preguntando
 		while (cpu.getDificultad() != 1 && cpu.getDificultad() != 2) {
 			System.out.print("Dificultad no válida, vuelve a elegir una: ");
 			cpu.setDificultad(sc.nextByte());
@@ -133,32 +151,87 @@ public class Ejercicio16 {
 
 		sleep(800);
 
+		// Bucle que contiene el juego del 7 y medio
 		do {
-			System.out.println("-------------------------------------- TURNO " + (turnosJugados + 1) + " ----------");
+			System.out.println("-------------------------------------- PARTIDA " + (partidasJugadas + 1) + " ----------");
 			
-			turnoJugador(sc, baraja, jugador, true);
-			
-			turnoCPU(sc, baraja, cpu);
-			
-			while (!(jugador.isPlantado() && cpu.isPlantado()) || jugador.getTotalPuntos() <= 7.5f
-					  || cpu.getTotalPuntos() <= 7.5f) {
-				
-				
-				
-				
-				
-			} 
-			
-			turnosJugados++;
-		} while (!terminarPartida && jugador.getSueldo() > 0);
+			// Turnos de la partida
+			while (!(jugador.isPlantado() && cpu.isPlantado())
+					&& jugador.getTotalPuntos() <= 7.5f && cpu.getTotalPuntos() <= 7.5f) {
 
-		// Mostrar estadísticas
+				if (!jugador.isPlantado()) {
+					sleep(400);
+					turnoJugador(sc, baraja, jugador, isInicial);
+				}
+
+				if (!cpu.isPlantado()) {
+					sleep(400);
+					turnoCPU(baraja, cpu, jugador, isInicial);
+				}
+				
+				isInicial = false;
+			}
+			// Sumar 1 al contador de partidas
+			partidasJugadas++;
+			
+			// Actualizar estadisticas en base al resultado de la partida
+			sleep(400);
+
+			// Mostrar los puntos totales
+			System.out.println("----- RESULTADO DE LA PARTIDA " + partidasJugadas + " -----");
+			sleep(100);
+			System.out.println("Total de puntos de " + jugador.getNombre() + ": " + jugador.getTotalPuntos());
+			System.out.println("Total de puntos de " + cpu.getNombre() + ": "
+								+ (cpu.getTotalPuntos() - cpu.getPuntosOcultos())
+								+ " + " + cpu.getPuntosOcultos()
+								+ " = " + cpu.getTotalPuntos());
+			sleep(800);
+			
+			// Devuelve la apuesta en positivo, negativo o "0" en base al resultado de la partida
+			resultadoPartida = resultado(jugador, cpu);
+			
+			// Mostrar el resultado de la partida y actualizar sueldo
+			if (resultadoPartida > 0) {
+				System.out.println("¡Felicidades, has ganado! Has duplicado tu apuesta de "
+									+ jugador.getApuesta() + "€");
+				jugador.setSueldo(jugador.getSueldo() + jugador.getApuesta());
+				dineroGanado += jugador.getApuesta();
+				
+			} else if (resultadoPartida < 0) {
+				System.out.println("Lo siento. Has perdido tu apuesta de "
+						+ jugador.getApuesta() + "€");
+				jugador.setSueldo(jugador.getSueldo() - jugador.getApuesta());
+				dineroPerdido += jugador.getApuesta();
+				
+			} else if (jugador.isPlantado()) {
+				System.out.println("¡Empate! Se te ha devuelto tu apuesta de "
+						+ jugador.getApuesta() + "€");
+			} else {
+				System.out.println("¡Ambos se han pasado de 7 y medio! Se te ha devuelto tu apuesta de "
+						+ jugador.getApuesta() + "€");
+			}
+			
+			// Reiniciar todo para prepararlo para la siguiente partida
+			reiniciar(baraja, jugador, cpu);
+			isInicial = true;
+			
+			// Preguntar si quiere volver a jugar, a menos que no tenga sueldo restante
+			if (jugador.getSueldo() > 0) {
+				System.out.print("¿Desea volver a jugar? [S/n]: ");
+				terminarJuego = Character.toUpperCase(sc.nextLine().charAt(0)) == 'N';
+				sleep(800);
+			}
+			
+		} while (!terminarJuego && jugador.getSueldo() > 0);
+
+		// Mostrar estadísticas una vez se haya terminado el juego
 		sleep(800);
-		System.out.println("Estadísticas de la partida: ");
+		System.out.println("-------- ESTADÍSTICAS DE LA PARTIDA --------");
+		System.out.println("Nombre del jugador: " + jugador.getNombre());
 		System.out.println("\tDificultad de la CPU: " + (cpu.getDificultad() == 1 ? "Normal" : "Difícil"));
 		System.out.println("\tSueldo inicial: " + sueldoBase + "€");
 		System.out.println("\tSueldo final: " + (jugador.getSueldo() <= 0 ? "Banca rota" : jugador.getSueldo() + "€"));
-		System.out.println("\tTurnos jugados: " + turnosJugados);
+		System.out.println("\tPartidas jugadas: " + partidasJugadas);
 		System.out.println("\tDinero ganado: " + dineroGanado + "€");
 		System.out.println("\tDinero perdido: " + dineroPerdido + "€");
 	}

@@ -8,6 +8,8 @@ public class Jugador {
 	private boolean plantado;
 	private int sueldo, apuesta;
 	
+	private static int contAnonimos = 0;
+	
 	// Getters y Setters
 	public String getNombre() {return nombre;}
 	public float getTotalPuntos() {return totalPuntos;}
@@ -22,10 +24,20 @@ public class Jugador {
 	public void setApuesta(int apuesta) {this.apuesta = apuesta;}
 	
 	// Constructores
-	public Jugador(String nombre) {
+	public Jugador(String nombre, int sueldo) {
 		this.nombre = nombre;
 		this.totalPuntos = 0;
 		this.plantado = false;
+		this.sueldo = sueldo;
+		this.apuesta = 0;
+	}
+	
+	public Jugador(String nombre) {
+		this(nombre, 0);
+	}
+	
+	public Jugador() {
+		this("Anónimo " + ++contAnonimos, 0);
 	}
 	
 	// Métodos publicos

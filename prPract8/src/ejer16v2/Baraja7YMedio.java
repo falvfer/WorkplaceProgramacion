@@ -48,6 +48,26 @@ public class Baraja7YMedio {
 		return valor;
 	}
 	
+	/**
+	 * Mirar la siguiente carta o la carta "pos".
+	 * @param pos -> Posición de la carta en la baraja.
+	 * 				  	0: La que está arriba del todo.
+	 * 					1: La segunda, etc.
+	 * @return float -> El valor de la carta mirada.
+	 */
+	public float mirarCarta(int pos) {
+		
+		if (this.pos > 40) return -1;
+		
+		float valor = LibreriaMatriz.buscarNum(this.baraja, this.pos+pos)[1];
+		
+		if (valor < 7) valor++;
+		else valor = 0.5f;
+
+		return valor;
+		
+	}
+	
 	// Métodos privados
 	private void cambiaUltimaCarta() {
 		int[] posicion = LibreriaMatriz.buscarNum(this.baraja, this.pos);
