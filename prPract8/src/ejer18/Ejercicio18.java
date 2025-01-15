@@ -1,8 +1,10 @@
-package ejer16v2;
+package ejer18;
 
 import java.util.Scanner;
+import ejer16v2.Jugador;
+import ejer16v2.JugadorCPU;
 
-public class Ejercicio16 {
+public class Ejercicio18 {
 
 	/*
 	 * Utilizar una matriz de 4 x 10 elementos para representar una baraja con
@@ -18,13 +20,21 @@ public class Ejercicio16 {
 		} catch (InterruptedException e) {
 		}
 	}
+	
+	private static float valorReal(int valor) {
+		return switch (valor) {
+		case 8,9,10 -> 0.5f;
+		default -> valor;
+		};
+	}
 
-	public static void turnoJugador(Scanner sc, Baraja7YMedio baraja, Jugador jugador, boolean isInicial) {
+	public static void turnoJugador(Scanner sc, Baraja baraja, Jugador jugador, boolean isInicial) {
 
 		System.out.println("----- TURNO DE " + jugador.getNombre().toUpperCase() + " -----");
-		jugador.setTotalPuntos(jugador.getTotalPuntos() + baraja.sacaCarta());
-		System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
+		jugador.setTotalPuntos(jugador.getTotalPuntos() + valorReal(baraja.valorCarta()));
+		System.out.println("Carta sacada: " + baraja.cartaActualToString());
 		System.out.println("Valor total actual: " + jugador.getTotalPuntos());
+		baraja.siguienteCarta();
 
 		// Pedir apuesta al jugador si es el primer turno
 		if (isInicial) {
@@ -58,16 +68,15 @@ public class Ejercicio16 {
 		sc.nextLine();
 	}
 
-	public static void turnoCPU(Baraja7YMedio baraja,
-								JugadorCPU cpu, Jugador jugador, boolean isInicial) {
+	public static void turnoCPU(Baraja baraja, JugadorCPU cpu, Jugador jugador, boolean isInicial) {
 		System.out.println("----- TURNO DE " + cpu.getNombre().toUpperCase() + " -----");
 		// Sacar primera carta
-		cpu.setTotalPuntos(cpu.getTotalPuntos() + baraja.sacaCarta());
+		cpu.setTotalPuntos(cpu.getTotalPuntos() + valorReal(baraja.valorCarta()));
 		if (isInicial) {
 			System.out.println("La CPU mantiene la primera carta oculta.");
 			cpu.setPuntosOcultos(cpu.getTotalPuntos());
 		} else {
-			System.out.println("Carta sacada: " + baraja.getUltimaCartaSacada());
+			System.out.println("Carta sacada: " + baraja.cartaActualToString());
 			System.out.println("Valor actual de la CPU: " + (cpu.getTotalPuntos() - cpu.getPuntosOcultos()) + " + ???");
 		}
 
@@ -77,7 +86,7 @@ public class Ejercicio16 {
 				if (cpu.getTotalPuntos() >= 5f)
 					cpu.setPlantado(true);
 			} else { // Dificultad dificil
-				float siguienteCarta = baraja.mirarCarta(jugador.isPlantado()?0:1);
+				float siguienteCarta = baraja.valorCarta(jugador.isPlantado()?1:2);
 				if (cpu.getTotalPuntos() + siguienteCarta > 7.5f)
 					cpu.setPlantado(true);
 			}
@@ -88,6 +97,8 @@ public class Ejercicio16 {
 			sleep(800);
 			System.out.println("La CPU se planta.");
 		}
+
+		baraja.siguienteCarta();
 	}
 	
 	public static int resultado(Jugador jugador, JugadorCPU cpu) {
@@ -123,7 +134,7 @@ public class Ejercicio16 {
 		return resultado;
 	}
 
-	public static void reiniciar(Baraja7YMedio baraja, Jugador jugador, JugadorCPU cpu) {
+	public static void reiniciar(Baraja baraja, Jugador jugador, JugadorCPU cpu) {
 		baraja.barajar();
 		cpu.setTotalPuntos(0);
 		cpu.setPuntosOcultos(0);
@@ -135,8 +146,9 @@ public class Ejercicio16 {
 	}
 
 	public static void main(String[] args) {
-		Baraja7YMedio baraja = new Baraja7YMedio();
+		Baraja baraja = new Baraja(1);
 		baraja.barajar();
+		System.out.println(baraja.debugPosiciones());
 		boolean terminarJuego = false, isInicial = true;
 		int partidasJugadas = 0, dineroPerdido = 0, dineroGanado = 0, resultadoPartida;
 		final int sueldoBase = 100;
@@ -234,7 +246,6 @@ public class Ejercicio16 {
 		} while (!terminarJuego && jugador.getSueldo() > 0);
 
 		// Mostrar estadísticas una vez se haya terminado el juego
-		sleep(800);
 		System.out.println("-------- ESTADÍSTICAS DE LA PARTIDA --------");
 		System.out.println("Nombre del jugador: " + jugador.getNombre());
 		System.out.println("\tDificultad de la CPU: " + (cpu.getDificultad() == 1 ? "Normal" : "Difícil"));

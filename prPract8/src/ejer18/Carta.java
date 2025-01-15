@@ -1,53 +1,34 @@
 package ejer18;
 
-public class Carta {
+public abstract class Carta {
 	
 	// Variables
-	private byte clase, palo, valor;
-	/* Clase 
-	 *  - 1: Baraja española
-	 *  	  - Palo
-	 *           - 1: Bastos
-	 *           - 2: Espadas
-	 *           - 3: Copas
-	 *           - 4: Monedas / Oros
-	 *        - Valor: 1-9, 10 Sota, 11 Caballo, 12 Rey
-	 *  - 2: Baraja 7 y media
-	 *  	  - Palo
-	 *           - 1: Bastos
-	 *           - 2: Espadas
-	 *           - 3: Copas
-	 *           - 4: Monedas / Oros
-	 *        - Valor: 1-7, 8 Sota, 9 Caballo, 10 Rey
-	 *  - 3: Baraja inglesa / Poker
-	 *  	  - Palo
-	 *           - 1: Diamantes
-	 *           - 2: Corazones
-	 *           - 3: Picas
-	 *           - 4: Treboles
-	 *        - Valor: 1 As, 2-10, 11 Jota, 12 Reina, 13 Rey
-	 */
+	private byte palo, valor, posicion;
 	
-	// Getters y Setters
-	public byte getClase() {return clase;}
+	// Getters and Setters
 	public byte getPalo() {return palo;}
 	public byte getValor() {return valor;}
+	public byte getPosicion() {return posicion;}
 
-	public void setClase(byte clase) {this.clase = clase;}
 	public void setPalo(byte palo) {this.palo = palo;}
 	public void setValor(byte valor) {this.valor = valor;}
+	public void setPosicion(byte posicion) {this.posicion = posicion;}
 	
-	// Constructores
-	public Carta(byte clase, byte palo, byte valor) {
-		this.clase = clase;
+	// Constructor
+	public Carta(byte palo, byte valor, byte posicion) {
 		this.palo = palo;
 		this.valor = valor;
+		this.posicion = posicion;
 	}
 
-	// Métodos
-	
-	
-	
+	// Métodos toString
+	@Override
+	public String toString() {
+		return this.valorToString() + " de " + this.paloToString();
+	}
+	abstract public String claseToString();
+	abstract public String paloToString();
+	abstract public String valorToString();
 	
 	
 	
