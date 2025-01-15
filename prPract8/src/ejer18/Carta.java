@@ -3,22 +3,19 @@ package ejer18;
 public abstract class Carta {
 	
 	// Variables
-	private byte palo, valor, posicion;
+	private byte palo, valor;
 	
 	// Getters and Setters
 	public byte getPalo() {return palo;}
 	public byte getValor() {return valor;}
-	public byte getPosicion() {return posicion;}
 
 	public void setPalo(byte palo) {this.palo = palo;}
 	public void setValor(byte valor) {this.valor = valor;}
-	public void setPosicion(byte posicion) {this.posicion = posicion;}
 	
 	// Constructor
 	public Carta(byte palo, byte valor, byte posicion) {
 		this.palo = palo;
 		this.valor = valor;
-		this.posicion = posicion;
 	}
 
 	// Métodos toString
@@ -30,7 +27,18 @@ public abstract class Carta {
 	abstract public String paloToString();
 	abstract public String valorToString();
 	
+	// equals
+	@Override
+	public boolean equals(Object ob) {
+		Carta other = (Carta)ob;
+		return this.palo == other.palo
+			&& this.valor == other.valor;
+	}
 	
+	public boolean isEqualTo(byte palo, byte valor) {
+		return this.palo == palo
+			&& this.valor == valor;
+	}
 	
 	
 	

@@ -2,19 +2,17 @@ package ejer18;
 
 import java.util.Random;
 
-import MisLibrerias.LibreriaVarios;
-
 public class Baraja {
 
 // Variables
-	private Carta[][] baraja;
+	private Carta[] baraja;
 	private int posicionActual;
 	
 // Getters y Setters
-	public Carta[][] getBaraja() {return baraja;}
+	public Carta[] getBaraja() {return baraja;}
 	public int getPosicionActual() {return posicionActual;}
 
-	public void setBaraja(Carta[][] baraja) {this.baraja = baraja;}
+	public void setBaraja(Carta[] baraja) {this.baraja = baraja;}
 	public void setPosicionActual(int posicionActual) {this.posicionActual = posicionActual;}
 	
 // Constructores
@@ -24,116 +22,90 @@ public class Baraja {
 	 */
 	public Baraja(int clase) {
 		switch (clase) {
-		// Caso de baraja espannola
-		case 1 -> {
-			this.baraja = new CartaEspannola[4][10];
+		case 1 -> { // Caso de baraja espannola
+			this.baraja = new CartaEspannola[40]; 
 			for (int i = 0; i < this.baraja.length; i++)
-				for (int k = 0; k < this.baraja[i].length; k++)
-					this.baraja[i][k] = new CartaEspannola((byte)(i+1), (byte)(k+1));
-			
-		} // Caso de baraja inglesa
-		case 2 -> {
-			this.baraja = new CartaInglesa[4][13];
+				this.baraja[i] = new CartaEspannola((byte)(((i)/10)+1), (byte)(((i+1)%10)+1));
+		}
+		case 2 -> { // Caso de baraja inglesa
+			this.baraja = new CartaInglesa[52];
 			for (int i = 0; i < this.baraja.length; i++)
-				for (int k = 0; k < this.baraja[i].length; k++)
-					this.baraja[i][k] = new CartaInglesa((byte)(i+1), (byte)(k+1));
+				this.baraja[i] = new CartaInglesa((byte)(((i)/13)+1), (byte)(((i+1)%13)+1));
 		}
 		} // Enumerar las posiciones
-		this.ordenar();
-		this.posicionActual = 1;
+		this.posicionActual = 0;
 	}
 	
 	/**
-	 * Constructor por defecto, crea una baraja espannola.
+	 * Constructor por defecto, crea una baraja española.
 	 */
 	public Baraja() {
-		this(2);
+		this(1);
 	}
 	
-// Métodos
+// Métodos para ordenar y desordenar
 	public void ordenar() {
-		byte cont = 1;
-		for (int i = 0; i < this.baraja.length; i++)
-			for (int k = 0; k < this.baraja[i].length; k++)
-				this.baraja[i][k].setPosicion(cont++);
+		Carta aux;
+		byte palo, valor,
+			cartasPorPalo = (byte)(this.baraja.length / 4),
+			parar = (byte)(this.baraja.length - 1);
+		
+		for (int i = 0; i < parar; i++) {
+			valor = (byte)(i % cartasPorPalo);
+			palo = (byte)(i / (cartasPorPalo - valor));
+			if (!this.baraja[i].isEqualTo(palo, valor)) {
+				for (int k = i+1; i < parar+1; k++) {
+					if (this.baraja[i].equals(this.baraja[k])) {
+						aux = this.baraja[i];
+						this.baraja[i] = this.baraja[k];
+						this.baraja[k] = aux;
+					}
+				}
+			}
+		}
 	}
 	
 	public void barajar() {
 		Random rdn = new Random();
-		int posIMax = this.baraja.length;
-		int pos1I, pos1K, pos2I, pos2K;
-		byte aux;
+		int posMax = this.baraja.length;
+		int posI, posK;
+		Carta aux;
 		
 		for (int i = 0; i < 100; i++) {
-			pos1I = rdn.nextInt(0, posIMax);
-			pos1K = rdn.nextInt(0, this.baraja[pos1I].length);
-			pos2I = rdn.nextInt(0, posIMax);
-			pos2K = rdn.nextInt(0, this.baraja[pos2I].length);
+			posI = rdn.nextInt(0, posMax);
+			posK = rdn.nextInt(0, posMax);
 			
-			if (pos1I != pos2I && pos1K != pos2K) {
-				aux = this.baraja[pos1I][pos1K].getPosicion();
-				this.baraja[pos1I][pos1K].setPosicion(this.baraja[pos2I][pos2K].getPosicion());
-				this.baraja[pos2I][pos2K].setPosicion(aux);
+			if (posI != posK) {
+				aux = this.baraja[posI];
+				this.baraja[posI] = this.baraja[posK];
+				this.baraja[posK] = aux;
 			}
 		}
-	}
-	
-	public int[] getPosicion(byte num) {
-		boolean salir = false;
-		int[] posicion = new int[2];
 		
-		for (int i = 0; i < this.baraja.length && !salir; i++)
-			for (int k = 0; k < this.baraja[i].length && !salir; k++)
-				if (this.baraja[i][k].getPosicion() == num) {
-					posicion[0] = i;
-					posicion[1] = k;
-					salir = true;
-				}
-		
-		return posicion;
+		this.posicionActual = 0;
 	}
 	
-	public int valorCarta(int posicion) {
-		int[] pos = getPosicion((byte)(this.posicionActual + posicion));
-		return this.baraja[pos[0]][pos[1]].getValor();
-	}
+// Método para la CPU para "espiar" la baraja
+	public int valorCarta(int posicion) {return this.baraja[this.posicionActual + posicion].getValor();}
+
+// Métodos para conseguir información de la carta actual
+	public int valorCartaActual() {return valorCarta(0);}
+	public int paloCartaActual() {return this.baraja[this.posicionActual].getPalo();}
 	
-	public int valorCarta() {
-		return valorCarta(0);
-	}
+// Métodos para conseguir información como String
+	public String valorCartaActualToString() {return this.baraja[this.posicionActual].valorToString();}
+	public String paloCartaActualToString() {return this.baraja[this.posicionActual].paloToString();}
+	public String cartaActualToString() {return this.baraja[this.posicionActual].toString();}
 	
-	public int paloCartaActual() {
-		int[] pos = getPosicion((byte)this.posicionActual);
-		return this.baraja[pos[0]][pos[1]].getPalo();
-	}
+// Método para cambiar la posición del mazo
+	public void siguienteCarta() {this.posicionActual++;}
 	
-	public String valorCartaActualToString() {
-		int[] pos = getPosicion((byte)this.posicionActual);
-		return this.baraja[pos[0]][pos[1]].valorToString();
-	}
-	
-	public String paloCartaActualToString() {
-		int[] pos = getPosicion((byte)this.posicionActual);
-		return this.baraja[pos[0]][pos[1]].paloToString();
-	}
-	
-	public String cartaActualToString() {
-		int[] pos = getPosicion((byte)this.posicionActual);
-		return this.baraja[pos[0]][pos[1]].toString();
-	}
-	
-	public void siguienteCarta() {
-		this.posicionActual++;
-	}
-	
+// Método debug para imprimir la baraja
 	public String debugPosiciones() {
 		String resultado = "";
-		for (int i = 0; i < this.baraja.length; i++) {
-			for (int k = 0; k < this.baraja[i].length; k++) {
-				resultado += this.baraja[i][k].getPosicion() + LibreriaVarios.tabular(this.baraja[i][k].getPosicion(), 3);
-			}
-			resultado += "\n";
-		}
+		
+		for (int i = 0; i < this.baraja.length; i++)
+			resultado += this.baraja[i].valorToString() + "/" + this.baraja[i].paloToString() + " ";
 		
 		return resultado;
 	}
