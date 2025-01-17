@@ -169,7 +169,7 @@ public class Ejercicio18 {
 			System.out.println("Valor actual de la CPU: " + (cpu.getTotalPuntos() - cpu.getPuntosOcultos()) + " + ???");
 		}
 
-		// La CPU procede a decidir si plantarse o no en base a su dificultad, si no se ha pasado
+		// La CPU procede a decidir si plantarse o no en base a su dificultad, si no se ha pasado de 7.5
 		if (cpu.getTotalPuntos() <= 7.5) {
 			Random rdn = new Random();
 			if (cpu.getDificultad() == 1) { // Dificultad normal
