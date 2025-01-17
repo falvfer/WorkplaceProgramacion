@@ -13,7 +13,7 @@ public abstract class Carta {
 	public void setValor(byte valor) {this.valor = valor;}
 	
 	// Constructor
-	public Carta(byte palo, byte valor, byte posicion) {
+	public Carta(byte palo, byte valor) {
 		this.palo = palo;
 		this.valor = valor;
 	}

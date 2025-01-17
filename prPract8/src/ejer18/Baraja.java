@@ -32,7 +32,7 @@ public class Baraja {
 			for (int i = 0; i < this.baraja.length; i++)
 				this.baraja[i] = new CartaInglesa((byte)(((i)/13)+1), (byte)(((i+1)%13)+1));
 		}
-		} // Enumerar las posiciones
+		}
 		this.posicionActual = 0;
 	}
 	

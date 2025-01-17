@@ -11,17 +11,11 @@ public class CartaEspannola extends Carta {
 	 */
 	
 	// Constructor
-	public CartaEspannola(byte palo, byte valor, byte posicion) {
-		super(palo, valor, posicion);
-	}
-	
 	public CartaEspannola(byte palo, byte valor) {
-		super(palo, valor, (byte)0);
+		super(palo, valor);
 	}
 
 	// Métodos toString
-	
-	
 	
 	@Override
 	public String claseToString() {
