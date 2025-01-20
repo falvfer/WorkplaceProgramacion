@@ -17,14 +17,15 @@ public class Test1 {
 		
 		System.out.println("--- Prueba de equals ---");
 		// Esta sentencia daría error al comparar ya que p1 es null y nos daría "NullPointerExcepcion"
-//		if (p1.equals(p2)) 
-//			System.out.println("Personas iguales");
-//		else 
-//			System.out.println("Personas distintas");
-		
-		// En cambio si la comparación la hacemos con el método de la clase Objects, no
-		// nos daría problemas, el cual, a su vez, llama al de la clase Persona puesto 
-		// que lo hemos redefinido
+/*		if (p1.equals(p2)) 
+			System.out.println("Personas iguales");
+		else 
+			System.out.println("Personas distintas");
+*/		
+		/* En cambio si la comparación la hacemos con el método de la clase Objects, no
+		 * nos daría problemas, el cual, a su vez, llama al de la clase Persona puesto 
+		 * que lo hemos redefinido
+		 */
 		if (Objects.equals(p1, p2))
 			System.out.println("Personas iguales");
 		else 
@@ -41,7 +42,7 @@ public class Test1 {
 			System.out.println("Personas distintas");
 		
 		// De forma análoga podemos trabajar con el método toString
-		System.out.println("\n--- Prueba de equals ---");
+		System.out.println("\n--- Prueba de toString ---");
 		System.out.println(p2.toString());
 		
 		// Esta sentencia daría error, al ser p1 un null
