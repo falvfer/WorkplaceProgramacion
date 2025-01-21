@@ -50,6 +50,8 @@ public class TestString {
 		System.out.println("bobo".compareTo("ana"));
 		System.out.println("ana".compareTo("aña"));
 
+		// Quitar warnings
+		System.out.println(str1 + str2);
 	}
 
 }
