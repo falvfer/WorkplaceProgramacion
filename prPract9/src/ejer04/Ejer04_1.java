@@ -20,7 +20,7 @@ public class Ejer04_1 {
 		}
 		
 		
-		System.out.println("Todas las vocales de la cadena son: ");
+		System.out.println("Todas las vocales de la cadena son: " + 1);
 		
 		// Extraer la penúltima letra de una cadena.
 		// Extrae y almacena en otro objeto del mismo tipo toda la cadena excepto los 2 primeros caracteres (subcadena).
