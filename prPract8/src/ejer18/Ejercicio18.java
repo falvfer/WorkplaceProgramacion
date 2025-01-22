@@ -9,7 +9,6 @@ public class Ejercicio18 {
 		// Preparación --------------------------------------------------------------------------
 		Baraja baraja = new Baraja(1);
 		baraja.barajar();
-		System.out.println(baraja.debugPosiciones());
 		boolean terminarJuego = false, isInicial = true;
 		int partidasJugadas = 0, dineroPerdido = 0, dineroGanado = 0, resultadoPartida;
 		final int sueldoBase = 100;
@@ -55,8 +54,6 @@ public class Ejercicio18 {
 			}
 			// Sumar 1 al contador de partidas
 			partidasJugadas++;
-			
-			// Actualizar estadisticas en base al resultado de la partida
 			sleep(400);
 
 			// -------------------------- Mostrar los puntos totales y resultado
@@ -109,12 +106,12 @@ public class Ejercicio18 {
 		// Mostrar estadísticas una vez se haya terminado el juego --------------------------------------------------------------------------
 		System.out.println("-------- ESTADÍSTICAS DE LA PARTIDA --------");
 		System.out.println("Nombre del jugador: " + jugador.getNombre());
-		System.out.println("\tDificultad de la CPU: " + (cpu.getDificultad() == 1 ? "Normal" : "Difícil"));
-		System.out.println("\tSueldo inicial: " + sueldoBase + "€");
-		System.out.println("\tSueldo final: " + (jugador.getSueldo() <= 0 ? "Banca rota" : jugador.getSueldo() + "€"));
-		System.out.println("\tPartidas jugadas: " + partidasJugadas);
-		System.out.println("\tDinero ganado: " + dineroGanado + "€");
-		System.out.println("\tDinero perdido: " + dineroPerdido + "€");
+		System.out.println("Dificultad de la CPU: " + (cpu.getDificultad() == 1 ? "Normal" : "Difícil"));
+		System.out.println("Sueldo inicial: " + sueldoBase + "€");
+		System.out.println("Sueldo final: " + (jugador.getSueldo() <= 0 ? "Banca rota" : jugador.getSueldo() + "€"));
+		System.out.println("Partidas jugadas: " + partidasJugadas);
+		System.out.println("Dinero ganado: " + dineroGanado + "€");
+		System.out.println("Dinero perdido: " + dineroPerdido + "€");
 	}
 
 	public static void turnoJugador(Scanner sc, Baraja baraja, Jugador jugador, boolean isInicial) {
@@ -176,7 +173,7 @@ public class Ejercicio18 {
 				if (cpu.getTotalPuntos() <= 4)
 					cpu.setPlantado(rdn.nextInt(1,21) == 1);
 				else if (cpu.getTotalPuntos() <= 5)
-					cpu.setPlantado(rdn.nextInt(1,5) <= 2);
+					cpu.setPlantado(rdn.nextInt(1,6) <= 2);
 				else if (cpu.getTotalPuntos() <= 6)
 					cpu.setPlantado(rdn.nextInt(1,11) <= 9);
 				else
