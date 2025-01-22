@@ -10,14 +10,10 @@ public class CartaInglesa extends Carta {
 	 *  - Valor: 1 As, 2-10, 11 Jota, 12 Reina, 13 Rey
 	 */
 	
-	public CartaInglesa(byte palo, byte valor, byte posicion) {
-		super(palo, valor, posicion);
+	public CartaInglesa(byte palo, byte valor) {
+		super(palo, valor);
 	}
 	
-	public CartaInglesa(byte palo, byte valor) {
-		super(palo, valor, (byte)0);
-	}
-
 	@Override
 	public String claseToString() {
 		return "Carta de baraja Inglesa";
