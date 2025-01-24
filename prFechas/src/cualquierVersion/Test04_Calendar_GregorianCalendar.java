@@ -53,29 +53,28 @@ public class Test04_Calendar_GregorianCalendar {
 		// ----------------------------------------------------------
 		// Calcular cuando fue nuestro cumpleaños en el año 2020
 		// ----------------------------------------------------------
-		Calendar fecCumple = new GregorianCalendar(2020,9,17);
+		Calendar fecCumple = new GregorianCalendar(2020,Calendar.DECEMBER,26);
 		int diaCumple = fecCumple.get(Calendar.DAY_OF_WEEK);
 		System.out.println("\nMi cumple en 2020 fue: "+
 								fecCumple.get(Calendar.DAY_OF_WEEK)); 	
 					// Día 1 es Sunday (Domingo)
 		
-		if (diaCumple==7)
-			System.out.println("Sábado");
-		
-		if (diaCumple==Calendar.SATURDAY)
-			System.out.println("Sábado\n");
+			System.out.println(diaSemanaToString(diaCumple) + "\n");
 		
 		// ----------------------------------------------------------
 		// Modificar los atributos o propiedades de una fecha
 		// ----------------------------------------------------------
-		// Cambiar el a�o de el cumple a 2017
-		fecCumple.set(Calendar.YEAR, 2017);
-		System.out.println("Mi cumple en 2017 fue: "+
-				fecCumple.get(Calendar.DAY_OF_WEEK)); 	
+		// Cambiar el a�o del cumple a 2017
+		fecCumple.set(Calendar.YEAR, 2025);
+		diaCumple = fecCumple.get(Calendar.DAY_OF_WEEK);
+		System.out.println("Mi cumple en 2025 es: "+
+								fecCumple.get(Calendar.DAY_OF_WEEK)); 	
+		
+		System.out.println(diaSemanaToString(diaCumple) + "\n");
 		
 		// Crear una nueva fecha con un valor no valido
 		Calendar fec6 = new GregorianCalendar(2019,1,45); // 45/02/2019
-		System.out.println("\nFecha 6:"+toString(fec6));
+		System.out.println("Fecha 6:"+toString(fec6));
 		
 		fec6.set(Calendar.YEAR, 2018);
 		fec6.set(Calendar.MONTH, 1);
@@ -113,7 +112,7 @@ public class Test04_Calendar_GregorianCalendar {
 		// Calcular el tiempo entre dos fechas
 		// ----------------------------------------------------------
 		Calendar fechaActual = new GregorianCalendar();
-		Calendar fechaUltimoDiaClase = new GregorianCalendar(2025,5,24);
+		Calendar fechaUltimoDiaClase = new GregorianCalendar(2025,5,1);
 		
 		long diasRestantes = fechaUltimoDiaClase.getTime().getTime()
 					             - fechaActual.getTime().getTime();
@@ -140,6 +139,19 @@ public class Test04_Calendar_GregorianCalendar {
 		return fecha.get(Calendar.DAY_OF_MONTH) + "/" + 
 			   (fecha.get(Calendar.MONTH) + 1) + "/" +
 			   fecha.get(Calendar.YEAR);
+	}
+	
+	public static String diaSemanaToString(int dia) {
+		return switch (dia) {
+		case Calendar.MONDAY -> "Lunes";
+		case Calendar.TUESDAY -> "Martes";
+		case Calendar.WEDNESDAY -> "Miércoles";
+		case Calendar.THURSDAY -> "Jueves";
+		case Calendar.FRIDAY -> "Viernes";
+		case Calendar.SATURDAY -> "Sábado";
+		case Calendar.SUNDAY -> "Domingo";
+		default -> "Dia no válido";
+		};
 	}
 }
 

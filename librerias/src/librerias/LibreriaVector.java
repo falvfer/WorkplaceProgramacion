@@ -1,9 +1,26 @@
 package librerias;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class LibreriaVector {
+	
+	public static String[] removeBlanks(String[] str) {
+		String[] strMod = Arrays.copyOf(str, str.length);
+		int contBlanks = 0;
+		for (int i = 0; i < strMod.length; i++)
+			if (strMod[i] == "") {
+				contBlanks++;
+				for (int k = i+1; k < strMod.length; k++) {
+					strMod[k-1] = strMod[k];
+				}
+				i--;
+			}
+		
+		return Arrays.copyOfRange(strMod, 0, strMod.length-contBlanks);
+		
+	}
 
 	public static String toString(int[] vector) {
 		String cadena = "";

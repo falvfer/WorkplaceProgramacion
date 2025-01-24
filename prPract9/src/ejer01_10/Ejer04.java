@@ -165,17 +165,10 @@ public class Ejer04 {
 		System.out.println("\n--- 19 --------------------------------------------------------------");
 		// A partir de un array de tipo byte que contiene números de un dígito, y con
 		// la ayuda del método reverse de la clase StringBuffer, invierte el citado array.
-			byte[] arrayBytes = {2,7,5,8,4,1,9,8,5,3,5,8,9,2,4,6};
-			StringBuffer nuevoString = new StringBuffer();
-			
-			for (byte by: arrayBytes)
-				nuevoString.append(by);
-			System.out.println("Array normal: " + nuevoString);
-			
-			nuevoString.reverse();
-			for (int i = 0; i < arrayBytes.length; i++)
-				arrayBytes[0] = (byte)nuevoString.charAt(i);
-			System.out.println("Array invertido: " + nuevoString);
+			byte[] arrayBytes = {2,7,5,8,4,1,9,4,6};
+			System.out.println("Array normal: " + Arrays.toString(arrayBytes));
+			arrayBytes = new StringBuffer(new String(arrayBytes)).reverse().toString().getBytes();
+			System.out.println("Array invertido: " + Arrays.toString(arrayBytes));
 	}
 	
 	public static int contarOcurrencias(String cadena, String cadenaBuscar) {
