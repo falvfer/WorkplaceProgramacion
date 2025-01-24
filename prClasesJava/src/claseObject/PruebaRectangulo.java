@@ -13,7 +13,7 @@ public class PruebaRectangulo {
 		r2.incrementaAncho();
 		r2.incrementaAlto();
 		
-		r1.setNombre("Pequeño");
+		r1.setNombre("Peque�o");
 		r2.setNombre("Grande");
 		
 		System.out.println("R1 "+ r1.toString());

@@ -52,7 +52,8 @@ public class Rectangulo implements Cloneable {
 		Rectangulo objeto=null;
 		try {
 			objeto = (Rectangulo) super.clone();
-		} catch (CloneNotSupportedException e) {
+		} 
+		catch (CloneNotSupportedException e) {
 			System.out.println("Error al duplicar");
 		}
 		return objeto;

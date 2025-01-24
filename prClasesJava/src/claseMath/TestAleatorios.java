@@ -57,9 +57,10 @@ public class TestAleatorios {
 		// Simular una cara de un dado
 		System.out.println("Dado: "+(obRandom.nextInt(6)+1));
 		
-		// Simular la cara de un dado
-		int dado = obRandom.nextInt(6)+1;  // Genera valores entre 1 y 6
-		System.out.println(dado);
+		// Simular la cara de un dado (ERRONEAMENTE)
+		int dado = obRandom.nextInt(7);  // Genera valores entre 0 y 6
+		  // OJO QUE LA CARA 0 DEL DADO NO EXISTE
+			
 		
 		// Generar valores entre 10 y 30
 		System.out.println("N�mero aleatorio entre 10 y 30: "+(obRandom.nextInt(21)+10));

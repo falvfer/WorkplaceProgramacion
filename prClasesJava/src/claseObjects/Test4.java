@@ -18,8 +18,8 @@ public class Test4 {
 	    lista.add(new Persona("David",21));
 	    
 	    lista.stream()
-	    	 .filter(Objects::nonNull)
-	    	 .map(Persona::getNombre)
-	    	 .forEach(System.out::println);
+	    			.filter(Objects::nonNull)
+	    				.map(Persona::getNombre)
+	    					.forEach(System.out::println);
 	}
 }
