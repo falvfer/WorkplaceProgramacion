@@ -6,9 +6,11 @@ public class Test09_Locale {
 
 	public static void main(String[] args) {
 		
-		Calendar c = Calendar.getInstance();
-		c.set(1989, 1, 21); // 21/02/1989
-						
+		//Calendar c = Calendar.getInstance();
+		//c.set(1989, 1, 21); // 21/02/1989
+			
+		Calendar c = new GregorianCalendar(1989, Calendar.FEBRUARY, 21);
+		
 		Date d = c.getTime();
 		Locale locIT = new Locale("it", "IT"); // Italy
 		Locale locPT = new Locale("pt"); // Portugal
@@ -44,6 +46,9 @@ public class Test09_Locale {
 		
 		DateFormat dfEN = DateFormat.getDateInstance(DateFormat.FULL, locEN);
 		System.out.println("Reino Unido " + dfEN.format(d));
+		
+		DateFormat dfCH = DateFormat.getDateInstance(DateFormat.FULL, Locale.CHINESE);
+		System.out.println("China " + dfCH.format(d));
 	}
 
 }

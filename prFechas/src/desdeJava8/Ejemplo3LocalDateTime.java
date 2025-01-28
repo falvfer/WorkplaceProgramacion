@@ -9,19 +9,23 @@ public class Ejemplo3LocalDateTime {
 
 		// ---------------------- CREACION DE OBJETO ---------------------------------------
 		// La clase LocalDateTime permite crear una fecha/hora  haciendo
-		// uso de todos los campos (año, mes, día, hora, minuto, segundo, nanosegundo)
+		// uso de todos los campos (aï¿½o, mes, dï¿½a, hora, minuto, segundo, nanosegundo)
 		LocalDateTime miDateTime = LocalDateTime.of(1989, 11, 11, 5, 30, 45, 35); //1989-11-11T05:30:45.000000035
 		System.out.println(miDateTime);
 		
-		// También, se puede crear un objeto LocalDateTime basado en los tipos LocalDate y LocalTime,
+		// Tambiï¿½n, se puede crear un objeto LocalDateTime basado en los tipos LocalDate y LocalTime,
 		LocalDate date = LocalDate.of(1989, 11, 11);
 		LocalTime time = LocalTime.of(5, 30, 45, 35);
+		System.out.println("\nPruebas de of y de atTime");
 		LocalDateTime miDateTime2 = LocalDateTime.of(date, time);
 		System.out.println(miDateTime2);
+		LocalDateTime miDateTime3 = date.atTime(time);
+		System.out.println(miDateTime3);
 		
 		// DateTime actual
-		LocalDateTime miDateTime3 = LocalDateTime.now();
-		System.out.println(miDateTime3+"\n");
+		System.out.println("\nDateTime actual");
+		LocalDateTime miDateTime4 = LocalDateTime.now();
+		System.out.println(miDateTime4+"\n");
 		
 		
 		// ----------------------  MODIFICACION DE OBJETO ---------------------------------------

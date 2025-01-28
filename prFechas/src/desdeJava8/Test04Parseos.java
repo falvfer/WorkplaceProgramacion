@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Formatter;
 import java.util.Locale;
 
 public class Test04Parseos {
@@ -53,7 +54,7 @@ public class Test04Parseos {
 	    DateTimeFormatter esDateFormatLargo = 
 	    					DateTimeFormatter
 	    						.ofPattern("EEEE, dd 'de' MMMM 'de' yyyy 'a las' hh:mm:ss")
-	    							.withLocale(new Locale("es", "ES"));
+	    							.withLocale(Locale.getDefault());
 	    System.out.println("Formato espa�ol (largo, localizado): " + fechaConHora.format(esDateFormatLargo));
 
 	    

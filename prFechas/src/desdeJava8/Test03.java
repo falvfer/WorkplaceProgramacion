@@ -26,7 +26,7 @@ public class Test03 {
         System.out.println("Fecha formateada: " + formattedDate);
         System.out.println("Fecha dentro de una semana: " + nextWeek);
         System.out.println("Primer día del mes: " + firstDayOfMonth);
-        System.out.println("¿La fecha es antes de fin de año? " + isBefore);
+        System.out.println("¿La fecha es antes de fin de año? " + (isBefore?"Sí":"No"));
 	}
 
 }

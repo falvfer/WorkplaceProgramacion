@@ -24,6 +24,8 @@ public class Test01 {
 		Date date1 = new Date();
 		Instant instant = date1.toInstant();
 		LocalDateTime dateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy', a las' h:m");
+		System.out.println(dateTime.format(formatter2) + " " + (dateTime.getHour()<12?"AM":"PM"));
 		
 		
 	}

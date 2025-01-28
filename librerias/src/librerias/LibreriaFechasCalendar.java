@@ -1,11 +1,11 @@
-package cualquierVersion;
+package librerias;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class LibreriaFechas {
+public class LibreriaFechasCalendar {
 	
 	/**
 	 * M�todo que permite cambiar el día de una fecha

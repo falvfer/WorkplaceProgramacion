@@ -39,7 +39,7 @@ public class Ejemplo8FestivosFinde {
 					numDias++;
 			}
 			System.out.println("En "+año+" hay "+numDias+
-					" d�a(s) festivo(s) que caen en s�bado o domingo");
+					" día(s) festivo(s) que caen en sábado o domingo");
 			
 		}
 	}
