@@ -1,8 +1,8 @@
-package EjemplosColecciones;
+package ejer01_Popurri;
 
 import java.util.*;
 
-public class Ejemplo01_Popurri {
+public class ejer {
 
 	// colection -> 3 cadenas, 1 objrandom, 2 libros, 3 enteros
 	public static void main(String[] args) {
@@ -35,14 +35,40 @@ public class Ejemplo01_Popurri {
 			System.out.println(it2.next());
 		}
 		
-		// Borrar números
+		// Borrar todos los números
 		Object elem;
 		for (Iterator<Object> it2 = lista.iterator(); it.hasNext();) {
 			elem = it2.next();
-			if (elem instanceof Integer || elem instanceof Double)
+			if (elem instanceof Integer)
 				it2.remove();
 		}
+		
+		System.out.println(lista);
+		
 		// Buscar un libro y guardarlo con el mismo nombre pero en mayuscula
+		// Libro a buscar
+		Libro libroABuscar = new Libro("Libro 1", "Panete", true);
+		
+		// Crear variables e iterator
+		boolean encontrado = false;
+		Object sigOb = null;
+		it = lista.iterator();
+		
+		// Buscarlo y cambiarle el título a mayusculas
+		while (it.hasNext() && !encontrado) {
+			sigOb = it.next();
+			if (sigOb instanceof Libro)
+				if (libroABuscar.equals(sigOb)) {
+					((Libro)sigOb).setTitulo(libroABuscar.getTitulo().toUpperCase());
+					encontrado = true;
+				}
+		}
+		
+		for (Object ob: lista)
+			System.out.println(ob);
+		
+		
+		
 		
 	}
 	

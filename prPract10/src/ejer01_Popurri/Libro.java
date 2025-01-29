@@ -1,6 +1,8 @@
-package EjemplosColecciones;
+package ejer01_Popurri;
 
-public class Libro {
+import java.util.Objects;
+
+public class Libro implements Comparable<Libro> {
 
 // Variables de instancia
 	private String autor, titulo;
@@ -21,12 +23,13 @@ public class Libro {
 				+ "\n\tTítulo: " + this.getTitulo()
 				+ "\n\tEstado: " + (this.getEstado()?"Disponible":"Prestado");
 	}
+/*
 	@Override
 	public boolean equals(Object ob) {
 		Libro otroLibro = (Libro)ob;
 		return this.autor.equals(otroLibro.getAutor())
 			&& this.titulo.equals(otroLibro.getTitulo());
-	}
+	}*/
 	
 // Getters
 	public String getAutor() {
@@ -48,6 +51,34 @@ public class Libro {
 	}
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(autor, titulo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Libro other = (Libro) obj;
+		return Objects.equals(autor, other.autor) && Objects.equals(titulo, other.titulo);
+	}
+
+	@Override
+	public int compareTo(Libro o) {
+		// Comparar autores
+		int comparacion = this.autor.compareTo(o.autor);
+		// Devolver eso si no son iguales
+		if (comparacion != 0)
+			return comparacion;
+		// Comparar títulos si es el mismo autor
+		return this.titulo.compareTo(o.titulo);
 	}
 	
 	
