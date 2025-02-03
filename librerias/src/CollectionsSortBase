@@ -1,0 +1,12 @@
+Método anónimo, base:
+
+Collections.sort(misLibros,
+	(o1, o2) -> {
+		int comparacion = o1.getAutor().compareTo(o2.getAutor());
+		
+		if (comparacion != 0)
+			return comparacion;
+
+		return o2.getTitulo().compareTo(o1.getTitulo());
+	}
+);
