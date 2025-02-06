@@ -10,10 +10,10 @@ public class Inmobiliaria implements GestionInmobiliaria {
 	
 // Getters y Setters
 	public Set<Propiedad> getListaPropiedades() {return listaPropiedades;}
-	public void setListaPropiedades(SortedSet<Propiedad> listaPropiedades) {this.listaPropiedades = listaPropiedades;}
+	public void setListaPropiedades(Set<Propiedad> listaPropiedades) {this.listaPropiedades = listaPropiedades;}
 	
 // Constructores
-	public Inmobiliaria(SortedSet<Propiedad> listaPropiedades) {
+	public Inmobiliaria(Set<Propiedad> listaPropiedades) {
 		this.listaPropiedades = listaPropiedades;
 	}
 	
@@ -30,11 +30,14 @@ public class Inmobiliaria implements GestionInmobiliaria {
 	}
 	
 	public String getPropiedadesOrdenPrecioString() {
-		StringBuilder cadena = new StringBuilder("LISTA ORDENADA POR PRECIO");
+		StringBuilder cadena = new StringBuilder("+------ LISTA ORDENADA POR PRECIO ------+");
+												  
 		Set<Propiedad> lista = this.getPropiedadesOrdenPrecio();
 		
 		for (Propiedad p: lista)
-			cadena.append("\n" + p.getCodigo() + " - " + p.getPrecio() + " - " + p.getTipoProp());
+			cadena.append("\n| " + p.getCodigo() + " - " + p.getPrecio() + " - " + p.getTipoProp());
+		
+		cadena.append("\n+---------------------------------------+");
 		
 		return cadena.toString();
 	}
@@ -42,11 +45,12 @@ public class Inmobiliaria implements GestionInmobiliaria {
 // Métodos de la interfaz
 	@Override
 	public boolean añade(Propiedad ob) {
+		if (ob == null) return false;
 		return this.listaPropiedades.add(ob);
 	}
 
 	@Override
-	public Propiedad buscar(int cod) throws Exception {
+	public Propiedad buscar(int cod) {
 		boolean encontrado = false;
 		Propiedad propiedadActual = null;
 		
@@ -57,7 +61,7 @@ public class Inmobiliaria implements GestionInmobiliaria {
 		}
 		
 		if (!encontrado)
-			throw new Exception("No se ha encontrado la propiedad");
+			return null;
 		
 		return propiedadActual;
 	}
@@ -69,29 +73,19 @@ public class Inmobiliaria implements GestionInmobiliaria {
 
 	@Override
 	public boolean borra(int cod) {
-		boolean borrado = false;
-		Propiedad propiedadActual = null;
-		
-		for (Iterator<Propiedad> it = listaPropiedades.iterator(); it.hasNext() && !borrado;) {
-			propiedadActual = it.next();
-			if (propiedadActual.getCodigo() == cod) {
-				it.remove();
-				borrado = true;
-			}
-		}
-		
-		return borrado;
+		return this.borra(this.buscar(cod));
 	}
 
 	@Override
 	public boolean borra(Propiedad p) {
+		if (p == null) return false;
 		return this.listaPropiedades.remove(p);
 	}
 	
 	// toString
 	@Override
 	public String toString() {
-		StringBuilder cadena = new StringBuilder(this.getClass().getSimpleName().toUpperCase());
+		StringBuilder cadena = new StringBuilder("------------------ " + this.getClass().getSimpleName().toUpperCase() + " ------------------");
 		
 		for (Propiedad p: this.listaPropiedades)
 			cadena.append("\n" + p.toString());
