@@ -13,6 +13,9 @@ public class EjemploList {
         numeros.add(10);
         numeros.add(20);
         numeros.add(30);
+        
+        numeros.forEach(System.out::println);
+        
 
         // Acceder a un elemento por su índice
         int segundoElemento = numeros.get(1); // Retorna 20

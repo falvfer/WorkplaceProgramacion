@@ -20,7 +20,7 @@ public class EjemploSpliterator {
         List<String> list2 = List.of("Java", "Python", "C++", "JavaScript", "Ruby", "Go");
 
         Spliterator<String> spliterator1 = list2.spliterator();
-
+        
         // Dividir el Spliterator
         Spliterator<String> spliterator2 = spliterator1.trySplit();
 
@@ -30,7 +30,6 @@ public class EjemploSpliterator {
 
         System.out.println("\nSpliterator 2:");
         spliterator2.forEachRemaining(System.out::println);
-        
         
         // ----------------------------------------------------------------
         // El Spliterator es fundamental en el framework de streams de Java,
