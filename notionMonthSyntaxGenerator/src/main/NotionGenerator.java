@@ -1,6 +1,5 @@
-package mis_programas;
+package main;
 
-import librerias.LibreriaFechasJavaTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
@@ -9,9 +8,11 @@ import java.util.Scanner;
 
 public class NotionGenerator {
 	
+// Variables
 	public static LocalDate startingDate = LocalDate.now();
 	public static Scanner sc = new Scanner(System.in);
 	
+// Métodos
 	public static String day() {
 		String str = "### L" + startingDate.format(DateTimeFormatter.ofPattern("yyMMdd - EEEE"))
 		 + "\n\nlll\n\n" + "---";
@@ -29,6 +30,7 @@ public class NotionGenerator {
 		return "# " + startingDate.format(DateTimeFormatter.ofPattern("MMMM yyy"));
 	}
 	
+// MAIN
 	public static void main(String[] args) {
 		// Preguntar por la fecha inicial
 		System.out.print("Say the starting date with a format like this \"31/01/2025\": ");
@@ -84,6 +86,10 @@ public class NotionGenerator {
 			}
 			
 		}
+		
+		System.out.print("Press Enter to exit... ");
+		sc.nextLine();
+		sc.nextLine();
 		
 	}
 }
