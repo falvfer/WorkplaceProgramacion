@@ -1,5 +1,9 @@
 package clasesPractica;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -17,7 +21,27 @@ public class Test {
 		lib2.añadirPersonaje("Sancho Panza");
 		
 		System.out.println(lib1);
-		System.out.println(lib2 + "\n");
+		System.out.println(lib2);
+		
+		Libro lib3 = new Libro("0002","Los pilares de la Tierra","Ken Follet",
+		Arrays.asList("Aliena","Jack Jackson","Regan Hamleigh"));
+		System.out.println(lib3);
+		
+		Libro lib4 = new Libro("0003","El tiempo entre costuras","María Dueñas",
+		Arrays.asList("Sira Quiroga","Ramiro Arribas", "Marcus Logan"));
+		System.out.println(lib4);
+		
+		Libro lib5 = new Libro("0004","El principito","Antoine de Saint-Exupary",
+		Arrays.asList("The Little Prince","El vanidoso","Le renard"));
+		System.out.println(lib5);
+		
+		Libro lib6 = new Libro("0006","Cien Años de Soledad","Gabriel García Márquez",
+		Arrays.asList("José Arcadio Buendía","Coronel Aureliano Buendía"));
+		System.out.println(lib6);
+		
+		Libro lib7 = new Libro("0007","El principito","Antoine de Saint-Exupary",
+		Arrays.asList("The Little Prince","El vanidoso","Le renard"));
+		System.out.println(lib7 + "\n");
 
 		//---------------------------------------------------------------------------------------
 		// TEST DE LA CLASE USUARIO
@@ -26,20 +50,28 @@ public class Test {
 		Usuario u1 = new Usuario("José Mª García");
 		Usuario u2 = new Usuario("María López");
 		
-		u1.sacaLibro(lib1);
-		u1.sacaLibro(lib2);
-		
 		System.out.println(u1);
-		System.out.println(u2);
+		System.out.println(u2 + "\n");
 
 		//---------------------------------------------------------------------------------------
-		// TEST DE LA CLASE 
+		// TEST DE LA CLASE BIBLIOTECA
 		//---------------------------------------------------------------------------------------
-		System.out.println("---------------------------------------------------------------------");
+		System.out.println("BIBLIOTECA-----------------------------------------------------------");
 		
+		Biblioteca bib = new Biblioteca();
 		
+		bib.altaUsuario(u1);
+		bib.altaUsuario(u2);
+		bib.altaLibro(lib1);
+		bib.altaLibro(lib2);
+		bib.altaLibro(lib3);
+		bib.altaLibro(lib4);
+		bib.altaLibro(lib5);
+		bib.altaLibro(lib6);
+		bib.altaLibro(lib7);
 		
-		
+		System.out.println(bib.librosToString() + "\n");
+		System.out.println(bib.usuariosToString());
 		
 		
 		

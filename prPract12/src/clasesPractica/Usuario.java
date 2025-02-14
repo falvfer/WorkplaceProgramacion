@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
-public class Usuario implements InterfazUsuario {
+public class Usuario implements InterfazUsuario, Comparable<Usuario> {
 
 // Variables
 	private String nombre;
@@ -88,6 +88,13 @@ public class Usuario implements InterfazUsuario {
 		
 		return cadena.toString();
 	}
+	
+	@Override
+	public int compareTo(Usuario o) {
+		return this.nombre.compareTo(o.nombre);
+	}
+	
+	
 	
 	
 	

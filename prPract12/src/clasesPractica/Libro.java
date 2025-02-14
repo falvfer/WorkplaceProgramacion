@@ -1,28 +1,28 @@
 package clasesPractica;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Libro {
+public class Libro implements Comparable<Libro> {
 	
 // Variables
 	private String codigo, titulo, autor;
-	private Set<String> personajes;
+	private List<String> personajes;
 	
 // Getters y Setters
 	public String getCodigo() {return codigo;}
 	public String getTitulo() {return titulo;}
 	public String getAutor() {return autor;}
-	public Set<String> getPersonajes() {return personajes;}
+	public List<String> getPersonajes() {return personajes;}
 	
 	public void setCodigo(String codigo) {this.codigo = codigo;}
 	public void setTitulo(String titulo) {this.titulo = titulo;}
 	public void setAutor(String autor) {this.autor = autor;}
-	public void setPersonajes(Set<String> personajes) {this.personajes = personajes;}
+	public void setPersonajes(List<String> personajes) {this.personajes = personajes;}
 	
 // Constructores
-	public Libro(String codigo, String titulo, String autor, Set<String> personajes) {
+	public Libro(String codigo, String titulo, String autor, List<String> personajes) {
 		super();
 		this.codigo = codigo;
 		this.titulo = titulo;
@@ -31,7 +31,7 @@ public class Libro {
 	}
 	
 	public Libro(String codigo, String titulo, String autor) {
-		this(codigo, titulo, autor, new HashSet<>());
+		this(codigo, titulo, autor, new ArrayList<>());
 	}
 	
 // Métodos
@@ -76,6 +76,10 @@ public class Libro {
 	@Override
 	public String toString() {
 		return this.codigo + ": " + this.titulo + " (escrito por " + this.autor + " " + this.personajes + ")";
+	}
+	@Override
+	public int compareTo(Libro o) {
+		return this.codigo.compareTo(o.codigo);
 	}
 	
 }

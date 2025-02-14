@@ -24,8 +24,41 @@ public class Biblioteca implements InterfazBiblioteca {
 	this.libros = new TreeSet<>();
 }
 	
-
 // Métodos
+	public String librosToString() {
+		StringBuilder cadena = new StringBuilder("----------------LIBROS EN LA LIBRERÍA----------------");
+		boolean hayLibros = false;
+		for (Libro lib: this.libros) {
+			cadena.append("\n" + lib);
+			hayLibros = true;
+		}
+		
+		if (!hayLibros)
+			cadena.append("\nNo hay libros en la librería disponibles");
+		
+		cadena.append("\n\n----------------LIBROS SACADOS----------------");
+		hayLibros = false;
+		for (Usuario usu: this.usuarios)
+			for (Libro lib: usu.getLibrosSacados()) {
+				cadena.append("\n" + lib);
+				hayLibros = true;
+			}
+		
+		if (!hayLibros)
+			cadena.append("\nNo hay ningún libro en poseción de los usuarios");
+		
+		return cadena.toString();
+	}
+	
+	public String usuariosToString() {
+		StringBuilder cadena = new StringBuilder("Usuarios: ");
+		for (Usuario usu: this.usuarios)
+			cadena.append(usu.getNombre() + ", ");
+		
+		return cadena.delete(cadena.length()-2, cadena.length()-1).toString();
+	}
+
+// Métodos de interfaz
 	@Override
 	public boolean altaUsuario(Usuario usu) {
 		return usuarios.add(usu);
@@ -131,7 +164,7 @@ public class Biblioteca implements InterfazBiblioteca {
 		Libro lib = null;
 		SortedSet<Libro> copiasLib = new TreeSet<>();
 		
-		for (Iterator<Libro> it = this.libros.iterator(); it.hasNext() && !terminar;) {
+		for (Iterator<Libro> it = this.libros.iterator(); it.hasNext();) {
 			lib = it.next();
 			if (lib.getTitulo() == titulo)
 				copiasLib.add(lib);
