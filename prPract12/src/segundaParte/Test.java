@@ -1,8 +1,6 @@
-package clasesPractica;
+package segundaParte;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Test {
 
@@ -70,13 +68,21 @@ public class Test {
 		bib.altaLibro(lib6);
 		bib.altaLibro(lib7);
 		
-		System.out.println(bib.librosToString() + "\n");
-		System.out.println(bib.usuariosToString());
-		
-		
-		
-		
+		try {
+			bib.prestarLibro(lib7.getTitulo(), u1.getNombre());
+		} catch (BibliotecaException e) {
+			System.out.println(e.getMessage());
+		}
 
+		System.out.println("Usuario: " + u1 + "\n");
+		
+		try {
+			System.out.println(bib.librosToString());
+		} catch (BibliotecaException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("\n" + bib.usuariosToString());
+		
 	}
-
 }

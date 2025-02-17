@@ -1,4 +1,4 @@
-package clasesPractica;
+package primeraParte;
 
 public interface InterfazUsuario {
 	boolean sacaLibro(Libro lib);

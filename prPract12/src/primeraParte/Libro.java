@@ -1,4 +1,4 @@
-package clasesPractica;
+package primeraParte;
 
 import java.util.ArrayList;
 import java.util.List;
