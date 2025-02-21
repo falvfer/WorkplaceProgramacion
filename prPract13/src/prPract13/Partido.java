@@ -30,6 +30,8 @@ public class Partido {
 		return this.fecha.format(DateTimeFormatter.ofPattern("dd-mm-yy"));
 	}
 	
+	public LocalDate getDate() {return fecha;}
+	
 // Constructores
 	public Partido(String anfitrion, String visitante, String fecha, String resultado) {
 		this.equipos = new String[2];
