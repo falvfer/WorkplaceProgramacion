@@ -14,6 +14,9 @@ public class GUI03Swing {
 	// Crear un contenedor
 		JFrame f = new JFrame("Mi primer GUI");
 		Container cp = f.getContentPane();
+
+	// Programar el evento de cierre de ventana
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	// Seleccionar un gestor de esquemas para la inserción de los componentes
 		cp.setLayout(new BorderLayout());
@@ -57,13 +60,15 @@ public class GUI03Swing {
 		// Bloquear cambios tamaño ventana
 		f.setResizable(false);
 		
+		// Pausar el proceso
 		try {Thread.sleep(2500);} catch (InterruptedException e) {}
 		
+		// Esconder el botón Sur
 		bSur.setVisible(false);
 		
-	// Programar el evento de cierre de ventana
-	  //f.addWindowListener(new ControlVentana());
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Volver a reajustar el layout
+		f.pack();
+		
 	}
 
 }
