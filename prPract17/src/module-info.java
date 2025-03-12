@@ -4,6 +4,6 @@
 /**
  * 
  */
-module prPract16 {
+module prPract17 {
 	requires java.desktop;
 }
