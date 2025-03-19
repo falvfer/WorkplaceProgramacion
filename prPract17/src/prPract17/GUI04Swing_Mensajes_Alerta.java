@@ -2,7 +2,7 @@ package prPract17;
 
 import javax.swing.*;
 
-public class GUI04Swing {
+public class GUI04Swing_Mensajes_Alerta {
 
 	public static void main(String[] args) {
 		

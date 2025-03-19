@@ -11,7 +11,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-public class GUI01Swing {
+public class GUI01Swing_BORDES {
 
 	public static void main(String[] args) {
 		
