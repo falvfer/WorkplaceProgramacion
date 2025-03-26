@@ -1,6 +1,6 @@
 package prPractDual;
 
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -19,8 +19,8 @@ public class Gestor {
 
 // Constructor
 	public Gestor() {
-		cajas = new HashSet<>();
-		expedientes = new HashSet<>();
+		cajas = new TreeSet<>();
+		expedientes = new TreeSet<>();
 	}
 	
 // Métodos públicos
@@ -28,7 +28,7 @@ public class Gestor {
 		boolean encontrado = false;
 		Expediente exp = null;
 		
-		for (Iterator<Expediente> it = this.expedientes.iterator(); it.hasNext();) {
+		for (Iterator<Expediente> it = this.expedientes.iterator(); it.hasNext() && !encontrado;) {
 			exp = it.next();
 			if (exp.getNumExpediente() == numExpediente && exp.getAnno() == anno)
 				encontrado = true;
@@ -43,7 +43,7 @@ public class Gestor {
 		boolean encontrado = false;
 		Expediente exp = null;
 		
-		for (Iterator<Expediente> it = this.expedientes.iterator(); it.hasNext();) {
+		for (Iterator<Expediente> it = this.expedientes.iterator(); it.hasNext() && !encontrado;) {
 			exp = it.next();
 			if (exp.equals(expEncontrar))
 				encontrado = true;
@@ -58,7 +58,7 @@ public class Gestor {
 		boolean encontrado = false;
 		Caja caja = null;
 		
-		for (Iterator<Caja> it = this.cajas.iterator(); it.hasNext();) {
+		for (Iterator<Caja> it = this.cajas.iterator(); it.hasNext() && !encontrado;) {
 			caja = it.next();
 			if (caja.getNumCaja() == numCaja)
 				encontrado = true;
@@ -73,7 +73,7 @@ public class Gestor {
 		boolean encontrado = false;
 		Caja caja = null;
 		
-		for (Iterator<Caja> it = this.cajas.iterator(); it.hasNext();) {
+		for (Iterator<Caja> it = this.cajas.iterator(); it.hasNext() && !encontrado;) {
 			caja = it.next();
 			if (caja.hasExpediente(numExp, anno))
 				encontrado = true;
@@ -147,7 +147,7 @@ public class Gestor {
 	public boolean addExpediente(Expediente exp, int numCaja) {
 		Caja destino = this.findCaja(numCaja);
 		
-		if (destino instanceof Caja && this.hasExpediente(exp) && destino.addExpediente(exp)) {
+		if (destino instanceof Caja && !this.hasExpediente(exp) && destino.addExpediente(exp)) {
 			this.expedientes.add(exp);
 			exp.setNumCaja(destino.getNumCaja());
 			return true;
@@ -162,5 +162,20 @@ public class Gestor {
 			this.findCaja(exp.getNumCaja()).quitaExpediente(exp);
 		}
 		return exp;
+	}
+	
+	// toString
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		for (Iterator<Caja> it = this.cajas.iterator(); it.hasNext();) {
+			Caja caj = it.next();
+			str.append(caj.getClass().getSimpleName() + " Nº" + caj.getNumCaja() + "\n");
+		}
+		for (Iterator<Expediente> it = this.expedientes.iterator(); it.hasNext();) {
+			Expediente exp = it.next();
+			str.append("Exp: " + exp.getNumExpediente() + "/" + exp.getAnno() + ", C: " + exp.getNumCaja() + "\n");
+		}
+		return str.toString();
 	}
 }

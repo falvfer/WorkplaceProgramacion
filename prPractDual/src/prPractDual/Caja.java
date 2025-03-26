@@ -1,11 +1,11 @@
 package prPractDual;
 
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
-public class Caja {
+public class Caja implements Comparable<Caja>{
 
 // Listas
 	private int numCaja;
@@ -20,7 +20,7 @@ public class Caja {
 // Constructor
 	public Caja(int numCaja) {
 		this.numCaja = numCaja;
-		this.expedientes = new HashSet<>();
+		this.expedientes = new TreeSet<>();
 	}
 	
 	public Caja() {
@@ -82,5 +82,10 @@ public class Caja {
 			return false;
 		Caja other = (Caja) obj;
 		return numCaja == other.numCaja;
+	}
+	
+	@Override
+	public int compareTo(Caja o) {
+		return Integer.compare(this.numCaja, o.numCaja);
 	}
 }

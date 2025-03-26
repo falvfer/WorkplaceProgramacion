@@ -33,6 +33,7 @@ public class NotionGenerator {
 // MAIN
 	public static void main(String[] args) {
 		// Preguntar por la fecha inicial
+		Locale.setDefault(Locale.ENGLISH);
 		System.out.print("Say the starting date with a format like this \"31/01/2025\": ");
 		String userDate = sc.nextLine();
 		if (LibreriaFechasJavaTime.isFechaCorrecta(userDate)) {

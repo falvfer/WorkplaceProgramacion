@@ -2,7 +2,7 @@ package prPractDual;
 
 import java.util.Objects;
 
-public class Expediente {
+public class Expediente implements Comparable<Expediente>{
 	
 // Variables
 	private short numExpediente, anno;
@@ -56,6 +56,13 @@ public class Expediente {
 			return false;
 		Expediente other = (Expediente) obj;
 		return anno == other.anno && numExpediente == other.numExpediente;
+	}
+	@Override
+	public int compareTo(Expediente o) {
+		int comparacion = Short.compare(this.anno, o.anno);
+		if (comparacion == 0)
+			comparacion = Short.compare(this.numExpediente, o.numExpediente);
+		return comparacion;
 	}
 	
 	

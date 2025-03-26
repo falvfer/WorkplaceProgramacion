@@ -5,7 +5,7 @@ public enum SubseccionExpediente {
 	AYUNTAMIENTO("Consejo / Ayuntamiento"),
 	ALCALDE("Alcalde"),
 	COMISIONES_GOBIERNO("Comisiones de Gobierno"),
-	COMISIONES_INFORMATIVAS("Comisiones informativas y Especiales"),
+	COMISIONES_INFORMATIVAS("Comisiones inform. y esp."),
 	
 	// ADMINISTRACION
 	SECRETARIA("Secretaría"),
@@ -18,12 +18,12 @@ public enum SubseccionExpediente {
 	
 	// SERVICIOS
 	OBRAS("Obras y Urbanismo"),
-	PROMOCION_ECONOMICA("Serv. Agrop. e Ind. / Prom. Económica"),
+	PROMOCION_ECONOMICA("Promoción Económica"),
 	ABASTOS("Abastos y Consumo"),
 	TRANSPORTES("Transportes"),
 	SEGURIDAD_CIUDADANA("Seguridad Ciudadana"),
 	SANIDAD("Sanidad"),
-	BENEFICENCIA("Beneficiencia y Asistencia Social"),
+	BENEFICENCIA("Benef. y Asistencia Social"),
 	EDUCACION("Educación"),
 	CULTURA("Cultura"),
 	DEPORTES("Deporte"),

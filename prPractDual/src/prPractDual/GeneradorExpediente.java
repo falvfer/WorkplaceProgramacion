@@ -18,7 +18,8 @@ public class GeneradorExpediente {
 	}
 	
 	public Expediente next(short numExpediente, short anno) {
-		return new Expediente(0, numExpediente, anno, genSeccion(), genSubseccion(),
+		SeccionExpediente seccion = genSeccion();
+		return new Expediente(0, numExpediente, anno, seccion, genSubseccion(seccion),
 								genDescripcion(numExpediente, anno), genNombres());
 	}
 	
@@ -26,8 +27,8 @@ public class GeneradorExpediente {
 		return SeccionExpediente.values()[rdn.nextInt(0,SeccionExpediente.values().length-1)];
 	}
 	
-	private SubseccionExpediente genSubseccion() {
-		return SubseccionExpediente.values()[rdn.nextInt(0,SubseccionExpediente.values().length-1)];
+	private SubseccionExpediente genSubseccion(SeccionExpediente seccion) {
+		return SubseccionExpediente.values()[rdn.nextInt(seccion.getIniSub(),seccion.getFinSub())];
 	}
 
 	private String genDescripcion(short numExpediente, short anno) {
@@ -39,7 +40,7 @@ public class GeneradorExpediente {
 				+ " " + apellidos[rdn.nextInt(0,apellidos.length-1)]
 				+ " " + apellidos[rdn.nextInt(0,apellidos.length-1)];
 		while (rdn.nextBoolean()) {
-			str += " " + nombres[rdn.nextInt(0,nombres.length-1)]
+			str += ", " + nombres[rdn.nextInt(0,nombres.length-1)]
 					+ " " + apellidos[rdn.nextInt(0,apellidos.length-1)]
 					+ " " + apellidos[rdn.nextInt(0,apellidos.length-1)];
 		};
