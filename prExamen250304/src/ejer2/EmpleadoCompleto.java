@@ -10,7 +10,7 @@ public class EmpleadoCompleto extends Empleado {
 	private int numTrienios;
 	private Set<EnumPlus> pluses; // Dando por echo que cada plus solo se puede tener una única vez
 	
-	private final static int EXTRATRIENIO = 100;
+	private final static int EXTRA_TRIENIO = 100;
 	
 // Getters y Setters
 	public int getNumTrienios() {return numTrienios;}
@@ -39,7 +39,7 @@ public class EmpleadoCompleto extends Empleado {
 // Métodos públicos
 	@Override
 	public double getSalarioBruto() {
-		double salario = super.getSalarioBruto() + EXTRATRIENIO * this.numTrienios;
+		double salario = super.getSalarioBruto() + EXTRA_TRIENIO * this.numTrienios;
 		
 		for (EnumPlus plus: pluses)
 			salario += plus.getImporte();

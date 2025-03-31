@@ -39,7 +39,6 @@ public class Test {
 		empresa.convertirEmpleadoACompleto(empleados[0]);
 		System.out.println(empresa.toString() + "\n");
 		
-		
 		empresa.convertirTodosEmpleadosACompletos();
 		System.out.println(empresa + "\n");
 		

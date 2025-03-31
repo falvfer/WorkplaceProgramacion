@@ -101,7 +101,7 @@ public class Ventas {
 		int y = 0;
 		
 		for (int i = 0; i < this.nombreJuegos.length && !salir; i++) {
-			if (this.nombreJuegos[i] == juego) {
+			if (this.nombreJuegos[i].equals(juego)) {
 				y = i;
 				salir = true;
 			}

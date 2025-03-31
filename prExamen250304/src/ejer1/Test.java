@@ -17,7 +17,7 @@ public class Test {
 		System.out.println(v.toStringVentasPlataforma() + "\n");
 		
 		System.out.println("Ventas de \"Dragon Ball\" en \"XBOX\": " + v.getVentas("Dragon Ball", "XBOX"));
-		System.out.println("Ventas de \"Dragon Ball\" en \"XBOX\": " + v.getVentas("Dragon Ball", Plataforma.XBOX));
+		System.out.println("Ventas de \"Dragon Ball\" en \"Plataforma.XBOX\": " + v.getVentas("Dragon Ball", Plataforma.XBOX));
 		System.out.println("Ventas de \"sgon Ball\" en \"XBOX\": " + v.getVentas("sgon Ball", "XBOX"));
 		System.out.println("Ventas de \"Dragon Ball\" en \"SBOX\": " + v.getVentas("Dragon Ball", "SBOX"));
 		System.out.println("Ventas de \"sgon Ball\" en \"SBOX\": " + v.getVentas("sgon Ball", "SBOX") + "\n");
