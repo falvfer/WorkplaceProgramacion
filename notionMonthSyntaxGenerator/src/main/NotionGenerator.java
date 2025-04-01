@@ -15,7 +15,7 @@ public class NotionGenerator {
 // Métodos
 	public static String day() {
 		String str = "### L" + startingDate.format(DateTimeFormatter.ofPattern("yyMMdd - EEEE"))
-		 + "\n\nlll\n\n" + "---";
+		 + "\n\nlll";
 		
 		startingDate = startingDate.plusDays(1);
 		
@@ -23,7 +23,7 @@ public class NotionGenerator {
 	}
 	
 	public static String week() {
-		return "## Week " + startingDate.format(DateTimeFormatter.ofPattern("w"));
+		return "---\n\n## Week " + startingDate.format(DateTimeFormatter.ofPattern("w"));
 	}
 	
 	public static String month() {
