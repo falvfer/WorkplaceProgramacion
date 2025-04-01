@@ -31,6 +31,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class Ejer2 extends JFrame {
 
@@ -60,23 +62,29 @@ public class Ejer2 extends JFrame {
 	}
 	
 	private JPanel crearPanelExtras() {
+		ContrCheckBox ccb = new ContrCheckBox();
 		JPanel p = new JPanel(new GridLayout(5,1));
 			p.setBorder(new TitledBorder("Elija extras"));
 			
 			chDiesel = new JCheckBox("Diesel", true);
+				chDiesel.addActionListener(ccb);
 				p.add(chDiesel);
 				
 			chAsientos = new JCheckBox("Asientos deportivos", true);
+				chAsientos.addActionListener(ccb);
 				p.add(chAsientos);
 				
 			chTapiceria = new JCheckBox("Tapicería de cuero", true);
+				chTapiceria.addActionListener(ccb);
 				chTapiceria.setEnabled(false);
 				p.add(chTapiceria);
 				
 			chLlantas = new JCheckBox("Llantas de aleación", false);
+				chLlantas.addActionListener(ccb);
 				p.add(chLlantas);
 				
 			chPintura = new JCheckBox("Pintura metalizada", true);
+				chPintura.addActionListener(ccb);
 				p.add(chPintura);
 			
 		return p;
@@ -109,11 +117,12 @@ public class Ejer2 extends JFrame {
 	
 	private JPanel crearPanelAcciones() {
 		JPanel p = new JPanel();
-			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 			p.setBorder(new TitledBorder("Elija acciones realizadas"));
 		
-			etiqueta.setForeground(Color.BLUE);
-		
+			etiqueta = new JLabel("Información");
+				etiqueta.setForeground(Color.BLUE);
+				etiqueta.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
+				p.add(etiqueta);
 		
 		return p;
 	}
@@ -127,12 +136,48 @@ public class Ejer2 extends JFrame {
 		v.setLocationRelativeTo(null);
 	}
 	
-	class ControladorLanzar implements ActionListener {
-
+	class ContrListas implements ListSelectionListener {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void valueChanged(ListSelectionEvent e) {
+			
+			if (e.getSource() instanceof JComboBox) {
+				
+			} else if (e.getSource() instanceof JList) {
+				
+			}
 			
 		}
-		
+	}
+	
+	class ContrCheckBox implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			etiqueta.setText(((JCheckBox)e.getSource()).getText());
+			if (e.getSource() == chAsientos) {
+				if (chAsientos.isSelected()) {
+					chTapiceria.setSelected(true);
+					chTapiceria.setEnabled(false);
+				} else {
+					chTapiceria.setEnabled(true);
+				}
+			}
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
