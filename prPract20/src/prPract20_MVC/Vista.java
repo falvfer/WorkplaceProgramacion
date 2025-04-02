@@ -1,11 +1,9 @@
-package prPract20;
+package prPract20_MVC;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -13,19 +11,16 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-public class Ejer2 extends JFrame {
-
-	private static final long serialVersionUID = -8024875578355712431L;
+public class Vista extends JPanel {
+	
+	private static final long serialVersionUID = 88259363022917391L;
 	
 	private JCheckBox chDiesel, chAsientos, chTapiceria, chLlantas, chPintura;
 	private JComboBox<String> cbRadios;
@@ -35,15 +30,13 @@ public class Ejer2 extends JFrame {
 	
 	private Map<String,Color> mapaColores;
 	
-	public Ejer2() {
-		// Contenedor y Frame principal
-		this.setTitle("Prueba de eventos");
+	public Vista() {
 		
 		JPanel principal = new JPanel();
 		 	principal.setLayout(new BoxLayout(principal, BoxLayout.Y_AXIS));
 		 	principal.setPreferredSize(new Dimension(300, 350));
 			principal.setBorder(new EmptyBorder(15, 15, 15, 15));
-			this.getContentPane().add(principal);
+			this.add(principal);
 
 		iniciarColores();
 		
@@ -66,29 +59,23 @@ public class Ejer2 extends JFrame {
 	}
 	
 	private JPanel crearPanelExtras() {
-		ContrItem ccb = new ContrItem();
 		JPanel p = new JPanel(new GridLayout(5,1));
 			p.setBorder(new TitledBorder("Elija extras"));
 			
 			chDiesel = new JCheckBox("Diesel", true);
-				chDiesel.addItemListener(ccb);
 				p.add(chDiesel);
 				
 			chAsientos = new JCheckBox("Asientos deportivos", true);
-				chAsientos.addItemListener(ccb);
 				p.add(chAsientos);
 				
 			chTapiceria = new JCheckBox("Tapicería de cuero", true);
-				chTapiceria.addItemListener(ccb);
 				chTapiceria.setEnabled(false);
 				p.add(chTapiceria);
 				
 			chLlantas = new JCheckBox("Llantas de aleación", false);
-				chLlantas.addItemListener(ccb);
 				p.add(chLlantas);
 				
 			chPintura = new JCheckBox("Pintura metalizada", true);
-				chPintura.addItemListener(ccb);
 				p.add(chPintura);
 			
 		return p;
@@ -100,7 +87,6 @@ public class Ejer2 extends JFrame {
 				String[] arrRadios = {"Tres radios", "Cinco radios", "Siete radios", "Nueve radios"};
 			cbRadios = new JComboBox<>(arrRadios);
 				cbRadios.setEnabled(false);
-				cbRadios.addItemListener(new ContrItem());
 				p.add(cbRadios);
 		
 		return p;
@@ -112,7 +98,6 @@ public class Ejer2 extends JFrame {
 			p.setBorder(new TitledBorder("Elija color"));
 			
 			listaColores = new JList<>(new Vector<String>(mapaColores.keySet()));
-				listaColores.addListSelectionListener(new ContrLista());
 			
 			spLista = new JScrollPane(listaColores);
 				spLista.setPreferredSize(new Dimension(80, 40));
@@ -133,78 +118,26 @@ public class Ejer2 extends JFrame {
 		return p;
 	}
 	
-	
-	public static void main(String[] args) {
-		Ejer2 v = new Ejer2();
-		v.pack();
-		v.setVisible(true);
-		v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		v.setLocationRelativeTo(null);
-	}
-	
-	class ContrLista implements ListSelectionListener {
-		@Override
-		public void valueChanged(ListSelectionEvent e) {
-			String strColor = listaColores.getSelectedValue();
-			etiqueta.setText("Color pintura: " + strColor);
-			etiqueta.setForeground(mapaColores.get(strColor));
-		}
-	}
-	
-	class ContrItem implements ItemListener {
-		@Override
+	public void control(Controlador ctr) {
+		chDiesel.addItemListener(ctr);
+		chAsientos.addItemListener(ctr);
+		chTapiceria.addItemListener(ctr);
+		chLlantas.addItemListener(ctr);
+		chPintura.addItemListener(ctr);
 		
-		public void itemStateChanged(ItemEvent e) {
-			Object source = e.getSource();
-			
-			if (source == cbRadios) {
-				etiqueta.setText("Número de radios: " + cbRadios.getSelectedItem());
-				return;
-			}
-
-			etiqueta.setText(((JCheckBox)source).getText());
-			
-			if (source == chAsientos) {
-				if (chAsientos.isSelected()) {
-					chTapiceria.setSelected(true);
-					chTapiceria.setEnabled(false);
-				} else
-					chTapiceria.setSelected(false);
-				return;
-			}
-				
-			if (source == chLlantas) {
-				cbRadios.setEnabled(chLlantas.isSelected());
-				return;
-			}
-			
-			if (source == chPintura) {
-				listaColores.setEnabled(chPintura.isSelected());
-				return;
-			}
-			
-		}
+		cbRadios.addItemListener(ctr);
+		
+		listaColores.addListSelectionListener(ctr);
 	}
-	
-	
-	
-	
-	
+
+	public JCheckBox getChDiesel() {return chDiesel;}
+	public JCheckBox getChAsientos() {return chAsientos;}
+	public JCheckBox getChTapiceria() {return chTapiceria;}
+	public JCheckBox getChLlantas() {return chLlantas;}
+	public JCheckBox getChPintura() {return chPintura;}
+	public JComboBox<String> getCbRadios() {return cbRadios;}
+	public JList<String> getListaColores() {return listaColores;}
+	public JScrollPane getSpLista() {return spLista;}
+	public JLabel getEtiqueta() {return etiqueta;}
+	public Map<String, Color> getMapaColores() {return mapaColores;}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
