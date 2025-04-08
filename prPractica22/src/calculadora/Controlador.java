@@ -1,4 +1,4 @@
-package Calculadora;
+package calculadora;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

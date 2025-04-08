@@ -1,4 +1,4 @@
-package Calculadora;
+package calculadora;
 /**
  * Clase propia de control de excepciones
  * @author profesor
