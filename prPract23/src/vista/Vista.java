@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import controlador.Controlador;
 import modelo.TipoPropiedad;
 import modelo.TipoTerreno;
 import modelo.TipoVivienda;
@@ -40,8 +41,9 @@ public class Vista extends JPanel {
 	private JComboBox<TipoTerreno> cbTerrenos;
 	private JRadioButton[] rbElectricidad, rbAgua, rbVivienda;
 	private JButton bGuardar, bBorrar, bLimpiar;
+	private JPanel panelVivienda, panelFinca;
 	
-// Getters
+	// Getters
 	public JTextField getTfCodigo() {return tfCodigo;}
 	public JTextField getTfPrecio() {return tfPrecio;}
 	public JTextField getTfSuperficie() {return tfSuperficie;}
@@ -58,6 +60,8 @@ public class Vista extends JPanel {
 	public JButton getbGuardar() {return bGuardar;}
 	public JButton getbBorrar() {return bBorrar;}
 	public JButton getbLimpiar() {return bLimpiar;}
+	public JPanel getPanelVivienda() {return panelVivienda;}
+	public JPanel getPanelFinca() {return panelFinca;}
 	
 // Constructor
 	public Vista() {
@@ -76,7 +80,6 @@ public class Vista extends JPanel {
 		// Panel principal
 		JPanel principal = new JPanel();
 		principal.setLayout(new BoxLayout(principal, BoxLayout.Y_AXIS));
-		principal.setPreferredSize(new Dimension(613, 175));
 		estableceBorde(principal, "Datos generales");
 		
 			// Primera parte
@@ -127,15 +130,14 @@ public class Vista extends JPanel {
 	
 	private JPanel crearEspecificosVivienda() {
 		// Panel principal
-		JPanel principal = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		principal.setPreferredSize(new Dimension(613, 70));
-		estableceBorde(principal, "Datos específicos para vivienda");
+		panelVivienda = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		estableceBorde(panelVivienda, "Datos específicos para vivienda");
 		
 		// Crear las agrupaciones y añadirlas al panel principal
 		JPanel[] grupos = new JPanel[3];
 		for (int i = 0; i < grupos.length; i++) {
 			grupos[i] = new JPanel();
-			principal.add(grupos[i]);
+			panelVivienda.add(grupos[i]);
 		}
 		
 		// Cargar en memoria los elementos
@@ -152,40 +154,42 @@ public class Vista extends JPanel {
 		grupos[2].add(new JLabel("Número baños:"));
 		grupos[2].add(cbBaños);
 		
-		return principal;
+		return panelVivienda;
 	}
 	
 	private JPanel crearEspecificosFinca() {
 		// Panel principal
-		JPanel principal = new JPanel();
-		principal.setLayout(new BoxLayout(principal, BoxLayout.Y_AXIS));
-		estableceBorde(principal, "Datos específicos para fincas rústicas");
+		panelFinca = new JPanel();
+		panelFinca.setLayout(new BoxLayout(panelFinca, BoxLayout.Y_AXIS));
+		estableceBorde(panelFinca, "Datos específicos para fincas rústicas");
 
 		// Crear las agrupaciones y añadirlas al panel principal
 		JPanel[] grupos = new JPanel[4];
 		for (int i = 0; i < grupos.length; i++) {
 			grupos[i] = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			principal.add(grupos[i]);
+			panelFinca.add(grupos[i]);
 		}
 		
 		// Cargar en memoria los elementos
 		cbTerrenos = new JComboBox<TipoTerreno>(TipoTerreno.values());
 		rbElectricidad = new JRadioButton[2];
 		rbElectricidad[0] = new JRadioButton("Sí");
+			rbElectricidad[0].setSelected(true);
 		rbElectricidad[1] = new JRadioButton("No");
 		rbAgua = new JRadioButton[2];
 		rbAgua[0] = new JRadioButton("Sí");
+			rbAgua[0].setSelected(true);
 		rbAgua[1] = new JRadioButton("No");
 		rbVivienda = new JRadioButton[2];
 		rbVivienda[0] = new JRadioButton("Sí");
+			rbVivienda[0].setSelected(true);
 		rbVivienda[1] = new JRadioButton("No");
 		
 		// Agrupar los botones
 		ButtonGroup[] gruposBotones = {
 				new ButtonGroup(),
 				new ButtonGroup(),
-				new ButtonGroup()
-		};
+				new ButtonGroup()};
 		gruposBotones[0].add(rbElectricidad[0]);
 		gruposBotones[0].add(rbElectricidad[1]);
 		gruposBotones[1].add(rbAgua[0]);
@@ -206,16 +210,23 @@ public class Vista extends JPanel {
 		grupos[3].add(rbVivienda[0]);
 		grupos[3].add(rbVivienda[1]);
 		
-		return principal;
+		return panelFinca;
 	}
 	
 	private JPanel crearOperaciones() {
 		// Panel principal
 		JPanel principal = new JPanel();
-		principal.setLayout(new BoxLayout(principal, BoxLayout.Y_AXIS));
 		estableceBorde(principal, "Operaciones disponibles");
-
 		
+		// Cargar en memoria los botones
+		bGuardar = new JButton("Guardar propiedad");
+		bBorrar = new JButton("Borrar propiedad");
+		bLimpiar = new JButton("Limpiar formulario");
+		
+		// Añadirlos al panel
+		principal.add(bGuardar);
+		principal.add(bBorrar);
+		principal.add(bLimpiar);
 		
 		return principal;
 	}
@@ -224,5 +235,13 @@ public class Vista extends JPanel {
 		p.setBorder(new CompoundBorder(
 				new EmptyBorder(5,5,5,5),
 				new TitledBorder(new LineBorder(Color.black), titulo)));
+	}
+	
+	public void control(Controlador ctrl) {
+		bGuardar.addActionListener(ctrl);
+		bBorrar.addActionListener(ctrl);
+		bLimpiar.addActionListener(ctrl);
+		
+		cbPropiedades.addItemListener(ctrl);
 	}
 }
