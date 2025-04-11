@@ -1,20 +1,15 @@
 package vista;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.concurrent.Flow;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -62,6 +57,24 @@ public class Vista extends JPanel {
 	public JButton getbLimpiar() {return bLimpiar;}
 	public JPanel getPanelVivienda() {return panelVivienda;}
 	public JPanel getPanelFinca() {return panelFinca;}
+	
+	public void limpiaInterfaz() {
+		tfCodigo.setText("");
+		tfPrecio.setText("");
+		tfSuperficie.setText("");
+		tfDireccion.setText("");
+		taDescripcion.setText("");
+		cbPropiedades.setSelectedItem(TipoPropiedad.FINCA);
+		cbViviendas.setSelectedIndex(0);
+		cbDormitorios.setSelectedIndex(0);
+		cbBaños.setSelectedIndex(0);
+		cbTerrenos.setSelectedIndex(0);
+		rbElectricidad[0].setSelected(true);
+		rbAgua[0].setSelected(true);
+		rbVivienda[0].setSelected(true);
+		bBorrar.setEnabled(false);
+		bGuardar.setEnabled(true);
+	}
 	
 // Constructor
 	public Vista() {
@@ -221,6 +234,7 @@ public class Vista extends JPanel {
 		// Cargar en memoria los botones
 		bGuardar = new JButton("Guardar propiedad");
 		bBorrar = new JButton("Borrar propiedad");
+			bBorrar.setEnabled(false);
 		bLimpiar = new JButton("Limpiar formulario");
 		
 		// Añadirlos al panel
@@ -243,5 +257,9 @@ public class Vista extends JPanel {
 		bLimpiar.addActionListener(ctrl);
 		
 		cbPropiedades.addItemListener(ctrl);
+		
+		tfCodigo.addFocusListener(ctrl);
+		tfPrecio.addFocusListener(ctrl);
+		tfSuperficie.addFocusListener(ctrl);
 	}
 }
