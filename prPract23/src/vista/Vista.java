@@ -261,5 +261,9 @@ public class Vista extends JPanel {
 		tfCodigo.addFocusListener(ctrl);
 		tfPrecio.addFocusListener(ctrl);
 		tfSuperficie.addFocusListener(ctrl);
+		
+		tfCodigo.addKeyListener(ctrl);
+		tfPrecio.addKeyListener(ctrl);
+		tfSuperficie.addKeyListener(ctrl);
 	}
 }

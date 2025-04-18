@@ -9,11 +9,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import modelo.FincaRustica;
 import modelo.Inmobiliaria;
@@ -24,7 +27,7 @@ import modelo.TipoVivienda;
 import modelo.Vivienda;
 
 public class Controlador implements ItemListener, ActionListener,
-									FocusListener {
+									FocusListener, KeyListener {
 
 	private Vista miVista;
 	private Inmobiliaria miInmobiliaria;
@@ -60,10 +63,12 @@ public class Controlador implements ItemListener, ActionListener,
 	}
 	
 	public void guardarPropiedad() {
+		int codigo = Integer.parseInt(miVista.getTfCodigo().getText());
+		
 		switch (miVista.getCbPropiedades().getSelectedItem()) {
 		case TipoPropiedad.VIVIENDA -> {
 			miInmobiliaria.añade(new Vivienda(
-					Integer.parseInt(miVista.getTfCodigo().getText()),
+					codigo,
 					miVista.getTfDireccion().getText(),
 					miVista.getTaDescripcion().getText(),
 					Integer.parseInt(miVista.getTfSuperficie().getText()),
@@ -74,7 +79,7 @@ public class Controlador implements ItemListener, ActionListener,
 		}
 		case TipoPropiedad.FINCA -> {
 			miInmobiliaria.añade(new FincaRustica(
-					Integer.parseInt(miVista.getTfCodigo().getText()),
+					codigo,
 					miVista.getTfDireccion().getText(),
 					miVista.getTaDescripcion().getText(),
 					Integer.parseInt(miVista.getTfSuperficie().getText()),
@@ -86,7 +91,7 @@ public class Controlador implements ItemListener, ActionListener,
 		}
 		default -> {
 			miInmobiliaria.añade(new Propiedad(
-					Integer.parseInt(miVista.getTfCodigo().getText()),
+					codigo,
 					miVista.getTfDireccion().getText(),
 					miVista.getTaDescripcion().getText(),
 					(TipoPropiedad)miVista.getCbPropiedades().getSelectedItem(),
@@ -94,6 +99,9 @@ public class Controlador implements ItemListener, ActionListener,
 					Double.parseDouble(miVista.getTfPrecio().getText())));
 		}
 		}
+		
+		JOptionPane.showMessageDialog(miVista, "Se han almacenado los siguientes datos:\n\t"
+				+ miInmobiliaria.buscar(codigo).toString());
 	}
 
 	@Override
@@ -136,33 +144,22 @@ public class Controlador implements ItemListener, ActionListener,
 
 	@Override
 	public void focusLost(FocusEvent e) {
-		Component src = e.getComponent();
+		JTextField src = (JTextField)e.getComponent();
+		
+		if (src.getText().equals("")) return;
 		
 		if (src == miVista.getTfCodigo()) {
-			try {
-				int cod = Integer.parseInt(miVista.getTfCodigo().getText());
-				Propiedad p = miInmobiliaria.buscar(cod);
-				if (p instanceof Propiedad) {
-					int respuesta = JOptionPane.showConfirmDialog(miVista, "Este código ya existe, desea ver la propiedad correspondiente?");
-					if (respuesta == JOptionPane.OK_OPTION);
-						mostrarPropiedad(p);
-				}
-			} catch (Exception e1) {
-				
-			}
-			
-			
-			
-			
+			checkCodigo();
 			return;
 		}
 		
-		if (src == miVista.getTfSuperficie()) {
-			// TODO Terminar de implementar un check para int
-			
+		if (src == miVista.getTfPrecio()) {
+			checkPrecio();
 			return;
 		}
-		// TODO Terminar de implementar un check para int para miVista.getTfPrecio()
+		
+		if (src == miVista.getTfSuperficie())
+			checkSuperficie();
 			
 	}
 	
@@ -195,6 +192,68 @@ public class Controlador implements ItemListener, ActionListener,
 			miVista.getRbElectricidad()[f.isLuz()?0:1].setSelected(true);
 			miVista.getRbAgua()[f.isAgua()?0:1].setSelected(true);
 			miVista.getRbVivienda()[f.isVivienda()?0:1].setSelected(true);
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		JTextField src = (JTextField)e.getComponent();
+		if (src.getText().equals("")) return;
+		
+		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+			if (src==miVista.getTfCodigo()) {
+				checkCodigo();
+				return;
+			}
+			if (src==miVista.getTfPrecio()) {
+				checkPrecio();
+				return;
+			}
+			if (src==miVista.getTfSuperficie()) {
+				checkSuperficie();
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {}
+	
+	private void checkCodigo() {
+		JTextField tfCheck = miVista.getTfCodigo();
+		try {
+			int cod = Integer.parseInt(tfCheck.getText());
+			Propiedad p = miInmobiliaria.buscar(cod);
+			if (p instanceof Propiedad) {
+				int respuesta = JOptionPane.showConfirmDialog(miVista, "Este código ya existe, desea ver la propiedad correspondiente?");
+				if (respuesta == JOptionPane.OK_OPTION);
+					mostrarPropiedad(p);
+			}
+		} catch (Exception e1) {
+			tfCheck.setText("");
+			JOptionPane.showMessageDialog(miVista, "Formato del código incorrecto: Solo se pueden introducir números.");
+		}
+	}
+	
+	private void checkPrecio() {
+		JTextField tfCheck = miVista.getTfPrecio();
+		try {
+			Integer.parseInt(tfCheck.getText());
+		} catch (Exception e1) {
+			tfCheck.setText("");
+			JOptionPane.showMessageDialog(miVista, "Formato del precio incorrecto: Solo se pueden introducir números.");
+		}
+	}
+	
+	private void checkSuperficie() {
+		JTextField tfCheck = miVista.getTfSuperficie();
+		try {
+			Integer.parseInt(tfCheck.getText());
+		} catch (Exception e1) {
+			tfCheck.setText("");
+			JOptionPane.showMessageDialog(miVista, "Formato de la superficie incorrecto: Solo se pueden introducir números.");
 		}
 	}
 }
