@@ -23,7 +23,6 @@ public class Test {
 		ventana.setContentPane(miVista);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.pack();
-		ventana.setSize(700,550);
 		ventana.setVisible(true);
 		miVista.getCbPropiedades().setSelectedItem(TipoPropiedad.FINCA);
 	}

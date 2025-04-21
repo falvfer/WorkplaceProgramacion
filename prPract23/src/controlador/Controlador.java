@@ -228,8 +228,10 @@ public class Controlador implements ItemListener, ActionListener,
 			Propiedad p = miInmobiliaria.buscar(cod);
 			if (p instanceof Propiedad) {
 				int respuesta = JOptionPane.showConfirmDialog(miVista, "Este código ya existe, desea ver la propiedad correspondiente?");
-				if (respuesta == JOptionPane.OK_OPTION);
+				if (respuesta == JOptionPane.OK_OPTION)
 					mostrarPropiedad(p);
+				else
+					tfCheck.setText("");
 			}
 		} catch (Exception e1) {
 			tfCheck.setText("");
@@ -240,7 +242,7 @@ public class Controlador implements ItemListener, ActionListener,
 	private void checkPrecio() {
 		JTextField tfCheck = miVista.getTfPrecio();
 		try {
-			Integer.parseInt(tfCheck.getText());
+			Double.parseDouble(tfCheck.getText());
 		} catch (Exception e1) {
 			tfCheck.setText("");
 			JOptionPane.showMessageDialog(miVista, "Formato del precio incorrecto: Solo se pueden introducir números.");
@@ -250,7 +252,7 @@ public class Controlador implements ItemListener, ActionListener,
 	private void checkSuperficie() {
 		JTextField tfCheck = miVista.getTfSuperficie();
 		try {
-			Integer.parseInt(tfCheck.getText());
+			Double.parseDouble(tfCheck.getText());
 		} catch (Exception e1) {
 			tfCheck.setText("");
 			JOptionPane.showMessageDialog(miVista, "Formato de la superficie incorrecto: Solo se pueden introducir números.");
