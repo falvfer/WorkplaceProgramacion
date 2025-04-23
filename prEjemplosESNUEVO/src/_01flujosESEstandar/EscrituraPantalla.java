@@ -23,7 +23,7 @@ public class EscrituraPantalla {
 		pantalla.write(str);
 		pantalla.print(" ");
 		pantalla.write(array);
-		pantalla.println("");
+		pantalla.println();
 		pantalla.flush();  // Limpiar el buffer de salida
 		   // Probar a anular esta sentencia, en ese caso la información se quedará en
 		   // el buffer, y no la mostrará, excepto si se cierra el flujo de salida, en

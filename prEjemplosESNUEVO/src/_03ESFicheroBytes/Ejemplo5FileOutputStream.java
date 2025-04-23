@@ -27,7 +27,7 @@ public class Ejemplo5FileOutputStream {
 		
 		try {
 			fOut = new FileOutputStream("./src/_03ESFicheroBytes/numeros.dat");
-			for(int i = 0; i < 100; i++) {
+			for(int i = 0; i < 1000; i++) {
 				fOut.write(i);
 			}	
 			System.out.println("Fichero creado");
