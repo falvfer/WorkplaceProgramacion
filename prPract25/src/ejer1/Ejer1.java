@@ -1,5 +1,12 @@
 package ejer1;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+
 /**
  * Desarrollar un programa que os permita escribir bytes en un fichero
  * con la ayuda de un objeto BufferedOutputstream, realizaremos una única
@@ -12,10 +19,23 @@ package ejer1;
  */
 public class Ejer1 {
 
-	
-	
-	
-	
-	
+	public static void main(String[] args) {
+		
+		byte[] buffer = new byte[1024*32];
+		Arrays.fill(buffer, (byte)1);
+
+		try (BufferedOutputStream flujoEscritura = new BufferedOutputStream(
+													new FileOutputStream(
+														new File("src/ejer1/buffered.dat")))) {
+			
+			flujoEscritura.write(buffer);
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Error: El archivo no se ha podido encontrar.");
+		} catch (IOException e) {
+			System.out.println("Error: Problema al escribir en el archivo");
+		}
+		
+	}
 	
 }
