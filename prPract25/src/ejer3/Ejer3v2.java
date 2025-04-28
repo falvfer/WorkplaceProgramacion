@@ -16,11 +16,8 @@ public class Ejer3v2 {
 		
 		String inicioQuijote = "En un lugar de la Mancha, de cuyo nombre no quiero acordarme...";
 		
-		StandardOpenOption opcion = Files.exists(Path.of("src/ejer3/introquijote.txt"))?
-										StandardOpenOption.APPEND:
-										StandardOpenOption.CREATE;
-		
-		try (BufferedWriter bw = Files.newBufferedWriter(Path.of("src/ejer3/introquijote.txt"),opcion)) {
+		try (BufferedWriter bw = Files.newBufferedWriter(Path.of("src/ejer3/introquijote.txt"),
+				StandardOpenOption.APPEND, StandardOpenOption.CREATE)) {
 			
 			bw.write(inicioQuijote+'\n');
 			
