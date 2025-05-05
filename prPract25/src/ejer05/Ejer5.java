@@ -1,4 +1,4 @@
-package ejer5;
+package ejer05;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

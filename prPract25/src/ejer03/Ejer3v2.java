@@ -1,4 +1,4 @@
-package ejer3;
+package ejer03;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

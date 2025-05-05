@@ -1,4 +1,4 @@
-package ejer4;
+package ejer04;
 
 import java.io.FileWriter;
 import java.io.IOException;

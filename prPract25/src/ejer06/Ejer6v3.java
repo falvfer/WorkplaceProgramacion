@@ -1,4 +1,4 @@
-package ejer6;
+package ejer06;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

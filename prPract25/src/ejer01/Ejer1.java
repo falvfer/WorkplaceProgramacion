@@ -1,4 +1,4 @@
-package ejer1;
+package ejer01;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

@@ -38,7 +38,8 @@ public class EjemploFichero3 {
 		
 		
 		System.out.println("---- Segunda forma de hacerlo ----");  
-		try (Scanner sc = (new Scanner(new File("./src/_09Scanner/datos1.txt"))).useDelimiter(",")){
+		try (Scanner sc = (new Scanner(
+				new File("./src/_09Scanner/datos1.txt"))).useDelimiter(",")){
 				
 			while (sc.hasNext()) { // Mientras queden frases separadas por coma
 				

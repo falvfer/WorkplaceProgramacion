@@ -1,4 +1,4 @@
-package ejer0;
+package ejer00;
 
 import java.io.BufferedWriter;
 import java.io.File;

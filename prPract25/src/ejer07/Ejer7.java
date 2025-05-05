@@ -1,4 +1,4 @@
-package ejer7;
+package ejer07;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
