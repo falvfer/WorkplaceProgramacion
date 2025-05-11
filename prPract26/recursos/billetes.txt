@@ -1,0 +1,14 @@
+BilleteTrenFamiliar
+	Origen: 23.0, 0.0
+	Destino: 0.0, 12.0
+	Descuento aplicado: 25% (Menor de 18 años)
+	Distancia: 25.942243542145693
+	Coste del billete: 3 € y 63 centimos
+	Descuento extra por familiar: 25%
+	Familiar: Peter LongCroft
+BilleteTren
+	Origen: 23.0, 0.0
+	Destino: 12.0, 12.0
+	Descuento aplicado: 10% (Desempleado)
+	Distancia: 16.278820596099706
+	Coste del billete: 3 € y 93 centimos

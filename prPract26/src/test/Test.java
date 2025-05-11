@@ -1,15 +1,9 @@
 package test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JFrame;
 
 import controlador.Controlador;
-import modelo.BilleteTren;
-import modelo.BilleteTrenFamiliar;
 import modelo.EnumDescuentos;
-import modelo.Punto;
 import vista.Vista;
 
 public class Test {
@@ -20,10 +14,10 @@ public class Test {
 				Vista miVista = new Vista();
 
 				// Crear un objeto de la Clase Controlador
-			//	Controlador ctr = new Controlador(miVista);
+				Controlador ctr = new Controlador(miVista);
 
-				// Llamar al m�todo que da control a los componentes
-			//	miVista.control(ctr);
+				// Llamar al método que da control a los componentes
+				miVista.control(ctr);
 
 				// Crearemos un JFrame
 				JFrame ventana = new JFrame("Venta de billetes de tren");
@@ -31,6 +25,9 @@ public class Test {
 				ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				ventana.pack();
 				ventana.setVisible(true);
+				
+				miVista.getCbTipoDescuento().setSelectedItem(EnumDescuentos.SIN_DESCUENTO);
 		
+				System.out.println(miVista.getPreferredSize());
 	}
 }

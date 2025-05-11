@@ -1,9 +1,5 @@
 package modelo;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
 public class BilleteTrenFamiliar extends BilleteTren{
 	
 // Variables de instancia
@@ -12,6 +8,8 @@ public class BilleteTrenFamiliar extends BilleteTren{
 // Getters y Setters
 	public String getNombre() {return nombre;}
 	public void setNombre(String nombre) {this.nombre = nombre;}
+	@Override
+	public String getDescuento() {return (super.getTipoDescuento().getPorcentaje()+25)+"%";}
 	
 // Constructor
 	public BilleteTrenFamiliar(Punto origen, Punto destino, EnumDescuentos tipoDescuento, String nombre) {

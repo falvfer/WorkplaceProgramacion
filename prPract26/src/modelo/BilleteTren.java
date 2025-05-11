@@ -1,9 +1,5 @@
 package modelo;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
 public class BilleteTren {
 
 // Variables de instancia
@@ -13,7 +9,9 @@ public class BilleteTren {
 // Getters y Setters
 	public Punto getOrigen() {return origen;}
 	public Punto getDestino() {return destino;}
-	public String getTipoDescuento() {return tipoDescuento.getDescripcion();}
+	public String getTipoDescuentoString() {return tipoDescuento.getDescripcion();}
+	public EnumDescuentos getTipoDescuento() {return tipoDescuento;}
+	public String getDescuento() {return tipoDescuento.getPorcentaje()+"%";}
 	public double getDistancia() {return origen.medirDistancia(destino);}
 	
 	public void setOrigen(Punto origen) {this.origen = origen;}
