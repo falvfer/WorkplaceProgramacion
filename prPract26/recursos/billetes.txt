@@ -12,3 +12,17 @@ BilleteTren
 	Descuento aplicado: 10% (Desempleado)
 	Distancia: 16.278820596099706
 	Coste del billete: 3 € y 93 centimos
+BilleteTrenFamiliar
+	Origen: 13.0, 0.0
+	Destino: -23.0, 23.0
+	Descuento aplicado: 25% (Menor de 18 años)
+	Distancia: 42.720018726587654
+	Coste del billete: 4 € y 33 centimos
+	Descuento extra por familiar: 25%
+	Familiar: Julian
+BilleteTren
+	Origen: 10.0, 0.0
+	Destino: 0.0, 15.0
+	Descuento aplicado: 10% (Desempleado)
+	Distancia: 18.027756377319946
+	Coste del billete: 3 € y 24 centimos
