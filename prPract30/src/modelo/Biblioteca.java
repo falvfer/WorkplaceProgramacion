@@ -34,12 +34,27 @@ public class Biblioteca implements InterfazBiblioteca {
 	
 	public Biblioteca(Path usuarios, Path libros) throws BibliotecaException {
 		try {
-			this.libros = leerLibros(libros);
 			this.usuarios = leerUsuarios(usuarios);
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new BibliotecaException("Error al crear el archivo");
+			throw new BibliotecaException("Error al leer el archivo de Usuarios");
 		}
+		try {
+			this.libros = leerLibros(libros);
+		} catch (IOException e) {
+			throw new BibliotecaException("Error al leer el archivo de Libros");
+		}
+	}
+	
+// Métodos que usa el constructor
+	private Set<Usuario> leerUsuarios(Path archivo) throws IOException {
+		SortedSet<Usuario> setLibros = new TreeSet<>();
+		
+		try {
+			for (String linea: Files.readAllLines(archivo))
+				setLibros.add(new Usuario(linea));
+		} finally {}
+		
+		return setLibros;
 	}
 	
 	private SortedSet<Libro> leerLibros(Path archivo) throws IOException {
@@ -51,17 +66,6 @@ public class Biblioteca implements InterfazBiblioteca {
 				List<String> listaPersonajes = Arrays.asList(parametros[3].split(", "));
 				setLibros.add(new Libro(parametros[0], parametros[1], parametros[2], listaPersonajes));
 			}
-		} finally {}
-		
-		return setLibros;
-	}
-	
-	private Set<Usuario> leerUsuarios(Path archivo) throws IOException {
-		SortedSet<Usuario> setLibros = new TreeSet<>();
-		
-		try {
-			for (String linea: Files.readAllLines(archivo))
-				setLibros.add(new Usuario(linea));
 		} finally {}
 		
 		return setLibros;
