@@ -1,11 +1,13 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AgendaCitas {
-
-// Coleccion de citas
+public class AgendaCitas implements Serializable{
+	private static final long serialVersionUID = -735956309917461357L;
+	
+	// Coleccion de citas
 	private List<CitaMedica> citas;
 	public List<CitaMedica> getCitas() {return citas;}
 

@@ -1,12 +1,14 @@
 package modelo;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CitaMedica implements Comparable<CitaMedica> {
-
-// Variables
+public class CitaMedica implements Comparable<CitaMedica>, Serializable{
+	private static final long serialVersionUID = 4784410810186898326L;
+	
+	// Variables
 	private byte prioridad;
 	private String numSS, nombre;
 	private List<MotivosEnum> motivos;
@@ -40,6 +42,10 @@ public class CitaMedica implements Comparable<CitaMedica> {
 		this.especialista = especialista;
 		this.horaVisita = horaVisita;
 	}
+	public CitaMedica(byte prioridad, String numSS, String nombre, List<MotivosEnum> motivos, EspecialistasEnum especialista,
+			String horaVisita) {
+		this(prioridad, numSS, nombre, motivos, especialista, convertirFecha(horaVisita));
+	}
 	
 	public CitaMedica(String numSS, String nombre, List<MotivosEnum> motivos, EspecialistasEnum especialista,
 			String horaVisita) {
@@ -70,7 +76,7 @@ public class CitaMedica implements Comparable<CitaMedica> {
 	}
 	
 // Métodos
-	public double getPrecio() {
+	public int getPrecio() {
 		int total = PRECIO_BASE;
 		
 		if (this.especialista != EspecialistasEnum.MEDICINA_GENERAL)
