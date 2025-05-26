@@ -1,8 +1,13 @@
-package prPractDual;
+package test;
 
 import java.util.Random;
 
 import javax.swing.JFrame;
+
+import controlador.ControladorBusqueda;
+import modelo.GeneradorExpediente;
+import modelo.Gestor;
+import vista.VentanaBusqueda;
 
 public class Test {
 	
@@ -41,11 +46,15 @@ public class Test {
 		}
 		
 		// Crear la Ventana
-		Ventana v = new Ventana(g);
+		VentanaBusqueda v = new VentanaBusqueda();
 		v.setVisible(true);
 		v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		v.setLocationRelativeTo(null);
 		v.setResizable(false);
+		
+		// Crear el controlador
+		ControladorBusqueda ctr = new ControladorBusqueda(v, g);
+		v.control(ctr);
 		
 		// Esto es para poder hacer debug y mirar los expedientes y las cajas que se generan.
 		System.out.println(g.toString());

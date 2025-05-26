@@ -1,4 +1,4 @@
-package prPractDual;
+package modelo;
 
 import java.util.Random;
 

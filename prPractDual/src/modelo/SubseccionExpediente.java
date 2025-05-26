@@ -1,4 +1,4 @@
-package prPractDual;
+package modelo;
 
 public enum SubseccionExpediente {
 	// GOBIERNO

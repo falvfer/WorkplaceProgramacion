@@ -1,4 +1,4 @@
-package prPractDual;
+package modelo;
 
 public enum SeccionExpediente {
 	GOBIERNO("Gobierno",(byte)0,(byte)4),

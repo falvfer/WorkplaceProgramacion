@@ -1,0 +1,17 @@
+Una vista inicial para elegir que hacer:
+
+- Añadir un expediente nuevo.
+	- Si se especifica una caja no existente, esta se crea.
+	
+- Ver expedientes de la base de datos (buscarlos y mostrarlos con la VentanaBusqueda).
+	- Se puede editar el expediente
+	- Botón para guardar los cambios
+	- Botón para cancelar los cambios realizados
+	
+- Registrar personas nuevas para poder usarlas al crear o editar expedientes (DNI y nombre).
+
+- Ventana para seleccionar una o varias personas, se usará al crear expedientes y editarlos.
+
+
+MODELO:
+- Reprogramar "Caja" completamente para hacer que sea una librería de metodos.
