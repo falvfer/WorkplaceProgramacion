@@ -1,13 +1,16 @@
 package test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Random;
 
 import javax.swing.JFrame;
 
-import controlador.ControladorBusqueda;
+import controlador.Controlador;
 import modelo.GeneradorExpediente;
 import modelo.Gestor;
-import vista.VentanaBusqueda;
+import vista.Vista;
 
 public class Test {
 	
@@ -31,6 +34,7 @@ public class Test {
 	 */
 	
 	public static void main(String[] args) {
+		/*
 		Random rdn = new Random();
 		// Crear las cajas y los expedientes para probar
 		Gestor g = new Gestor();
@@ -44,19 +48,50 @@ public class Test {
 								(short)(2013+i/10)),
 					rdn.nextInt(1,21));
 		}
+		*/
+
+		// Crear la conexion con la BBDD de expedientes
+		Connection c = null;
+		try {
+			c = DriverManager.getConnection(
+					Datos.URL_BBDD.getInfo(),
+					Datos.USUARIO.getInfo(),
+					Datos.CONTRASEÑA.getInfo());
+		} catch (SQLException e) {
+			printSQLException(e);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// Crear el gestor y añadirle la conexion
+		Gestor g = new Gestor();
+		g.setConnection(c);
 		
 		// Crear la Ventana
-		VentanaBusqueda v = new VentanaBusqueda();
+		Vista v = new Vista();
 		v.setVisible(true);
 		v.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		v.setLocationRelativeTo(null);
 		v.setResizable(false);
 		
-		// Crear el controlador
-		ControladorBusqueda ctr = new ControladorBusqueda(v, g);
+		// Crear el controlador y añadirselo a la vista
+		Controlador ctr = new Controlador(v, g, c);
 		v.control(ctr);
 		
-		// Esto es para poder hacer debug y mirar los expedientes y las cajas que se generan.
+		// Debug
 		System.out.println(g.toString());
+	}
+	
+	public static void printSQLException(SQLException ex) {
+		
+		ex.printStackTrace(System.err);
+		System.err.println("SQLState: "+ex.getSQLState());
+		System.err.println("Error code: "+ex.getErrorCode());
+		System.err.println("Message: "+ex.getMessage());
+		Throwable t = ex.getCause();
+		while (t!=null) {
+			System.out.println("Cause: "+t);
+			t = t.getCause();
+		}
 	}
 }

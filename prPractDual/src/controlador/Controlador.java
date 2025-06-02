@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -12,17 +16,19 @@ import javax.swing.JPanel;
 import modelo.Caja;
 import modelo.Expediente;
 import modelo.Gestor;
-import vista.VentanaBusqueda;
+import vista.Vista;
 
-public class ControladorBusqueda implements ActionListener {
+public class Controlador implements ActionListener, WindowListener {
 
-	private VentanaBusqueda v;
+	private Vista v;
 	private Gestor gestor;
+	private Connection c;
 	int ultContExp;
 	
-	public ControladorBusqueda(VentanaBusqueda v, Gestor gestor) {
+	public Controlador(Vista v, Gestor gestor, Connection c) {
 		this.v = v;
 		this.gestor = gestor;
+		this.c = c;
 	}
 	
 	@Override
@@ -131,5 +137,26 @@ public class ControladorBusqueda implements ActionListener {
 		v.pack();
 		v.setSize(400, 455+35*((ultContExp+3)/4));
 	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		try {c.close();} catch (SQLException e1) {e1.printStackTrace();}
+		System.exit(0);
+	}
+
+	
+	// Métodos no usados
+	@Override
+	public void windowOpened(WindowEvent e) {}
+	@Override
+	public void windowClosing(WindowEvent e) {}
+	@Override
+	public void windowIconified(WindowEvent e) {}
+	@Override
+	public void windowDeiconified(WindowEvent e) {}
+	@Override
+	public void windowActivated(WindowEvent e) {}
+	@Override
+	public void windowDeactivated(WindowEvent e) {}
 
 }

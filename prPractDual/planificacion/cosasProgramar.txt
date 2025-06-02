@@ -15,3 +15,36 @@ Una vista inicial para elegir que hacer:
 
 MODELO:
 - Reprogramar "Caja" completamente para hacer que sea una librería de metodos.
+
+
+
+
+
+
+
+
+Vista:
+	> Menu Añadir Expedientes
+		- Campos para pedir todos los datos
+		- Las personas seleccionadas tienen que tener un check marcado,
+			al desmarcarlo se quitan.
+		- Boton para añadir personas relacionadas que lleva a DialogBusquedaPersonas.
+
+	> Menu Busqueda Expedientes
+		- Campos para la busqueda de expedientes
+		- Boton para editar que habilita todos los campos, desactiva
+			el boton de editar y activa un boton de Guardar y otro de Cancelar.
+			- Las personas seleccionadas tienen que tener un check marcado,
+				al desmarcarlo se quitan.
+			- Boton para añadir personas relacionadas que lleva a DialogBusquedaPersonas.
+			
+
+DialogBusquedaPersonas:
+	- Campo de texto para buscar por nombre
+	- Poder seleccionar a varias personas
+	- Boton para añadir la persona (no borrar la seleccion anterior)
+	- Boton para sustituir las personas
+	- Boton para editar la persona
+		- Si no sale la persona al buscarla dar un aviso y preguntar
+			si se quiere añadir a la persona.
+		

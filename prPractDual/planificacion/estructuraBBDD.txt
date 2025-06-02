@@ -1,24 +1,20 @@
+TABLA SUBSECCIONES
+- int id_subseccion(PK)
+- varchar(32) seccion
+- varchar(64) subseccion
+
+TABLA PERSONAS
+- int id_persona(PK)
+- varchar(64) nombre
+
 TABLA EXPEDIENTES
-- int anno_expediente(PK)
-- int num_expediente(PK)
+- int id_expediente(PK)
+- int anno_expediente(UQ)
+- int num_expediente(UQ)
 - int id_subseccion(FK)
 - int caja
 - varchar(256) descripcion
 
-TABLA SECCIONES
-- int id_seccion(PK)
-- varchar(32) nombre
-
-TABLA SUBSECCIONES
-- int id_subseccion(PK)
-- int id_seccion (FK)
-- varchar(64) nombre
-
-TABLA PERSONAS
-- int nif(PK)
-- varchar(64) nombre
-
 TABLA REL_EXP_PERS
-- int id_relacion(PK)
-- int id_expediente(FK)
-- int nif(FK)
+- int id_expediente(PK)(FK)
+- int id_persona(PK)(FK)

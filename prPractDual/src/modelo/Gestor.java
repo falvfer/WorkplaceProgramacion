@@ -1,14 +1,19 @@
 package modelo;
 
 import java.util.TreeSet;
-import java.util.Iterator;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
+import java.util.SortedSet;
 
 public class Gestor {
 	
 // Listas
 	private Set<Caja> cajas;
 	private Set<Expediente> expedientes;
+	private Connection c;
 	
 // Getters y Setters
 	public Set<Caja> getCajas() {return cajas;}
@@ -16,6 +21,7 @@ public class Gestor {
 
 	public void setExpedientes(Set<Expediente> expedientes) {this.expedientes = expedientes;}
 	public void setCajas(Set<Caja> cajas) {this.cajas = cajas;}
+	public void setConnection(Connection c) {this.c = c;}
 
 // Constructor
 	public Gestor() {
@@ -24,158 +30,158 @@ public class Gestor {
 	}
 	
 // Métodos públicos
-	public Expediente findExpediente(short numExpediente, short anno) {
-		boolean encontrado = false;
-		Expediente exp = null;
+	public Expediente findExpediente(short numExpediente, short anno) throws SQLException {
 		
-		for (Iterator<Expediente> it = this.expedientes.iterator(); it.hasNext() && !encontrado;) {
-			exp = it.next();
-			if (exp.getNumExpediente() == numExpediente && exp.getAnno() == anno)
-				encontrado = true;
+		// Creamos el objeto para enviar sentencias SQL
+		Statement st = c.createStatement();
+		
+		// Buscar el Expediente
+		ResultSet rsExpediente = getResultSetExpediente(numExpediente, anno);
+		rsExpediente.next();
+		
+		// Buscar la Subseccion
+		ResultSet rsSubseccion = st.executeQuery("SELECT * FROM SUBSECCIONES"
+				+ " WHERE id_subsecciones = "+rsExpediente.getInt("id_subseccion")+";");
+		rsSubseccion.next();
+		
+		// Buscar las Personas
+		ResultSet rsPersonas = st.executeQuery("SELECT * FROM REL_EXP_PERS"
+				+ "WHERE id_expediente = "+rsExpediente.getInt("id_expediente")+";");
+		SortedSet<Persona> listaPersonas = new TreeSet<>();
+		while (rsPersonas.next()) {
+			ResultSet rsPersona = st.executeQuery("SELECT * FROM PERSONAS"
+					+ " WHERE id_persona = "+rsPersonas.getInt("id_persona")+";");
+			listaPersonas.add(new Persona(rsPersona.getString("nombre")));
 		}
-		if (!encontrado)
-			exp = null;
 		
-		return exp;
+		// Crear el expediente y devolverlo
+		return new Expediente(rsExpediente.getInt("caja"), numExpediente, anno,
+				SeccionExpediente.valueOf(rsSubseccion.getString("seccion")),
+				SubseccionExpediente.valueOf(rsSubseccion.getString("subseccion")),
+				rsExpediente.getString("descripcion"), listaPersonas);
 	}
 	
-	public boolean hasExpediente(Expediente expEncontrar) {
-		boolean encontrado = false;
-		Expediente exp = null;
-		
-		for (Iterator<Expediente> it = this.expedientes.iterator(); it.hasNext() && !encontrado;) {
-			exp = it.next();
-			if (exp.equals(expEncontrar))
-				encontrado = true;
-		}
-		if (!encontrado)
-			exp = null;
-		
-		return exp instanceof Expediente;
+	public boolean hasExpediente(Expediente expEncontrar) throws SQLException {
+		ResultSet rsExpediente = getResultSetExpediente(expEncontrar.getNumExpediente(), expEncontrar.getAnno());
+		return rsExpediente.next();
 	}
 	
-	public Caja findCaja(int numCaja) {
-		boolean encontrado = false;
-		Caja caja = null;
+	public boolean mueveExpediente(short numExp, short anno, int destino) throws SQLException {
+		// Creamos el objeto para enviar sentencias SQL
+		Statement st = c.createStatement();
 		
-		for (Iterator<Caja> it = this.cajas.iterator(); it.hasNext() && !encontrado;) {
-			caja = it.next();
-			if (caja.getNumCaja() == numCaja)
-				encontrado = true;
-		}
-		if (!encontrado)
-			caja = null;
+		// Actualizar el Expediente
+		int colsUpdated = st.executeUpdate("UPDATE EXPEDIENTES"
+				+ " SET caja = "+destino
+				+ " WHERE num_expediente = "+numExp+" && anno_expediente = "+anno+";");
 		
-		return caja;
+		return colsUpdated != 0;
+		
 	}
 	
-	public Caja findCaja(short numExp, short anno) {
-		boolean encontrado = false;
-		Caja caja = null;
+	public boolean crearExpediente(int numCaja, short numExpediente, short anno,
+						SubseccionExpediente subseccion, String descripcion, SortedSet<Persona> personas) throws SQLException {
+		// Creamos el objeto para enviar sentencias SQL
+		Statement st = c.createStatement();
 		
-		for (Iterator<Caja> it = this.cajas.iterator(); it.hasNext() && !encontrado;) {
-			caja = it.next();
-			if (caja.hasExpediente(numExp, anno))
-				encontrado = true;
-		}
-		if (!encontrado)
-			caja = null;
+		ResultSet rsSubseccion = st.executeQuery("SELECT * FROM SUBSECCIONES WHERE subseccion = "+subseccion.toString());
 		
-		return caja;
-	}
-	
-	public Caja crearCaja() {
-		Caja caj = new Caja();
-		this.cajas.add(caj);
-		return caj;
-	}
-	
-	public Caja crearCaja(int numCaja) {
-		Caja caj = new Caja(numCaja);
-		this.cajas.add(caj);
-		return caj;
-	}
-
-	public boolean addCaja(Caja caj) {
-		if (this.cajas.add(caj)) {
-			for (Expediente exp: caj.getExpedientes()) {
-				expedientes.add(exp);
+		// Insertar el expediente
+		st.executeUpdate("INSERT INTO EXPEDIENTES(anno_expediente, num_expediente, id_subseccion, caja, descripcion)"
+				+ "VALUES("+anno+", "+numExpediente+", "+rsSubseccion.getInt("id_subseccion")+", "
+				+ numCaja+", "+"descripcion"+")");
+		
+		ResultSet rsExpediente = getResultSetExpediente(numExpediente, anno);
+		
+		if (rsExpediente.next()) {
+			
+			for (Persona p: personas) {
+				ResultSet rsPersona = st.executeQuery("SELECT * FROM PERSONAS "
+						+ "WHERE nombre = "+p.getNombre()+";");
+				
+				if (!rsPersona.next()) {
+					st.executeUpdate("INSERT INTO PERSONAS(nombre) VALUES("+p.getNombre()+");");
+					rsPersona = st.executeQuery("SELECT * FROM PERSONAS "
+							+ "WHERE nombre = "+p.getNombre()+";");
+					rsPersona.next();
+				}
+				
+				st.executeUpdate("INSERT INTO REL_EXP_PERS(id_expediente, id_persona)"
+						+ "VALUES("+rsExpediente.getInt("id_expediente")+", "
+						+ rsPersona.getInt("id_persona")+");");
 			}
 			return true;
 		}
 		return false;
-	}
-	
-	public Caja quitaCaja(int numCaja) {
-		Caja caj = this.findCaja(numCaja);
-		this.cajas.remove(caj);
-		return caj;
-	}
-	
-	public boolean mueveExpediente(short numExp, short anno, Caja destino) {
-		Expediente exp = this.findExpediente(numExp, anno);
-		Caja origen = this.findCaja(exp.getNumCaja());
-		if (destino.addExpediente(exp)) {
-			origen.quitaExpediente(exp);
-			exp.setNumCaja(destino.getNumCaja());
-			return true;
-		}
-		return false;
 		
 	}
 	
-	public Expediente crearExpediente(int numCaja, short numExpediente, short anno, SeccionExpediente seccion,
-						SubseccionExpediente subseccion, String descripcion, String nombres) {
-		Expediente exp = new Expediente(numCaja, numExpediente, anno, seccion, subseccion, descripcion, nombres);
-		Caja caj = this.findCaja(numCaja);
-		if (caj instanceof Caja)
-			if (this.addExpediente(exp, caj))
-				return exp;
-		return null;
-	}
-	
-	public boolean addExpediente(Expediente exp, Caja destino) {
+	public Expediente quitaExpediente(short numExp, short anno) throws SQLException {
+		// Creamos el objeto para enviar sentencias SQL
+		Statement st = c.createStatement();
 		
-		if (this.hasExpediente(exp) && destino.addExpediente(exp)) {
-			this.expedientes.add(exp);
-			exp.setNumCaja(destino.getNumCaja());
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean addExpediente(Expediente exp, int numCaja) {
-		Caja destino = this.findCaja(numCaja);
+		// Buscar el expediente
+		Expediente exp = findExpediente(numExp, anno);
 		
-		if (destino instanceof Caja && !this.hasExpediente(exp) && destino.addExpediente(exp)) {
-			this.expedientes.add(exp);
-			exp.setNumCaja(destino.getNumCaja());
-			return true;
-		}
-		return false;
-	}
-	
-	public Expediente quitaExpediente(short numExp, short anno) {
-		Expediente exp = this.findExpediente(numExp, anno);
-		if (exp instanceof Expediente) {
-			this.expedientes.remove(exp);
-			this.findCaja(exp.getNumCaja()).quitaExpediente(exp);
-		}
+		// Borrar el expediente
+		if (exp instanceof Expediente)
+			st.executeUpdate("DELETE FROM EXPEDIENTES"
+					+ "WHERE num_expediente = "+numExp+" && anno_expediente = "+anno);
+		
 		return exp;
 	}
 	
-	// toString
+	public SortedSet<Expediente> findCaja(int caja) throws SQLException {
+		// TODO METODO SIN TERMINAR
+		SortedSet<Expediente> expedientes = new TreeSet<>();
+		
+		// Creamos el objeto para enviar sentencias SQL
+		Statement st = c.createStatement();
+		
+		// Buscar el Expediente
+		ResultSet rsExpediente = st.executeQuery("SELECT * FROM EXPEDIENTES "
+					+ "JOIN SUBSECCION USING(\"id_subseccion\")"
+				+ "WHERE caja = "+caja);
+		rsExpediente.next();
+	}
+	
+	
+// METODOS PRIVADOS
+	private ResultSet getResultSetExpediente(short numExpediente, short anno) throws SQLException {
+		// Creamos el objeto para enviar sentencias SQL
+		Statement st = c.createStatement();
+		
+		// Buscar el Expediente
+		ResultSet rsExpediente = st.executeQuery("SELECT * FROM EXPEDIENTES"
+				+ " WHERE num_expediente = "+numExpediente+" && anno_expediente = "+anno+";");
+		return rsExpediente;
+	}
+	
+	
+// toString
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		for (Iterator<Caja> it = this.cajas.iterator(); it.hasNext();) {
-			Caja caj = it.next();
-			str.append(caj.getClass().getSimpleName() + " Nº" + caj.getNumCaja() + "\n");
+		Statement st;
+		
+		try {
+			st = c.createStatement();
+
+			str.append("PERSONAS _______________________________________________________");
+			ResultSet rs = st.executeQuery("SELECT * FROM PERSONAS;");
+			while (rs.next())
+				str.append("ID: "+rs.getInt("id_persona")+" - NOMBRE: "+rs.getString("nombre")+"\n");
+
+			str.append("EXPEDIENTES ____________________________________________________");
+			rs = st.executeQuery("SELECT * FROM EXPEDIENTES;");
+			while (rs.next())
+				str.append("Exp: "+rs.getInt("num_expediente")+"/"+rs.getInt("anno_expediente")
+						+ ", C: " + rs.getInt("caja")+"\n");
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		for (Iterator<Expediente> it = this.expedientes.iterator(); it.hasNext();) {
-			Expediente exp = it.next();
-			str.append("Exp: " + exp.getNumExpediente() + "/" + exp.getAnno() + ", C: " + exp.getNumCaja() + "\n");
-		}
+		
 		return str.toString();
 	}
 }

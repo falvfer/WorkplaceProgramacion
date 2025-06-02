@@ -23,12 +23,12 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import controlador.ControladorBusqueda;
+import controlador.Controlador;
 import modelo.Caja;
 import modelo.Expediente;
 import modelo.Gestor;
 
-public class VentanaBusqueda extends JFrame {
+public class Vista extends JFrame {
 	private static final long serialVersionUID = -2294662424161337165L;
 	
 	
@@ -63,7 +63,7 @@ public class VentanaBusqueda extends JFrame {
 	public void setpExpedientes(JPanel pExpedientes) {this.pExpedientes = pExpedientes;}
 	
 	
-	public VentanaBusqueda() {
+	public Vista() {
 		
 		CompoundBorder mainBorder = new CompoundBorder(
 				new LineBorder(Color.DARK_GRAY),
@@ -198,7 +198,7 @@ public class VentanaBusqueda extends JFrame {
 					pInf2_2.add(infNombres, BorderLayout.SOUTH);
 	}
 	
-	public void control(ControladorBusqueda ctr) {
+	public void control(Controlador ctr) {
 		buscarExpAnno.addActionListener(ctr);
 		buscarCaja.addActionListener(ctr);
 		

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.Objects;
+import java.util.SortedSet;
 
 public class Expediente implements Comparable<Expediente>{
 	
@@ -9,7 +10,8 @@ public class Expediente implements Comparable<Expediente>{
 	private int numCaja;
 	private SeccionExpediente seccion;
 	private SubseccionExpediente subseccion;
-	private String descripcion, nombres;
+	private String descripcion;
+	private SortedSet<Persona> personas;
 	
 // Getters y Setters
 	public short getNumExpediente() {return numExpediente;}
@@ -18,7 +20,7 @@ public class Expediente implements Comparable<Expediente>{
 	public SeccionExpediente getSeccion() {return seccion;}
 	public SubseccionExpediente getSubseccion() {return subseccion;}
 	public String getDescripcion() {return descripcion;}
-	public String getNombres() {return nombres;}
+	public SortedSet<Persona> getPersonas() {return personas;}
 	
 	public void setNumExpediente(short numExpediente) {this.numExpediente = numExpediente;}
 	public void setNumCaja(int numCaja) {this.numCaja = numCaja;}
@@ -26,18 +28,18 @@ public class Expediente implements Comparable<Expediente>{
 	public void setSeccion(SeccionExpediente seccion) {this.seccion = seccion;}
 	public void setSubseccion(SubseccionExpediente subseccion) {this.subseccion = subseccion;}
 	public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
-	public void setNombres(String nombres) {this.nombres = nombres;}
+	public void setNombres(SortedSet<Persona> personas) {this.personas = personas;}
 	
 // Constructor
 	public Expediente(int numCaja, short numExpediente, short anno, SeccionExpediente seccion,
-						SubseccionExpediente subseccion, String descripcion, String nombres) {
+						SubseccionExpediente subseccion, String descripcion, SortedSet<Persona> nombres) {
 		this.numCaja = numCaja;
 		this.numExpediente = numExpediente;
 		this.anno = anno;
 		this.seccion = seccion;
 		this.subseccion = subseccion;
 		this.descripcion = descripcion;
-		this.nombres = nombres;
+		this.personas = nombres;
 	}
 
 // hashCode, equals
