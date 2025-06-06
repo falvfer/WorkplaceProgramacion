@@ -1,6 +1,8 @@
 package modelo;
 
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Persona implements Comparable<Persona> {
 
@@ -11,6 +13,14 @@ public class Persona implements Comparable<Persona> {
 	
 	public Persona(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public static SortedSet<Persona> splitNombres(String nombres) {
+		SortedSet<Persona> personas = new TreeSet<>();
+		for (String nombre: nombres.split("\\s*,\\s*"))
+			personas.add(new Persona(nombre));
+		
+		return personas;
 	}
 	
 	@Override
@@ -36,7 +46,7 @@ public class Persona implements Comparable<Persona> {
 	
 	@Override
 	public int compareTo(Persona o) {
-		return this.nombre.compareTo(nombre);
+		return this.nombre.compareTo(o.nombre);
 	}
 	
 	

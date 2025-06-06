@@ -1,21 +1,15 @@
 package modelo;
 
 public enum SeccionExpediente {
-	GOBIERNO("Gobierno",(byte)0,(byte)4),
-	ADMINISTRACION("Administración",(byte)4,(byte)11),
-	SERVICIOS("Servicios",(byte)11,(byte)24),
-	HACIENDA("Hacienda",(byte)24,(byte)27);
+	GOBIERNO("Gobierno"),
+	ADMINISTRACION("Administración"),
+	SERVICIOS("Servicios"),
+	HACIENDA("Hacienda");
 	
 	private String nombre;
-	private byte iniSub, finSub;
 	
-	public byte getIniSub() {return iniSub;}
-	public byte getFinSub() {return finSub;}
-	
-	private SeccionExpediente(String nombre, byte iniSub, byte finSub) {
+	private SeccionExpediente(String nombre) {
 		this.nombre = nombre;
-		this.iniSub = iniSub;
-		this.finSub = finSub;
 	}
 	
 	@Override

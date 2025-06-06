@@ -4,159 +4,134 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import modelo.Caja;
+import bd.*;
 import modelo.Expediente;
-import modelo.Gestor;
+import modelo.MiExcepcion;
+import modelo.SeccionExpediente;
+import modelo.SubseccionExpediente;
 import vista.Vista;
 
-public class Controlador implements ActionListener, WindowListener {
+public class Controlador implements ActionListener, ItemListener {
 
+// Variables
 	private Vista v;
-	private Gestor gestor;
-	private Connection c;
-	int ultContExp;
+	private int ultContExp;
+	private Expediente ultExpediente;
 	
-	public Controlador(Vista v, Gestor gestor, Connection c) {
+// Getters
+	public Vista getV() {return v;}
+	public int getUltContExp() {return ultContExp;}
+	public void setUltContExp(int ultContExp) {this.ultContExp = ultContExp;}
+	public Expediente getUltExpediente() {return ultExpediente;}
+	public void setUltExpediente(Expediente ultExpediente) {this.ultExpediente = ultExpediente;}
+	
+// Constructor
+	public Controlador(Vista v) {
 		this.v = v;
-		this.gestor = gestor;
-		this.c = c;
 	}
 	
+// Metodos
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
 		
-		if (e.getSource() == v.getBuscarCaja())
-			buscarCaja();
-		else if (e.getSource() == v.getBuscarExpAnno())
-			buscarExpAnno();
+		if (source == v.getBuscarCaja())
+			CTRBuscadores.buscarCaja(this, true);
+		else if (source == v.getBuscarExpAnno())
+			CTRBuscadores.buscarExpAnno(this);
+		else if (source == v.getbBorrar())
+			CTREdicion.borrar(this);
+		else if (source == v.getbEditar())
+			CTREdicion.editar(this);
+		else if (source == v.getbGuardar())
+			CTREdicion.guardar(this);
+		else if (source == v.getbCancelar())
+			CTREdicion.cancelar(this);
+		else if (source == v.getMenuAdd())
+			menuCrear();
+		else if (source == v.getMenuBuscar())
+			menuBuscar();
 		else
-			buscarExpediente(e);
+			CTRBuscadores.buscarExpediente(this, e);
+		
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+			actualizarSubseccion();
+	}
+
+	private void actualizarSubseccion() {
+		v.getInfSubseccionModel().removeAllElements();
+		v.getInfSubseccionModel().addAll(
+			SubseccionExpediente.getValuesFromSeccion(
+				(SeccionExpediente)v.getInfSeccion().getSelectedItem()));
+		v.getInfSubseccion().setSelectedIndex(0);
+	}
+	
+	private void menuCrear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void menuBuscar() {
+		// TODO Auto-generated method stub
 		
 	}
 	
-	private void buscarCaja() {
-		Caja caj = null;
-		boolean error = false;
-		try {
-			caj = gestor.findCaja(Integer.parseInt(v.getBusCaja().getText()));
-		} catch (Exception e) {error = true;}
-		
-		if (caj instanceof Caja) {
-			v.getpBordeExpedientes().remove(v.getpExpedientes());
-			v.setpExpedientes(new JPanel(new FlowLayout(FlowLayout.LEFT)));
-			v.getpBordeExpedientes().add(v.getpExpedientes());
-			
-			ultContExp = 0;
-			for (Expediente exp: caj.getExpedientes()) {
-				JButton bExp = new JButton(exp.getNumExpediente()+"/"+exp.getAnno());
-				bExp.addActionListener(this);
-				v.getpExpedientes().add(bExp);
-				ultContExp++;
-			}
-			
-			if (v.getpInformacion().isVisible())
-				v.getpInformacion().setVisible(false);
-			
-			v.getpBordeExpedientes().setPreferredSize(new Dimension(370, 25+35*((ultContExp+3)/4)));
-			if (!v.getpBordeExpedientes().isVisible())
-				v.getpBordeExpedientes().setVisible(true);
-			
-			v.pack();
-			v.setSize(400, 210+35*((ultContExp+3)/4));
-			
-		} else {
-			if (error)
-				JOptionPane.showMessageDialog(null, "Solamente se admiten datos numéricos",
-						"Error en la búsqueda", JOptionPane.ERROR_MESSAGE);
-			else
-				JOptionPane.showMessageDialog(null, "No se ha encontrado ninguna caja",
-						"Error en la búsqueda", JOptionPane.INFORMATION_MESSAGE);
-		}
+	public void mostrarUltExpediente() {
+		v.getInfCaja().setText(ultExpediente.getNumCaja()+"");
+		v.getInfExpediente().setText(ultExpediente.getNumExpediente()+"");
+		v.getInfFecha().setText(ultExpediente.getAnno()+"");
+		v.getInfSeccion().setSelectedItem(ultExpediente.getSeccion());
+		actualizarSubseccion();
+		v.getInfSubseccion().setSelectedItem(ultExpediente.getSubseccion());
+		v.getInfDescripcion().setText(ultExpediente.getDescripcion()+"");
+		v.getInfNombres().setText(ultExpediente.getNombres()+"");
 	}
 	
-	private void buscarExpAnno() {
-		Expediente exp = null;
-		boolean error = false;
-		try {
-			exp = gestor.findExpediente(Short.parseShort(v.getBusExpediente().getText()),
-										Short.parseShort(v.getBusAnno().getText()));
-		} catch (Exception e) {error = true;}
-		
-		if (exp instanceof Expediente) {
-			v.getInfCaja().setText(exp.getNumCaja()+"");
-			v.getInfExpediente().setText(exp.getNumExpediente()+"");
-			v.getInfFecha().setText(exp.getAnno()+"");
-			v.getInfSeccion().setText(exp.getSeccion().toString()+"");
-			v.getInfSubseccion().setText(exp.getSubseccion().toString()+"");
-			v.getInfDescripcion().setText(exp.getDescripcion()+"");
-			v.getInfNombres().setText(exp.getNombres()+"");
-			
-			if (v.getpBordeExpedientes().isVisible())
-				v.getpBordeExpedientes().setVisible(false);
-			if (!v.getpInformacion().isVisible())
-				v.getpInformacion().setVisible(true);
-			
-			v.pack();
-			v.setSize(400, 425);
-			
-		} else {
-			if (error)
-				JOptionPane.showMessageDialog(null, "Solamente se admiten datos numéricos",
-						"Error en la búsqueda", JOptionPane.ERROR_MESSAGE);
-			else
-				JOptionPane.showMessageDialog(null, "No se ha encontrado ningún expediente",
-						"Error en la búsqueda", JOptionPane.INFORMATION_MESSAGE);
-		}
+	public void limpiarBusqueda() {
+		v.getInfCaja().setText("");
+		v.getInfExpediente().setText("");
+		v.getInfFecha().setText("");
+		v.getInfSeccion().setSelectedIndex(0);
+		actualizarSubseccion();
+		v.getInfSubseccion().setSelectedIndex(0);
+		v.getInfDescripcion().setText("");
+		v.getInfNombres().setText("");
 	}
 	
-	private void buscarExpediente(ActionEvent e) {
-		String[] datosExp = ((JButton)e.getSource()).getText().split("/");
-		Expediente exp = gestor.findExpediente(Short.parseShort(datosExp[0]),
-												Short.parseShort(datosExp[1]));
-		
-		v.getInfCaja().setText(exp.getNumCaja()+"");
-		v.getInfExpediente().setText(exp.getNumExpediente()+"");
-		v.getInfFecha().setText(exp.getAnno()+"");
-		v.getInfSeccion().setText(exp.getSeccion().toString()+"");
-		v.getInfSubseccion().setText(exp.getSubseccion().toString()+"");
-		v.getInfDescripcion().setText(exp.getDescripcion()+"");
-		v.getInfNombres().setText(exp.getNombres()+"");
-		
-		if (!v.getpInformacion().isVisible())
-			v.getpInformacion().setVisible(true);
-		
+	public void actualizarTamañoPantalla() {
 		v.pack();
-		v.setSize(400, 455+35*((ultContExp+3)/4));
+		
+		if (v.getpBordeExpedientes().isVisible()) {
+			if (v.getpInformacion().isVisible()) {
+				// Todo está habilitado
+				v.setSize(400, 530+35*((ultContExp+3)/4));
+			} else {
+				// Panel buscar y Panel de cajas están habilitados
+				v.setSize(400, 235+35*((ultContExp+3)/4));
+			}
+		} else if (v.getpInformacion().isVisible()) {
+			// Panel buscar y Panel información están habilitados
+			v.setSize(400, 500);
+		} else {
+			// Panel buscar está habilitado unicamente
+			v.setSize(400, 205);
+		}
 	}
-
-	@Override
-	public void windowClosed(WindowEvent e) {
-		try {c.close();} catch (SQLException e1) {e1.printStackTrace();}
-		System.exit(0);
-	}
-
-	
-	// Métodos no usados
-	@Override
-	public void windowOpened(WindowEvent e) {}
-	@Override
-	public void windowClosing(WindowEvent e) {}
-	@Override
-	public void windowIconified(WindowEvent e) {}
-	@Override
-	public void windowDeiconified(WindowEvent e) {}
-	@Override
-	public void windowActivated(WindowEvent e) {}
-	@Override
-	public void windowDeactivated(WindowEvent e) {}
-
 }

@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.Objects;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Expediente implements Comparable<Expediente>{
 	
@@ -21,6 +22,13 @@ public class Expediente implements Comparable<Expediente>{
 	public SubseccionExpediente getSubseccion() {return subseccion;}
 	public String getDescripcion() {return descripcion;}
 	public SortedSet<Persona> getPersonas() {return personas;}
+	public String getNombres() {
+		StringBuilder str = new StringBuilder();
+		for (Persona p: personas)
+			str.append(p.getNombre()+", ");
+		
+		return str.substring(0, str.length()<=1?str.length():str.length()-2);
+	}
 	
 	public void setNumExpediente(short numExpediente) {this.numExpediente = numExpediente;}
 	public void setNumCaja(int numCaja) {this.numCaja = numCaja;}
@@ -28,21 +36,45 @@ public class Expediente implements Comparable<Expediente>{
 	public void setSeccion(SeccionExpediente seccion) {this.seccion = seccion;}
 	public void setSubseccion(SubseccionExpediente subseccion) {this.subseccion = subseccion;}
 	public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
-	public void setNombres(SortedSet<Persona> personas) {this.personas = personas;}
+	public void setPersonas(SortedSet<Persona> personas) {this.personas = personas;}
 	
 // Constructor
-	public Expediente(int numCaja, short numExpediente, short anno, SeccionExpediente seccion,
-						SubseccionExpediente subseccion, String descripcion, SortedSet<Persona> nombres) {
+	public Expediente(int numCaja, short numExpediente, short anno, SubseccionExpediente subseccion,
+						String descripcion, SortedSet<Persona> personas) {
 		this.numCaja = numCaja;
 		this.numExpediente = numExpediente;
 		this.anno = anno;
-		this.seccion = seccion;
+		this.seccion = subseccion.getSeccion();
 		this.subseccion = subseccion;
 		this.descripcion = descripcion;
-		this.personas = nombres;
+		this.personas = personas;
+	}
+	
+	public Expediente(int numCaja, short numExpediente, short anno,	SubseccionExpediente subseccion,
+						String descripcion, Persona p) {
+		this(numCaja, numExpediente, anno, subseccion, descripcion);
+		this.personas.add(p);
+	}
+	
+	public Expediente(int numCaja, short numExpediente, short anno,	SubseccionExpediente subseccion,
+						String descripcion, Persona p, Persona p2) {
+		this(numCaja, numExpediente, anno, subseccion, descripcion);
+		this.personas.add(p);
+		this.personas.add(p2);
+	}
+	
+	public Expediente(int numCaja, short numExpediente, short anno,	SubseccionExpediente subseccion,
+						String descripcion) {
+		this(numCaja, numExpediente, anno, subseccion, descripcion, new TreeSet<Persona>());
+	}
+	
+// toString
+	@Override
+	public String toString() {
+		return this.getNumExpediente()+"/"+this.getAnno();
 	}
 
-// hashCode, equals
+// hashCode, equals, compareTo
 	@Override
 	public int hashCode() {
 		return Objects.hash(anno, numExpediente);

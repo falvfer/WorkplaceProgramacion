@@ -1,15 +1,11 @@
 package test;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Random;
 
 import javax.swing.JFrame;
 
+import bd.BDConnection;
 import controlador.Controlador;
-import modelo.GeneradorExpediente;
-import modelo.Gestor;
 import vista.Vista;
 
 public class Test {
@@ -34,38 +30,14 @@ public class Test {
 	 */
 	
 	public static void main(String[] args) {
-		/*
-		Random rdn = new Random();
-		// Crear las cajas y los expedientes para probar
-		Gestor g = new Gestor();
-		GeneradorExpediente expGen = new GeneradorExpediente();
-		for (int i = 1; i<=20; i++) {
-			g.crearCaja(i);
-		}
-		for (int i = 0; i<130; i++) {
-			g.addExpediente(
-					expGen.next((short)(i%10+1),
-								(short)(2013+i/10)),
-					rdn.nextInt(1,21));
-		}
-		*/
-
-		// Crear la conexion con la BBDD de expedientes
-		Connection c = null;
-		try {
-			c = DriverManager.getConnection(
-					Datos.URL_BBDD.getInfo(),
-					Datos.USUARIO.getInfo(),
-					Datos.CONTRASEÑA.getInfo());
-		} catch (SQLException e) {
-			printSQLException(e);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
-		// Crear el gestor y añadirle la conexion
-		Gestor g = new Gestor();
-		g.setConnection(c);
+		/* SOLO LA PRIMERA VEZ
+		 * // Crear las subsecciones
+		 * Crear.actualizarSubsecciones(c);
+		 * 
+		 * // Crear unos cuantos Expedientes y Personas para probar
+		 * Crear.expedientes(g);
+		 */
 		
 		// Crear la Ventana
 		Vista v = new Vista();
@@ -75,11 +47,11 @@ public class Test {
 		v.setResizable(false);
 		
 		// Crear el controlador y añadirselo a la vista
-		Controlador ctr = new Controlador(v, g, c);
+		Controlador ctr = new Controlador(v);
 		v.control(ctr);
 		
 		// Debug
-		System.out.println(g.toString());
+		System.out.println(BDConnection.mostrarBBDD());
 	}
 	
 	public static void printSQLException(SQLException ex) {
