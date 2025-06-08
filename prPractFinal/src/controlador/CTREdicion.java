@@ -45,10 +45,10 @@ public class CTREdicion {
 		if (respuesta == JOptionPane.OK_OPTION) {
 			try {
 				// Actualizar el ultimo expediente con el expediente de la interfaz
-				actualizarUltimoExpediente(ctr, CTRBuscadores.getExpedienteInterfaz(ctr));
+				actualizarUltimoExpediente(ctr, CTRBuscadores.getExpedienteInfInterfaz(ctr));
 				cambiarEstadoEditar(ctr, false);
 				
-			} catch(Exception e) {
+			} catch(MiExcepcion e) {
 				JOptionPane.showMessageDialog(v, "Comprueba los datos introducidos",
 						"Error", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
@@ -89,10 +89,10 @@ public class CTREdicion {
 		
 		v.setEditableBuscar(b);
 		
-		v.getbBorrar().setEnabled(!b);
-		v.getbEditar().setEnabled(!b);
-		v.getbGuardar().setEnabled(b);
-		v.getbCancelar().setEnabled(b);
+		v.getbInfBorrar().setEnabled(!b);
+		v.getbInfEditar().setEnabled(!b);
+		v.getbInfGuardar().setEnabled(b);
+		v.getbInfCancelar().setEnabled(b);
 		
 		v.getBuscarCaja().setEnabled(!b);
 		v.getBuscarExpAnno().setEnabled(!b);

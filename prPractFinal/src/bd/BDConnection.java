@@ -46,7 +46,7 @@ public class BDConnection {
 			// Objeto statement para ejecutar las consultas
 			Statement st = c.createStatement();
 
-			str.append("PERSONAS _______________________________________________________\n");
+			str.append("\nPERSONAS _______________________________________________________\n");
 			
 			// Buscar todas las personas
 			ResultSet rs = st.executeQuery("SELECT * FROM PERSONAS;");

@@ -125,7 +125,7 @@ public class CTRBuscadores {
 		
 	}
 
-	public static Expediente getExpedienteInterfaz(Controlador ctr) throws Exception {
+	public static Expediente getExpedienteInfInterfaz(Controlador ctr) throws MiExcepcion {
 		Vista v = ctr.getV();
 		
 		return new Expediente(Integer.parseInt(v.getInfCaja().getText()),
@@ -134,5 +134,20 @@ public class CTRBuscadores {
 				(SubseccionExpediente)v.getInfSubseccion().getSelectedItem(),
 				v.getInfDescripcion().getText(),
 				Persona.splitNombres(v.getInfNombres().getText()));
+	}
+
+	public static Expediente getExpedienteAddInterfaz(Controlador ctr) throws MiExcepcion {
+		Vista v = ctr.getV();
+		
+		try {
+			return new Expediente(Integer.parseInt(v.getAddCaja().getText()),
+					Short.parseShort(v.getAddExpediente().getText()),
+					Short.parseShort(v.getAddFecha().getText()),
+					(SubseccionExpediente)v.getAddSubseccion().getSelectedItem(),
+					v.getAddDescripcion().getText(),
+					Persona.splitNombres(v.getAddNombres().getText()));
+		} catch (Exception e) {
+			throw new MiExcepcion("Comprueba los datos introducidos");
+		}
 	}
 }

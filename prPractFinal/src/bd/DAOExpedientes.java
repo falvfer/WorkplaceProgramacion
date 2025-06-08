@@ -112,8 +112,8 @@ public class DAOExpedientes {
 							+ "VALUES("+rsExpediente.getInt("id_expediente")+", "
 							+ rsPersona.getInt("id_persona")+");");
 				}
-			}
-			throw new MiExcepcion("No se ha podido encontrar el expediente recien añadido.");
+			} else
+				throw new MiExcepcion("No se ha podido encontrar el expediente recien añadido.");
 			
 		} catch (ClassNotFoundException e) {
 			throw new MiExcepcion("No se ha encontrado la clase");
