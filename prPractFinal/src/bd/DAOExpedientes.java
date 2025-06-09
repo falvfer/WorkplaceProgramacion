@@ -141,6 +141,14 @@ public class DAOExpedientes {
 			subseccion.next();
 			
 			// Actualizar el expediente viejo con los datos del expediente nuevo
+			System.out.println("UPDATE EXPEDIENTES SET"
+					+ " anno_expediente = " + newExp.getAnno()
+					+ ", num_expediente = " + newExp.getNumExpediente()
+					+ ", id_subseccion = " + subseccion.getInt("id_subseccion")
+					+ ", caja = " + newExp.getNumCaja()
+					+ ", descripcion = '" + newExp.getDescripcion()
+					+ "' WHERE anno_expediente = " + oldExp.getAnno()
+					+ " && num_expediente = " + oldExp.getNumExpediente()+";");
 			st2.executeUpdate("UPDATE EXPEDIENTES SET"
 					+ " anno_expediente = " + newExp.getAnno()
 					+ ", num_expediente = " + newExp.getNumExpediente()
@@ -197,14 +205,15 @@ public class DAOExpedientes {
 			
 			// Buscar el expediente
 			ResultSet rs = getResultSetExpediente(c, numExp, anno);
+			rs.next();
 			
 			// Borrar las relaciones de personas
 			st.executeUpdate("DELETE FROM REL_EXP_PERS"
-					+ "WHERE id_expediente = "+rs.getInt("id_expediente")+";");
+					+ " WHERE id_expediente = "+rs.getInt("id_expediente")+";");
 			
 			// Borrar el expediente
 			st.executeUpdate("DELETE FROM EXPEDIENTES"
-					+ "WHERE num_expediente = "+numExp+" && anno_expediente = "+anno+";");
+					+ " WHERE num_expediente = "+numExp+" && anno_expediente = "+anno+";");
 			
 		} catch (ClassNotFoundException e) {
 			throw new MiExcepcion("No se ha encontrado la clase");

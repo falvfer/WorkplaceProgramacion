@@ -31,7 +31,7 @@ public class Test {
 	
 	public static void main(String[] args) {
 		
-		/* SOLO LA PRIMERA VEZ
+		/* // ----- SOLO LA PRIMERA VEZ -----
 		 * // Crear las subsecciones
 		 * Crear.actualizarSubsecciones(c);
 		 * 

@@ -89,7 +89,6 @@ public class CTRBuscadores {
 		// Controlar visibilidades y tamaños de ventana
 		if (v.getpBordeExpedientes().isVisible()) {
 			v.getpBordeExpedientes().setVisible(false);
-			v.setpExpedientes(new JPanel(new FlowLayout(FlowLayout.LEFT)));
 			ctr.setUltContExp(0);
 		}
 		if (!v.getpInformacion().isVisible())

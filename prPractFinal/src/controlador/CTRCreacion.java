@@ -1,12 +1,7 @@
 package controlador;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import bd.DAOCajas;
 import bd.DAOExpedientes;
 import modelo.Expediente;
 import modelo.MiExcepcion;
