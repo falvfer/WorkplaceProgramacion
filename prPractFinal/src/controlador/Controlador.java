@@ -122,7 +122,6 @@ public class Controlador implements ActionListener, ItemListener, MouseListener 
 	}
 	
 	private void menuCrear() {
-		System.out.println("Menu Crear");
 		v.getpCrear().setVisible(true);
 		v.getpBusqueda().setVisible(false);
 		v.getpInformacion().setVisible(false);
@@ -132,7 +131,6 @@ public class Controlador implements ActionListener, ItemListener, MouseListener 
 	}
 
 	private void menuBuscar() {
-		System.out.println("Menu Buscar");
 		v.getpCrear().setVisible(false);
 		v.getpBusqueda().setVisible(true);
 		v.getMenuAdd().setBackground(UIManager.getColor("Menu.background"));
@@ -151,14 +149,14 @@ public class Controlador implements ActionListener, ItemListener, MouseListener 
 	}
 	
 	public void limpiarInterfazCrear() {
-		v.getAddCaja().setText(ultExpediente.getNumCaja()+"");
-		v.getAddExpediente().setText(ultExpediente.getNumExpediente()+"");
-		v.getAddFecha().setText(ultExpediente.getAnno()+"");
-		v.getAddSeccion().setSelectedItem(ultExpediente.getSeccion());
+		v.getAddCaja().setText("");
+		v.getAddExpediente().setText("");
+		v.getAddFecha().setText("");
+		v.getAddSeccion().setSelectedIndex(0);
 		actualizarSubseccionAdd();
-		v.getAddSubseccion().setSelectedItem(ultExpediente.getSubseccion());
-		v.getAddDescripcion().setText(ultExpediente.getDescripcion()+"");
-		v.getAddNombres().setText(ultExpediente.getNombres()+"");
+		v.getAddSubseccion().setSelectedIndex(0);
+		v.getAddDescripcion().setText("");
+		v.getAddNombres().setText("");
 	}
 	
 	public void limpiarBusqueda() {
@@ -177,20 +175,20 @@ public class Controlador implements ActionListener, ItemListener, MouseListener 
 		
 		if (v.getpBordeExpedientes().isVisible()) {
 			if (v.getpInformacion().isVisible()) {
-				// Todo está habilitado
+				// Todo lo de buscar está visibles
 				v.setSize(400, 530+35*((ultContExp+3)/4));
 			} else {
-				// Panel buscar y Panel de cajas están habilitados
+				// Panel buscar y Panel de cajas están visibles
 				v.setSize(400, 235+35*((ultContExp+3)/4));
 			}
 		} else if (v.getpInformacion().isVisible()) {
-			// Panel buscar y Panel información están habilitados
+			// Panel buscar y Panel información están visibles
 			v.setSize(400, 500);
 		} else if (v.getpCrear().isVisible()){
 			// Panel de crear está visible unicamente.
 			v.setSize(400, 365);
 		} else {
-			// Panel buscar está habilitado unicamente
+			// Panel buscar está visible unicamente
 			v.setSize(400, 205);
 		}
 	}

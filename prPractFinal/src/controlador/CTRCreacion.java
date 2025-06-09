@@ -25,8 +25,10 @@ public class CTRCreacion {
 			int respuesta = JOptionPane.showConfirmDialog(v,
 					"¿Seguro que quieres crear el expediente?");
 			
-			if (respuesta == JOptionPane.OK_OPTION)
+			if (respuesta == JOptionPane.OK_OPTION) {
 				DAOExpedientes.crearExpediente(e);
+				ctr.limpiarInterfazCrear();
+			}
 			
 		} catch(MiExcepcion e) {
 			JOptionPane.showMessageDialog(v, "Comprueba los datos introducidos",
@@ -41,7 +43,7 @@ public class CTRCreacion {
 		int respuesta = JOptionPane.showConfirmDialog(v,
 							"¿Seguro que quieres borrar los datos de la interfaz?");
 		if (respuesta == JOptionPane.OK_OPTION) {
-			ctr.limpiarBusqueda();
+			ctr.limpiarInterfazCrear();
 		}
 	}
 }
